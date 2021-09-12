@@ -1,0 +1,75 @@
+table.gl {
+	font-size:70%;
+	font-family: "trebuchet ms", "lucidia grande", verdana, arial, sans-serif;
+	line-height:1.2em;
+	color: #333;
+	background-color:#fff;
+	border-collapse:collapse;
+	text-align:left;
+}
+
+table.gl caption {
+	padding-bottom:1em;
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: normal;
+	text-transform: uppercase;
+	letter-spacing:.6em;
+	color: #333;
+	background: transparent;
+}
+  
+table.gl thead th, table.gl tfoot th, table.gl tfoot td {
+	font-family: arial, verdana, sans-serif;
+	border-right: 1px solid #fff;
+	padding-left:5px;
+	font-variant:small-caps;
+	color: #4F76A3;
+	background: #E3F1FA;
+}
+  
+table.gl tfoot th, table.gl tfoot td {
+	border-top: 2pt double #009;
+}
+
+table.gl td, table.gl th {
+	padding:4px;
+}
+
+table.gl tbody tr th, table.gl tbody tr td {
+	border-bottom: 1px dotted #009;
+}
+
+table.gl tbody tr:hover td, table.gl tbody tr:hover th {
+	border-bottom: 1px solid #333;
+}
+
+table.gl tbody td a, table.gl tbody th a {
+	background: transparent;
+	color: #009;
+	text-decoration: none;
+	border:none;
+}
+
+table.gl tbody td a:hover, table.gl tbody th a:hover {
+	background: transparent;
+	color: #930;
+}
+
+table.gl .odd {
+	background: #FFFFDA;
+}
+
+table.gl tbody tr:hover {
+	color: #333;
+	background: #EFF9FF;
+}
+
+table.gl tbody tr th:hover {
+	background:#fff;
+}
+
+table.gl a:visited {
+	text-decoration: line-through;
+	color:#ccc;
+}

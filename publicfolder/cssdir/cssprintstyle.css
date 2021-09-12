@@ -1,0 +1,14 @@
+* {
+	font-family: "Arial";
+	margin:0px;
+	padding:0px;
+}
+@page {
+	margin-left:0.1cm 0.1cm 0.1cm 0.1cm;
+}
+.pagebreak {
+	page-break-after: always;
+}
+#closethewindow{
+	display:none;
+}

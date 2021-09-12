@@ -1,0 +1,83 @@
+table.gridua {
+	font-size:70%;
+	font-family: "trebuchet ms", "lucidia grande", verdana, arial, sans-serif;
+	line-height:1.2em;
+	color: #333;
+	background-color:#fff;
+	border-collapse:collapse;
+	/*text-align:left;*/
+}
+
+table.gridua caption {
+	padding-bottom:1em;
+	/*text-align: left;*/
+	font-weight:bold;
+	text-transform: uppercase;
+	color: #4F76A3;
+	background: transparent;
+}
+  
+table.gridua thead th, table.gridua tfoot th, table.gridua tfoot td {
+	font-family: arial, verdana, sans-serif;
+	border-right: 1px solid #fff;
+	padding-left:5px;
+	font-variant:small-caps;
+	color: #414476;
+	background: #ededed;
+}
+table.gridua tbody td, table.gridua tfoot td {
+	/*text-align:left;*/
+}
+table.gridua thead th{
+	text-align:center;
+}
+table.gridua tbody th, table.gridua tfoot th {
+	/*text-align:left;*/
+	font-weight:normal;
+}
+  
+table.gridua tfoot th, table.gridua tfoot td {
+	border-top: 2pt double #009;
+}
+
+table.gridua td, table.gridua th {
+	padding:4px;
+}
+
+table.gridua tbody tr th, table.gridua tbody tr td {
+	border-bottom: 1px dotted #009;
+}
+
+table.gridua tbody tr:hover td, table.gridua tbody tr:hover th {
+	border-bottom: 1px solid #333;
+}
+
+table.gridua tbody td a, table.gridua tbody th a {
+	background: transparent;
+	color: #009;
+	text-decoration: none;
+	border:none;
+}
+
+table.gridua tbody td a:hover, table.gridua tbody th a:hover {
+	background: transparent;
+	color: #930;
+}
+
+table.gridua .odd {
+	background: #F2FEF1;
+}
+
+table.gridua tbody tr:hover {
+	color: #333;
+	background: #EFF9FF;
+}
+
+table.gridua tbody tr th:hover {
+	background:#fff;
+}
+
+table.gridua a:visited {
+	text-decoration: line-through;
+	color:#ccc;
+}

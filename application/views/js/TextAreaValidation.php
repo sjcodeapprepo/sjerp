@@ -1,0 +1,2 @@
+<link href="<?=base_url()?>publicfolder/adobespry/widgets/textareavalidation/SpryValidationTextarea.css" rel="stylesheet" type="text/css"/>\n
+<script src="<?=base_url()?>publicfolder/adobespry/widgets/textareavalidation/SpryValidationTextarea.js" type="text/javascript"></script>\n

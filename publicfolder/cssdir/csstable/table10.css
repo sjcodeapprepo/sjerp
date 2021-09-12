@@ -1,0 +1,21 @@
+/* 
+    Document   : table10
+    Created on : Oct 6, 2009, 3:45:31 PM
+    Author     : mirza
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+table {
+	border: 1px solid;
+	border-spacing: 0px;
+}
+
+table thead tr th, table tbody tr td {
+	border: 1px solid;
+}

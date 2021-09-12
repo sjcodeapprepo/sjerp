@@ -1,0 +1,83 @@
+table.datanumber {
+	font:normal 76%/150% "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	border-collapse:separate;
+	border-spacing:0;
+	margin:0 0 1em 1em;
+	color:#000;
+	}
+
+table.datanumber a {
+	color:#523A0B;
+	text-decoration:none;
+	border-bottom:1px dotted;
+	}
+table.datanumber a:visited {
+	color:#444;
+	font-weight:normal;
+	}
+	
+table.datanumber a:hover {
+	border-bottom-style:solid;
+	}
+
+	table.datanumber thead th{
+	text-align:center;
+	}
+table.datanumber thead th,
+table.datanumber thead td,
+table.datanumber tfoot th,
+table.datanumber tfoot td {
+	border:1px solid #523A0B;
+	border-width:1px 0;
+	background:#EBE5D9;
+	}
+table.datanumber th {
+	font-weight:bold;
+	line-height:normal;
+	padding:0.25em 0.5em;
+	/* text-align:left; */
+	}
+table.datanumber tbody th,
+table.datanumber td {
+	padding:0.25em 0.5em;
+	/* text-align:left; */
+	vertical-align:top;
+	}
+table.datanumber tbody th {
+	font-weight:normal;
+	white-space:nowrap;
+	text-align:left; /* tambahan */
+	}
+	table.datanumber tfoot th{
+	text-align:left;
+	}
+	table.datanumber tbody td,table.datanumber tfoot td{
+	text-align:right;
+	}
+table.datanumber tbody th a:link,
+table.datanumber tbody th a:visited {
+	font-weight:bold;
+	}
+table.datanumber tbody td,
+table.datanumber tbody th {
+	border:1px solid #fff;
+	border-width:1px 0;
+	}
+table.datanumber tbody tr.odd th,
+table.datanumber tbody tr.odd td {
+	border-color:#EBE5D9;
+	background:#F7F4EE;
+	}
+table.datanumber tbody tr:hover td,
+table.datanumber tbody tr:hover th {
+	background:#ffffee;
+	border-color:#523A0B;
+	}
+table.datanumber caption {
+	font-family:Georgia,Times,serif;
+	font-weight:normal;
+	font-size:1.4em;
+	text-align:left;
+	margin:0;
+	padding:0.5em 0.25em;
+	}
