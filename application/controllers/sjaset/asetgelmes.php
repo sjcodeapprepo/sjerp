@@ -247,6 +247,57 @@ class AsetGElMes extends Authcontroller
 		redirect('jt/kontrak' . $url, 'refresh');
 	}
 
+	function testqrcode()
+	{
+        $nim='test_pertama_qrcode';
+ 
+        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+ 
+        $config['cacheable']    = true; //boolean, the default is true
+        $config['cachedir']     = './publicfolder/qrcode/'; //string, the default is application/cache/
+        $config['errorlog']     = './publicfolder/qrcode/'; //string, the default is application/logs/
+        $config['imagedir']     = './publicfolder/qrcode/images/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224,255,255); // array, default is array(255,255,255)
+        $config['white']        = array(70,130,180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+ 
+        $image_name='test_pertama_qrcode.png';
+        $params['data'] = $nim; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 4;
+        $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder publicfolder/qrcode/images/
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+		echo'ok';
+    }
+	function barcode()
+	{
+		$this->load->library('zend');
+		$this->zend->load('Zend/Barcode');
+
+		$id='ahmadmirza210173';
+
+		$barcodeOptions = array('text' => $id);
+		$rendererOptions = array(
+								'imageType'          => 'png', 
+								'horizontalPosition' => 'center', 
+								'verticalPosition'   => 'middle'
+							);
+			
+		// $imageResource=Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->render();
+		// return $imageResource;
+
+		$imageResource = Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->draw();
+		imagepng($imageResource, 'publicfolder/qrcode/images/barcode.png');
+	}
+	
+	function viewbarcode() 
+	{
+		// echo "<img src='".site_url()."/sjaset/asetgelmes/barcode'  alt='not show' /></div>";
+		echo "<img src='".base_url()."/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
+	}
+
 	function test()
 	{
 		print_array('asdf');
