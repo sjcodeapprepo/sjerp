@@ -166,6 +166,14 @@ class AsetGElMes extends Authcontroller
 		return $result;
 	}
 
+	function _getLastInsertID() 
+	{
+		$sql	= "SELECT LAST_INSERT_ID() AS lii";
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result[0]['lii'];
+	}
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -178,35 +186,64 @@ class AsetGElMes extends Authcontroller
 	function _inputproc()
 	{
 		$submit		= $this->input->post('submit');
-		$nik		= $this->input->post('nik');
-		$nama		= $this->input->post('nama');
-		$jk			= $this->input->post('jk');
-		$tgllahir	= $this->input->post('tgllahir');
-		$isactive	= $this->input->post('isactive');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
+		$a		= $this->input->post('');
 
 		if ($submit == 'SIMPAN') {
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI
 
-			$data	= array(
-				'NIK'		=> $nik,
-				'Nama'		=> $nama,
-				'JK'		=> $jk,
-				'TglLahir'	=> $tgllahir,
-				'IsActive'	=> $isactive
+			$datamaster	= array(
+				'GolID'			=> '',
+				'KatID'			=> '',
+				'AssetNo'		=> '',
+				'TglPr'			=> ''
 			);
-			$this->db->insert('karyawanmst', $data);
+			$this->db->insert('itemmaster', $datamaster);
+
+			$itemid		= $this->_getLastInsertID();
+
+			$datadetail	= array(
+							'ItemID'				=> $itemid,
+							'KatID'					=> '',
+							'AssetNo'				=> '',
+							'TglPr'					=> '',
+							'AssetOrder'			=> '',
+							'JenisElkmesinKatID'	=> '',
+							'NoDokumenPr'			=> '',
+							'NilaiPr'				=> '',
+							'PenyusutanPr'			=> '',
+							'LokasiIDPr'			=> '',
+							'DivisionIDPs'			=> '',
+							'PenanggungJawabPs'		=> '',
+							'KondisiKodeSi'			=> '',
+							'HargaSi'				=> '',
+							'KeteranganSi'			=> '',
+							'PicLocationSi'			=> ''
+						);
+			$this->db->insert('itemelkmesindetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 		}
-		redirect('hr/karyawanmaster', 'refresh');
+		redirect('sjaset/asetgelmes', 'refresh');
 	}
 
 	function edit($id)
 	{
 		$this->load->helper('text');
-		$data['data']		= $this->_getData($id);
+		$id									= null;
+		$data['data']						= $this->_getData($id);
+		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
+		$data['itemkatmaster']				= $this->_getItemKatMasterData();
+		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
+		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
 		$data['urlsegment']	= $this->uri->uri_string();
-		$this->load->view('hr/karyawan/karyawanmaster_input', $data);
+		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_edit', $data);
 	}
 
 	function _editproc($id)
@@ -271,6 +308,7 @@ class AsetGElMes extends Authcontroller
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 		echo'ok';
     }
+
 	function barcode()
 	{
 		$this->load->library('zend');
@@ -288,8 +326,8 @@ class AsetGElMes extends Authcontroller
 		// $imageResource=Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->render();
 		// return $imageResource;
 
-		$imageResource = Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->draw();
-		imagepng($imageResource, 'publicfolder/qrcode/images/barcode.png');
+		// $imageResource = Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->draw();
+		// imagepng($imageResource, 'publicfolder/qrcode/images/barcode.png');
 	}
 	
 	function viewbarcode() 
