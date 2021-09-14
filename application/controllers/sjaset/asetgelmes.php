@@ -199,11 +199,11 @@ class AsetGElMes extends Authcontroller
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI
 
 			$datamaster	= array(
-				'GolID'			=> '',
-				'KatID'			=> '',
-				'AssetNo'		=> '',
-				'TglPr'			=> ''
-			);
+							'GolID'			=> '',
+							'KatID'			=> '',
+							'AssetNo'		=> '',
+							'TglPr'			=> ''
+						);
 			$this->db->insert('itemmaster', $datamaster);
 
 			$itemid		= $this->_getLastInsertID();
@@ -246,7 +246,7 @@ class AsetGElMes extends Authcontroller
 		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_edit', $data);
 	}
 
-	function _editproc($id)
+	function _editproc($itemid)
 	{
 		$submit		= $this->input->post('submit');
 		$nik		= $this->input->post('nik');
@@ -258,17 +258,37 @@ class AsetGElMes extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI
 
-			$data	= array(
-				'NIK'		=> $nik,
-				'Nama'		=> $nama,
-				'JK'		=> $jk,
-				'TglLahir'	=> $tgllahir,
-				'IsActive'	=> $isactive
+			$datamaster	= array(
+							'GolID'			=> '',
+							'KatID'			=> '',
+							'AssetNo'		=> '',
+							'TglPr'			=> ''
+						);
+			$this->db->update('itemmaster', $datamaster, array('ID'	=> $itemid));
+
+			$datadetail	= array(
+				'ItemID'				=> $itemid,
+				'KatID'					=> '',
+				'AssetNo'				=> '',
+				'TglPr'					=> '',
+				'AssetOrder'			=> '',
+				'JenisElkmesinKatID'	=> '',
+				'NoDokumenPr'			=> '',
+				'NilaiPr'				=> '',
+				'PenyusutanPr'			=> '',
+				'LokasiIDPr'			=> '',
+				'DivisionIDPs'			=> '',
+				'PenanggungJawabPs'		=> '',
+				'KondisiKodeSi'			=> '',
+				'HargaSi'				=> '',
+				'KeteranganSi'			=> '',
+				'PicLocationSi'			=> ''
 			);
-			$this->db->update('karyawanmst', $data, array('ID'	=> $id));
+			$this->db->update('itemelkmesindetail', $datadetail, array('ID'	=> $itemid));
+
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 		}
-		redirect('hr/karyawanmaster', 'refresh');
+		redirect('sjaset/asetgelmes', 'refresh');
 
 
 		// back to page asal	
