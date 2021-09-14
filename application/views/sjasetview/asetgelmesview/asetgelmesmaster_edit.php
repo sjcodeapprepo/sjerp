@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Aset Elektronika dan Mesin - input</title>
+    <title>Aset Elektronika dan Mesin - edit</title>
     <link type="text/css" href="<?= base_url() ?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
     <?php
 		$this->load->view('js/jqueryui');
@@ -72,8 +72,14 @@
                             <td align="right">
                                 No Aset&nbsp;
                             </td>
-                            <td colspan='3'>
-								<input type='text' name='assetno' size='60' id='assetno' value="<?= $data['AssetNo'] ?>" />
+                            <td>
+								<input type='text' name='assetno' size='20' id='assetno' value="<?= $data['AssetNo'] ?>" readonly />
+                            </td>
+                            <td align="right">
+                                No Urut&nbsp;
+                            </td>
+                            <td>
+								<input type='text' name='assetorder' size='10' id='assetorder' value="<?= $data['AssetOrder'] ?>" readonly class='ratakanan' />
                             </td>
 						</tr>
                         <tr>
@@ -147,13 +153,8 @@
                                 Kondisi&nbsp;
                             </td>
                             <td colspan='3'>
-								<select name="kondisikodesi" id="kondisikodesi">
-									<option value="">-Pilih Kondisi-</option>
-									<option value="B">Baik</option>
-									<option value="RR">Rusak Ringan</option>
-									<option value="RB">Rusak Berat</option>
-								</select>
-							</td>
+                                <?=form_dropdownDB_init('kondisikodesi', $kondisikodesi, 'KondisiKodeSi', 'KondisiKodeSiName', $data['KondisiKodeSi'], '', '-Pilih Kondisi-', "id='kondisikodesi'");?>
+                            </td>
                         </tr>
 						<tr> <!-- ////////////////////////////=============================//////////////////////////////////// -->
                             <td colspan='4'  class='subdata'>
@@ -170,8 +171,8 @@
                                 File Foto&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" class='ratakanan' />
-                            </td>
+                                <input type='hidden' name='piclocationsi' id='piclocationsi' value='<?=$data['PicLocationSi']?>' />
+                                <input name="piclocationsi" type="file" id="piclocationsi" /></td>
                         </tr>
 						<tr>
                             <td align="right">
@@ -181,7 +182,6 @@
 								<textarea name="" id=""></textarea>
 							</td>
                             <td colspan="3">
-                                Gambar
                                 <div id="picaset"></div>
                             </td>
                         </tr>

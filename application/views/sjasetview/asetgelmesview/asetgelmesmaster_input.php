@@ -46,7 +46,13 @@
     </style>
 
 <script type="text/javascript">
-
+    $(function() {
+            $("#tglpr").datepicker({              
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1960:2022"
+            });
+        });
 </script>
 </head>
 
@@ -54,7 +60,7 @@
     <?php
     menulist();
     ?>
-    <form action="<?= site_url() ?>/sjaset/asetgelmes/inputeditproc/ ?>" method='post' id='formin' enctype="multipart/form-data">
+    <form action="<?= site_url() ?>/sjaset/asetgelmes/inputeditproc/" method='post' id='formin' enctype="multipart/form-data">
         <input type='hidden' name='urlsegment' id='urlsegment' value='<?= $urlsegment ?>' />
         <br />
         <br />
@@ -73,7 +79,7 @@
                                 No Aset&nbsp;
                             </td>
                             <td colspan='3'>
-								<input type='text' name='assetno' size='60' id='assetno' value="<?= $data['AssetNo'] ?>" />
+								&nbsp;
                             </td>
 						</tr>
                         <tr>
@@ -81,7 +87,7 @@
                                 Kategori&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('itemkatmaster', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '00', '-Pilih Kategori-', "id='katid'");?>
+								<?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '00', '-Pilih Kategori-', "id='katid'");?>
                             </td>
                             <td align="right">
                                 Jenis&nbsp;
@@ -95,6 +101,14 @@
                                 Perolehan&nbsp;
                             </td>
 						</tr>
+                        <tr>
+                            <td align="right">
+                                Tgl Perolehan&nbsp;
+                            </td>
+                            <td colspan="3">
+								<input type='text' name='tglpr' size='9' id='tglpr' value="<?= $data['TglPr'] ?>" readonly />
+                            </td>
+                        </tr>
 						<tr>
                             <td align="right">
                                 No Dokumen&nbsp;
@@ -139,7 +153,7 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" class='ratakanan' />
+								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
                             </td>
                         </tr>
 						<tr>
@@ -147,12 +161,7 @@
                                 Kondisi&nbsp;
                             </td>
                             <td colspan='3'>
-								<select name="kondisikodesi" id="kondisikodesi">
-									<option value="">-Pilih Kondisi-</option>
-									<option value="B">Baik</option>
-									<option value="RR">Rusak Ringan</option>
-									<option value="RB">Rusak Berat</option>
-								</select>
+                                <?=form_dropdownDB_init('kondisikodesi', $kondisikodesi, 'KondisiKodeSi', 'KondisiKodeSiName', $data['KondisiKodeSi'], '', '-Pilih Kondisi-', "id='kondisikodesi'");?>
 							</td>
                         </tr>
 						<tr> <!-- ////////////////////////////=============================//////////////////////////////////// -->
@@ -165,24 +174,24 @@
                                 Harga&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" class='ratakanan' />                            </td>
+                                <input type='text' name='hargasi' size='30' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
+                            </td>
                             <td align="right">
                                 File Foto&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" class='ratakanan' />
+                                <input name="piclocationsi" type="file" id="piclocationsi" />
                             </td>
                         </tr>
 						<tr>
-                            <td align="right">
+                            <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
                             <td>
-								<textarea name="" id=""></textarea>
+								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"></textarea>
 							</td>
-                            <td colspan="3">
-                                Gambar
-                                <div id="picaset"></div>
+                            <td colspan="3">                                
+                                <div id="picaset">Gambar</div>
                             </td>
                         </tr>
                     </table>
@@ -197,9 +206,12 @@
         </table>
     </form>
     <script>
-        new Spry.Widget.ValidationTextField("certname", "none");
-        new Spry.Widget.ValidationTextField("tahun", "integer", {
-            minValue: "1970"
+        new Spry.Widget.ValidationTextField("nodokumenpr", "none");
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
+            minValue: "0"
+        });
+        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {
+            minValue: "0",maxValue: "100"
         });
     </script>
 </body>

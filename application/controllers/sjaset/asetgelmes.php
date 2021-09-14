@@ -93,6 +93,18 @@ class AsetGElMes extends Authcontroller
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
+		$data['kondisikodesi']				= array(
+												array(
+													'KondisiKodeSi'	=> 'B',
+													'KondisiKodeSiName'	=> 'Baik'
+												),
+												array(
+													'KondisiKodeSi'	=> 'RR',
+													'KondisiKodeSiName'	=> 'Rusak Ringan'),
+												array(
+													'KondisiKodeSi'	=> 'RB',
+													'KondisiKodeSiName'	=> 'Rusak Berat')
+											);
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_input', $data);
 	}
@@ -174,6 +186,15 @@ class AsetGElMes extends Authcontroller
 		return $result[0]['lii'];
 	}
 
+	function _getLastAsetOrderPlusOne() 
+	{
+		$sql	= "SELECT LPAD(AssetOrder+1, 3, 0) AS AO FROM itemelkmesindetail ORDER BY AssetOrder DESC";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		return $retval;
+	}
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -185,50 +206,74 @@ class AsetGElMes extends Authcontroller
 
 	function _inputproc()
 	{
-		$submit		= $this->input->post('submit');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
-		$a		= $this->input->post('');
+		$submit				= $this->input->post('submit');
+		$katid				= $this->input->post('katid');
+		$jeniselkmesinkatid	= $this->input->post('jeniselkmesinkatid');
+		$tglpr				= $this->input->post('tglpr');
+		$thnpr				= substr($tglpr, 0, 4);
+		$nodokumenpr		= $this->input->post('nodokumenpr');
+		$lokasiidpr			= $this->input->post('lokasiidpr');
+		$nilaipr			= $this->input->post('nilaipr');
+		$penyusutanpr		= $this->input->post('penyusutanpr');
+		$divisionidps		= $this->input->post('divisionidps');
+		$penanggungjawabps	= $this->input->post('penanggungjawabps');
+		$kondisikodesi		= $this->input->post('kondisikodesi');
+		$hargasi			= $this->input->post('hargasi');
+		$keterangansi		= $this->input->post('keterangansi');
+		$urlsegment			= $this->input->post('urlsegment');
 
 		if ($submit == 'SIMPAN') {
-			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI
+			$assetorder	= $this->_getLastAsetOrderPlusOne();
+			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
-			$datamaster	= array(
-							'GolID'			=> '',
-							'KatID'			=> '',
-							'AssetNo'		=> '',
-							'TglPr'			=> ''
-						);
-			$this->db->insert('itemmaster', $datamaster);
+			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+			$config['file_name']		= 'aset' . $assetno.rand(5, 16);
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'gif|jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-			$itemid		= $this->_getLastInsertID();
+			$this->load->library('upload', $config);
 
-			$datadetail	= array(
-							'ItemID'				=> $itemid,
-							'KatID'					=> '',
-							'AssetNo'				=> '',
-							'TglPr'					=> '',
-							'AssetOrder'			=> '',
-							'JenisElkmesinKatID'	=> '',
-							'NoDokumenPr'			=> '',
-							'NilaiPr'				=> '',
-							'PenyusutanPr'			=> '',
-							'LokasiIDPr'			=> '',
-							'DivisionIDPs'			=> '',
-							'PenanggungJawabPs'		=> '',
-							'KondisiKodeSi'			=> '',
-							'HargaSi'				=> '',
-							'KeteranganSi'			=> '',
-							'PicLocationSi'			=> ''
-						);
-			$this->db->insert('itemelkmesindetail', $datadetail);
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				print_array($error);
+			} else {
+				$data			= $this->upload->data();				
+				$filelocation	= $data['full_path'];
 
-			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
+
+				$datamaster	= array(
+								'GolID'			=> '04',
+								'KatID'			=> $katid,
+								'AssetNo'		=> $assetno,
+								'TglPr'			=> $tglpr
+							);
+				$this->db->insert('itemmaster', $datamaster);
+
+				$itemid		= $this->_getLastInsertID();
+
+				$datadetail	= array(
+								'ItemID'				=> $itemid,
+								'AssetOrder'			=> $assetorder,
+								'JenisElkmesinKatID'	=> $jeniselkmesinkatid,
+								'NoDokumenPr'			=> $nodokumenpr,
+								'NilaiPr'				=> $nilaipr,
+								'PenyusutanPr'			=> $penyusutanpr,
+								'LokasiIDPr'			=> $lokasiidpr,
+								'DivisionIDPs'			=> $divisionidps,
+								'PenanggungJawabPs'		=> $penanggungjawabps,
+								'KondisiKodeSi'			=> $kondisikodesi,
+								'HargaSi'				=> $hargasi,
+								'KeteranganSi'			=> $keterangansi,
+								'PicLocationSi'			=> $filelocation
+							);
+				$this->db->insert('itemelkmesindetail', $datadetail);
+
+				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			}
 		}
 		redirect('sjaset/asetgelmes', 'refresh');
 	}
@@ -236,61 +281,97 @@ class AsetGElMes extends Authcontroller
 	function edit($id)
 	{
 		$this->load->helper('text');
-		$id									= null;
+
 		$data['data']						= $this->_getData($id);
 		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
+
+		$data['kondisikodesi']				= array(
+													array(
+														'KondisiKodeSi'	=> 'B',
+														'KondisiKodeSiName'	=> 'Baik'
+													),
+													array(
+														'KondisiKodeSi'	=> 'RR',
+														'KondisiKodeSiName'	=> 'Rusak Ringan'),
+													array(
+														'KondisiKodeSi'	=> 'RB',
+														'KondisiKodeSiName'	=> 'Rusak Berat')
+												);
+
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_edit', $data);
 	}
 
 	function _editproc($itemid)
 	{
-		$submit		= $this->input->post('submit');
-		$nik		= $this->input->post('nik');
-		$nama		= $this->input->post('nama');
-		$jk			= $this->input->post('jk');
-		$tgllahir	= $this->input->post('tgllahir');
-		$isactive	= $this->input->post('isactive');
+		$submit				= $this->input->post('submit');
+
+		$katid				= $this->input->post('katid');
+		$jeniselkmesinkatid	= $this->input->post('jeniselkmesinkatid');
+		$assetorder			= $this->input->post('assetorder');
+		$tglpr				= $this->input->post('tglpr');
+		$thnpr				= substr($tglpr, 0, 4);
+		$nodokumenpr		= $this->input->post('nodokumenpr');
+		$lokasiidpr			= $this->input->post('lokasiidpr');
+		$nilaipr			= $this->input->post('nilaipr');
+		$penyusutanpr		= $this->input->post('penyusutanpr');
+		$divisionidps		= $this->input->post('divisionidps');
+		$penanggungjawabps	= $this->input->post('penanggungjawabps');
+		$kondisikodesi		= $this->input->post('kondisikodesi');
+		$hargasi			= $this->input->post('hargasi');
+		$keterangansi		= $this->input->post('keterangansi');
+		$urlsegment			= $this->input->post('urlsegment');
 
 		if ($submit == 'SIMPAN') {
-			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI
+			$assetno					= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
-			$datamaster	= array(
-							'GolID'			=> '',
-							'KatID'			=> '',
-							'AssetNo'		=> '',
-							'TglPr'			=> ''
-						);
-			$this->db->update('itemmaster', $datamaster, array('ID'	=> $itemid));
+			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+			$config['file_name']		= 'aset' . $assetno.rand(5, 16);
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'gif|jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-			$datadetail	= array(
-				'ItemID'				=> $itemid,
-				'KatID'					=> '',
-				'AssetNo'				=> '',
-				'TglPr'					=> '',
-				'AssetOrder'			=> '',
-				'JenisElkmesinKatID'	=> '',
-				'NoDokumenPr'			=> '',
-				'NilaiPr'				=> '',
-				'PenyusutanPr'			=> '',
-				'LokasiIDPr'			=> '',
-				'DivisionIDPs'			=> '',
-				'PenanggungJawabPs'		=> '',
-				'KondisiKodeSi'			=> '',
-				'HargaSi'				=> '',
-				'KeteranganSi'			=> '',
-				'PicLocationSi'			=> ''
-			);
-			$this->db->update('itemelkmesindetail', $datadetail, array('ID'	=> $itemid));
+			$this->load->library('upload', $config);
 
-			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				print_array($error);
+			} else {
+				$data			= $this->upload->data();				
+				$filelocation	= $data['full_path'];
+
+				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
+
+				$datamaster	= array(
+								'KatID'			=> $katid,
+								'AssetNo'		=> $assetno,
+								'TglPr'			=> $tglpr
+							);
+				$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+
+				$datadetail	= array(
+								'JenisElkmesinKatID'	=> $jeniselkmesinkatid,
+								'NoDokumenPr'			=> $nodokumenpr,
+								'NilaiPr'				=> $nilaipr,
+								'PenyusutanPr'			=> $penyusutanpr,
+								'LokasiIDPr'			=> $lokasiidpr,
+								'DivisionIDPs'			=> $divisionidps,
+								'PenanggungJawabPs'		=> $penanggungjawabps,
+								'KondisiKodeSi'			=> $kondisikodesi,
+								'HargaSi'				=> $hargasi,
+								'KeteranganSi'			=> $keterangansi,
+								'PicLocationSi'			=> $filelocation
+							);
+				$this->db->update('itemelkmesindetail', $datadetail, array('ItemID'	=> $itemid));
+
+				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			}
 		}
-		redirect('sjaset/asetgelmes', 'refresh');
-
-
 		// back to page asal	
 		$urlstring	= $this->input->post('urlsegment');
 		$urlarr = explode("/", $urlstring);
@@ -301,7 +382,7 @@ class AsetGElMes extends Authcontroller
 				$url	.= '/' . $uri;
 			$i++;
 		}
-		redirect('jt/kontrak' . $url, 'refresh');
+		redirect('sjaset/asetgelmes' . $url, 'refresh');
 	}
 
 	function testqrcode()
