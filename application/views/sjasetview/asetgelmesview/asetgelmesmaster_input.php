@@ -134,7 +134,7 @@
                                 Penyusutan&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penyusutanpr' size='10' id='penyusutanpr' value="<?= $data['PenyusutanPr'] ?>" class='ratakanan' /> %
+								<input type='text' name='penyusutanpr' size='10' id='penyusutanpr' value="0" class='ratakanan' /> %
 							</td>
                         </tr>
 						<tr>

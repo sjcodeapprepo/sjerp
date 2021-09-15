@@ -329,7 +329,7 @@ class AsetGElMes extends Authcontroller
 			$assetno					= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
 			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-			$config['file_name']		= 'aset' . $assetno.rand(5, 16);
+			$config['file_name']		= 'em' . $assetno.rand(5, 16);
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'gif|jpg|png|jpeg';
 			$config['max_size']			= 5000;
