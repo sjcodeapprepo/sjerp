@@ -114,7 +114,7 @@
                                 No Dokumen&nbsp;
                             </td>
                             <td>
-								<input type='text' name='nodokumenpr' size='60' id='nodokumenpr' value="<?= $data['NoDokumenPr'] ?>" />
+								<input type='text' name='nodokumenpr' size='30' id='nodokumenpr' value="<?= $data['NoDokumenPr'] ?>" />
                             </td>
                             <td align="right">
                                 Lokasi&nbsp;
@@ -128,13 +128,13 @@
                                 Nilai&nbsp;
                             </td>
                             <td>
-								<input type='text' name='nilaipr' size='50' id='nilaipr' value="<?= $data['NilaiPr'] ?>" class='ratakanan' />
+								<input type='text' name='nilaipr' size='20' id='nilaipr' value="<?= $data['NilaiPr'] ?>" class='ratakanan' />
                             </td>
                             <td align="right">
                                 Penyusutan&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penyusutanpr' size='10' id='penyusutanpr' value="0" class='ratakanan' /> %
+								<input type='text' name='penyusutanpr' size='6' id='penyusutanpr' value="0" class='ratakanan' /> %
 							</td>
                         </tr>
 						<tr>
@@ -174,7 +174,7 @@
                                 Harga&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='hargasi' size='30' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
+                                <input type='text' name='hargasi' size='20' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
                             </td>
                             <td align="right">
                                 File Foto&nbsp;
