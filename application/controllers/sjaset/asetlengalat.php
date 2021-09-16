@@ -52,7 +52,7 @@ class Asetlengalat extends Authcontroller
 		$this->pagination->initialize($config);
 		$fromurisegment				= $this->uri->segment($urisegment);
 		$data['view_data']			= $this->_view_data(true, $dataperpage, $fromurisegment, $keyword, $keywordurl2);
-		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_index', $data);
+		$this->load->view('sjasetview/asetlengalatview/asetlengalat_index', $data);
 	}
 
 	function _view_data($isviewdata, $num, $offset, $key, $category)
