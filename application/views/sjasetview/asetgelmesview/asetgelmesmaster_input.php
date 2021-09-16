@@ -6,6 +6,7 @@
     <?php
 		$this->load->view('js/jqueryui');
 		$this->load->view('js/TextValidation');
+        $this->load->view('js/SelectValidation');
     ?>
     <style>
         .msg {
@@ -47,12 +48,21 @@
 
 <script type="text/javascript">
     $(function() {
-            $("#tglpr").datepicker({              
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "1960:2022"
-            });
+        $("#tglpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
         });
+        $( "#penyusutanpr" ).focusin(function() {
+            $(this).val('');
+        });
+
+        $( "#penyusutanpr" ).focusout(function() {
+            if($(this).val()=='') {
+                $(this).val(0);
+            }
+        });
+    });
 </script>
 </head>
 
@@ -134,7 +144,7 @@
                                 Penyusutan&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penyusutanpr' size='6' id='penyusutanpr' value="0" class='ratakanan' /> %
+								<input type='text' name='penyusutanpr' size='3' id='penyusutanpr' value="0" class='ratakanan' /> %
 							</td>
                         </tr>
 						<tr>
@@ -208,11 +218,18 @@
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0"
+            minValue: "0",useCharacterMasking:true
+        });
+        new Spry.Widget.ValidationTextField("hargasi", "integer", {
+            minValue: "0",useCharacterMasking:true
         });
         new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {
-            minValue: "0",maxValue: "100"
+            minValue: "0",maxValue: "100",useCharacterMasking:true
         });
+        new Spry.Widget.ValidationSelect("katid");
+        new Spry.Widget.ValidationSelect("jeniselkmesinkatid");
+        new Spry.Widget.ValidationSelect("lokasiidpr");
+        new Spry.Widget.ValidationSelect("kondisikodesi");
     </script>
 </body>
 

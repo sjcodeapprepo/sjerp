@@ -281,8 +281,10 @@ class AsetGElMes extends Authcontroller
 	function edit($id)
 	{
 		$this->load->helper('text');
-
-		$data['data']						= $this->_getData($id);
+		$datas								= $this->_getData($id);
+		$data['data']						= $datas;
+		$url	= explode('/',$datas['PicLocationSi'],6);
+		$data['imgsrc']						= base_url().$url[5];
 		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
@@ -323,7 +325,6 @@ class AsetGElMes extends Authcontroller
 		$kondisikodesi		= $this->input->post('kondisikodesi');
 		$hargasi			= $this->input->post('hargasi');
 		$keterangansi		= $this->input->post('keterangansi');
-		$urlsegment			= $this->input->post('urlsegment');
 
 		if ($submit == 'SIMPAN') {
 			$assetno					= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
@@ -342,7 +343,7 @@ class AsetGElMes extends Authcontroller
 				$error					= array('error_info' => $this->upload->display_errors());
 				print_array($error);
 			} else {
-				$data			= $this->upload->data();				
+				$data			= $this->upload->data();
 				$filelocation	= $data['full_path'];
 
 				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
@@ -382,7 +383,7 @@ class AsetGElMes extends Authcontroller
 				$url	.= '/' . $uri;
 			$i++;
 		}
-		redirect('sjaset/asetgelmes' . $url, 'refresh');
+		// redirect('sjaset/asetgelmes' . $url, 'refresh');
 	}
 
 	function testqrcode()
