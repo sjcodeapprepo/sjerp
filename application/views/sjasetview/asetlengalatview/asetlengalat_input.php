@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Aset Elektronika dan Mesin - input</title>
+    <title>Aset Perlengkapan dan Peralatan - input</title>
     <link type="text/css" href="<?= base_url() ?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
     <?php
 		$this->load->view('js/jqueryui');
@@ -53,11 +53,11 @@
             changeYear: true,
             yearRange: "1960:2022"
         });
-        $( "#penyusutanpr" ).focusin(function() {
+        $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
 
-        $( "#penyusutanpr" ).focusout(function() {
+        $( "#penyusutanps" ).focusout(function() {
             if($(this).val()=='') {
                 $(this).val(0);
             }
@@ -70,7 +70,7 @@
     <?php
     menulist();
     ?>
-    <form action="<?= site_url() ?>/sjaset/asetgelmes/inputeditproc/" method='post' id='formin' enctype="multipart/form-data">
+    <form action="<?= site_url() ?>/sjaset/asetlengalat/inputeditproc/" method='post' id='formin' enctype="multipart/form-data">
         <input type='hidden' name='urlsegment' id='urlsegment' value='<?= $urlsegment ?>' />
         <br />
         <br />
@@ -81,7 +81,7 @@
                     <table class='gridtable' width='600'>
                         <thead>
                             <tr>
-                                <th colspan='4'>Elektronika dan Mesin</th>
+                                <th colspan='4'>Perlengkapan dan Peralatan</th>
                             </tr>
                         </thead>
 						<tr>
@@ -97,13 +97,13 @@
                                 Kategori&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '00', '-Pilih Kategori-', "id='katid'");?>
+								<?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '', '-Pilih Kategori-', "id='katid'");?>
                             </td>
                             <td align="right">
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniselkmesinkatid', $itemjeniselkmesinmaster, 'JenisElkmesinKatID', 'JenisElkmesinKatName', $data['JenisElkmesinKatID'], '00', '-Pilih Jenis-', "id='jeniselkmesinkatid'");?>
+                                <?=form_dropdownDB_init('jenisperlengperalatkatid', $itemjenisperlengperalatkatmaster, 'JenisPerlengPeralatKatID', 'JenisPerlengPeralatKatName', $data['JenisPerlengPeralatKatID'], '', '-Pilih Jenis-', "id='jenisperlengperalatkatid'");?>
                             </td>
                         </tr>
                         <tr>
@@ -115,93 +115,97 @@
                             <td align="right">
                                 Tgl Perolehan&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td>
 								<input type='text' name='tglpr' size='9' id='tglpr' value="<?= $data['TglPr'] ?>" readonly />
                             </td>
-                        </tr>
-						<tr>
                             <td align="right">
                                 No Dokumen&nbsp;
                             </td>
                             <td>
 								<input type='text' name='nodokumenpr' size='30' id='nodokumenpr' value="<?= $data['NoDokumenPr'] ?>" />
                             </td>
-                            <td align="right">
-                                Lokasi&nbsp;
-                            </td>
-                            <td>
-								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '00', '-Pilih Lokasi-', "id='lokasiidpr'");?>
-                            </td>
                         </tr>
 						<tr>
                             <td align="right">
                                 Nilai&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<input type='text' name='nilaipr' size='20' id='nilaipr' value="<?= $data['NilaiPr'] ?>" class='ratakanan' />
                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Posisi&nbsp;
+                            </td>
+						</tr>
+                        <tr>
                             <td align="right">
                                 Penyusutan&nbsp;
                             </td>
                             <td>
 								<input type='text' name='penyusutanpr' size='3' id='penyusutanpr' value="0" class='ratakanan' /> %
 							</td>
-                        </tr>
-						<tr>
-                            <td colspan='4' class='subdata'>
-                                Posisi&nbsp;
+                            <td align="right">
+                                Lokasi&nbsp;
                             </td>
-						</tr>
-						<tr>
+                            <td>
+								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '', '-Pilih Lokasi-', "id='lokasiidpr'");?>
+                            </td>
+                        </tr>
+                        <tr>
                             <td align="right">
                                 Divisi&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '00', '-Pilih Divisi-', "id='divisionidps'");?>
                             </td>
+                        </tr>
+						<tr>
+                            <td colspan='4' class='subdata'>
+                                Kondisi Saat Ini&nbsp;
+                            </td>
+						</tr>
+						<tr>
                             <td align="right">
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
 								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
                             </td>
-                        </tr>
-						<tr>
                             <td align="right">
                                 Kondisi&nbsp;
                             </td>
-                            <td colspan='3'>
+                            <td>
                                 <?=form_dropdownDB_init('kondisikodesi', $kondisikodesi, 'KondisiKodeSi', 'KondisiKodeSiName', $data['KondisiKodeSi'], '', '-Pilih Kondisi-', "id='kondisikodesi'");?>
 							</td>
                         </tr>
-						<tr> <!-- ////////////////////////////=============================//////////////////////////////////// -->
-                            <td colspan='4'  class='subdata'>
-                                Kondisi Saat Ini&nbsp;
-                            </td>
-						</tr>
 						<tr>
                             <td align="right">
                                 Harga&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
                                 <input type='text' name='hargasi' size='20' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
                             </td>
-                            <td align="right">
-                                File Foto&nbsp;
-                            </td>
-                            <td>
-                                <input name="piclocationsi" type="file" id="piclocationsi" />
-                            </td>
-                        </tr>
-						<tr>
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
                             <td>
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"></textarea>
 							</td>
-                            <td colspan="3">                                
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                File Foto&nbsp;
+                            </td>
+                            <td>
+                                <input name="piclocationsi" type="file" id="piclocationsi" />
                                 <div id="picaset">Gambar</div>
+                            </td>
+                            <td align="right">
+                                Label&nbsp;
+                            </td>
+                            <td colspan="3">                                
+                                <div id="labelaset">Label</div>
                             </td>
                         </tr>
                     </table>
@@ -223,11 +227,11 @@
         new Spry.Widget.ValidationTextField("hargasi", "integer", {
             minValue: "0",useCharacterMasking:true
         });
-        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {
+        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
             minValue: "0",maxValue: "100",useCharacterMasking:true
         });
         new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("jeniselkmesinkatid");
+        new Spry.Widget.ValidationSelect("jenisperlengperalatkatid");
         new Spry.Widget.ValidationSelect("lokasiidpr");
         new Spry.Widget.ValidationSelect("kondisikodesi");
     </script>

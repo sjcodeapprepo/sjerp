@@ -35,7 +35,7 @@
 </head>
 <body>
 <?php menulist()?>
-<form action=<?=site_url().'/sjaset/asetgelmes/index'?> method='post'>
+<form action=<?=site_url().'/sjaset/asetlengalat/index'?> method='post'>
 <table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridtable'>
 	<thead>
 	  <tr><th colspan='2'>Aset Perlengkapan dan Peralatan</th></tr>
@@ -44,8 +44,8 @@
         <td noWrap align=center>
 		<select name="option">
 			<option value='mk.KatName'>Kategori</option>
-			<option value='mj.JenisElkmesinKatName'>Jenis</option>
-			<option value='d.PenanggungJawabPs'>Penanggung Jawab</option>
+			<option value='mj.JenisPerlengPeralatKatName'>Jenis</option>
+			<option value='d.PenanggungJawabSi'>Penanggung Jawab</option>
 		</select>
 		&nbsp;&nbsp;<input type=text size='40' name='optionValue' />&nbsp;&nbsp;<input type=submit value='Cari' name='submit' />
 		</td>
@@ -66,8 +66,8 @@
 			<table align="center">
 				<tr>
 					<td>
-						<a href="<?=site_url()?>/sjaset/asetgelmes/input">
-							<div class='ui-state-default ui-corner-all lebariconkecil' title='TAMBAH DATA ASET ELEKTRONIKA DAN MESIN'>
+						<a href="<?=site_url()?>/sjaset/asetlengalat/input">
+							<div class='ui-state-default ui-corner-all lebariconkecil' title='TAMBAH DATA ASET PERLENGKAPAN DAN PERALATAN'>
 								<span class='ui-icon ui-icon-plusthick' />
 							</div
 						</a>
@@ -84,9 +84,9 @@ for($a=0; $a<count($view_data); $a++) {
 	$id			= $view_data[$a]['ItemID'];
 	$asno		= $view_data[$a]['AssetNo'];
     $katname	= $view_data[$a]['KatName'];
-    $jkat		= $view_data[$a]['JenisElkmesinKatName'];
+    $jkat		= $view_data[$a]['JenisPerlengPeralatKatName'];
 	$divname	= $view_data[$a]['DivisionAbbr'];
-	$pngjwb 	= $view_data[$a]['PenanggungJawabPs'];
+	$pngjwb 	= $view_data[$a]['PenanggungJawabSi'];
 ?>
 	  <tr>
 	  	<td align='center'><?=$asno?></td>
@@ -98,8 +98,8 @@ for($a=0; $a<count($view_data); $a++) {
 			<?php 
 				$url	=$this->uri->uri_string();
 			?>
-			<a href="<?=site_url()?>/sjaset/asetgelmes/edit/<?=$id?>/<?=$url?>">
-				<div class='ui-state-default ui-corner-all lebariconkecil' title='EDIT ASET ELEKTRONIKA DAN MESIN'>
+			<a href="<?=site_url()?>/sjaset/asetlengalat/edit/<?=$id?>/<?=$url?>">
+				<div class='ui-state-default ui-corner-all lebariconkecil' title='EDIT DATA ASET PERLENGKAPAN DAN PERALATAN'>
 					<span class='ui-icon ui-icon-pencil' />
 				</div>
 			</a>

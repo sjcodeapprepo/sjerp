@@ -45,7 +45,7 @@ class Asetlengalat extends Authcontroller
 		}
 		$dataperpage				= 11;
 		$config['per_page']         = $dataperpage;
-		$config['base_url']         = site_url() . "/sjaset/asetgelmes/index/$keywordurl/$keywordurl2/";
+		$config['base_url']         = site_url() . "/sjaset/asetlengalat/index/$keywordurl/$keywordurl2/";
 		$config['uri_segment']      = $urisegment;
 		$config['total_rows']       = $this->_view_data(false, 0, 0, $keyword, $keywordurl2);
 
@@ -61,12 +61,12 @@ class Asetlengalat extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisElkmesinKatName, md.DivisionAbbr, d.PenanggungJawabPs
+					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, d.PenanggungJawabSi
 				FROM 
-					itemmaster m, itemelkmesindetail d, itemkatmaster mk, itemdivisionmaster md, itemjeniselkmesinmaster mj 
+					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisElkmesinKatID=mj.JenisElkmesinKatID AND d.DivisionIDPs=md.DivisionID
-					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='04'";
+					m.ItemID=d.ItemID AND d.JenisPerlengPeralatKatID=mj.JenisPerlengPeralatKatID AND d.DivisionIDPs=md.DivisionID
+					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
 		if($isviewdata) {
@@ -87,26 +87,26 @@ class Asetlengalat extends Authcontroller
 	function input()
 	{
 		$this->load->helper('text');
-		$id									= null;
-		$data['data']						= $this->_getData($id);
-		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
-		$data['itemkatmaster']				= $this->_getItemKatMasterData();
-		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
-		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
-		$data['kondisikodesi']				= array(
-												array(
-													'KondisiKodeSi'	=> 'B',
-													'KondisiKodeSiName'	=> 'Baik'
-												),
-												array(
-													'KondisiKodeSi'	=> 'RR',
-													'KondisiKodeSiName'	=> 'Rusak Ringan'),
-												array(
-													'KondisiKodeSi'	=> 'RB',
-													'KondisiKodeSiName'	=> 'Rusak Berat')
-											);
+		$id											= null;
+		$data['data']								= $this->_getData($id);
+		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData();
+		$data['itemkatmaster']						= $this->_getItemKatMasterData();
+		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
+		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
+		$data['kondisikodesi']						= array(
+														array(
+															'KondisiKodeSi'	=> 'B',
+															'KondisiKodeSiName'	=> 'Baik'
+														),
+														array(
+															'KondisiKodeSi'	=> 'RR',
+															'KondisiKodeSiName'	=> 'Rusak Ringan'),
+														array(
+															'KondisiKodeSi'	=> 'RB',
+															'KondisiKodeSiName'	=> 'Rusak Berat')
+													);
 		$data['urlsegment']	= $this->uri->uri_string();
-		$this->load->view('sjasetview/asetgelmesview/asetgelmesmaster_input', $data);
+		$this->load->view('sjasetview/asetlengalatview/asetlengalat_input', $data);
 	}
 
 	function _getData($id)
@@ -117,13 +117,13 @@ class Asetlengalat extends Authcontroller
 			'AssetNo'				=> '',
 			'TglPr'					=> '',
 			'AssetOrder'			=> '',
-			'JenisElkmesinKatID'	=> '',
+			'JenisPerlengPeralatKatID'	=> '',
 			'NoDokumenPr'			=> '',
 			'NilaiPr'				=> '',
-			'PenyusutanPr'			=> '',
-			'LokasiIDPr'			=> '',
+			'PenyusutanPs'			=> '',
+			'LokasiIDPs'			=> '',
 			'DivisionIDPs'			=> '',
-			'PenanggungJawabPs'		=> '',
+			'PenanggungJawabSi'		=> '',
 			'KondisiKodeSi'			=> '',
 			'HargaSi'				=> '',
 			'KeteranganSi'			=> '',
@@ -131,13 +131,13 @@ class Asetlengalat extends Authcontroller
 		);
 
 		$sql = "SELECT 
-					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisElkmesinKatID, 
-					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPr, d.LokasiIDPr, d.DivisionIDPs, d.PenanggungJawabPs, 
+					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisPerlengPeralatKatID, 
+					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPr, d.DivisionIDPs, d.PenanggungJawabSi, 
 					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
 				FROM 
 					itemmaster m, itemelkmesindetail d
 				WHERE 
-					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='04'";
+					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='03'";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
@@ -146,9 +146,9 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
-	function _getItemjeniselkmesinmasterData()
+	function _getItemJenisPerlengPeralatkatmasterData()
 	{
-		$sql = "SELECT JenisElkmesinKatID, JenisElkmesinKatName FROM itemjeniselkmesinmaster";
+		$sql = "SELECT JenisPerlengPeralatKatID, JenisPerlengPeralatKatName FROM itemjenisperlengperalatkatmaster";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -156,7 +156,7 @@ class Asetlengalat extends Authcontroller
 
 	function _getItemKatMasterData()
 	{
-		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='04'";
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='03'";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;

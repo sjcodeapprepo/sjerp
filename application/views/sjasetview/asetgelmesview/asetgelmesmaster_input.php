@@ -97,13 +97,13 @@
                                 Kategori&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '00', '-Pilih Kategori-', "id='katid'");?>
+								<?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', $data['KatID'], '', '-Pilih Kategori-', "id='katid'");?>
                             </td>
                             <td align="right">
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniselkmesinkatid', $itemjeniselkmesinmaster, 'JenisElkmesinKatID', 'JenisElkmesinKatName', $data['JenisElkmesinKatID'], '00', '-Pilih Jenis-', "id='jeniselkmesinkatid'");?>
+                                <?=form_dropdownDB_init('jeniselkmesinkatid', $itemjeniselkmesinmaster, 'JenisElkmesinKatID', 'JenisElkmesinKatName', $data['JenisElkmesinKatID'], '', '-Pilih Jenis-', "id='jeniselkmesinkatid'");?>
                             </td>
                         </tr>
                         <tr>
@@ -130,7 +130,7 @@
                                 Lokasi&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '00', '-Pilih Lokasi-', "id='lokasiidpr'");?>
+								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '', '-Pilih Lokasi-', "id='lokasiidpr'");?>
                             </td>
                         </tr>
 						<tr>
@@ -157,7 +157,7 @@
                                 Divisi&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '00', '-Pilih Divisi-', "id='divisionidps'");?>
+								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '', '-Pilih Divisi-', "id='divisionidps'");?>
                             </td>
                             <td align="right">
                                 Penanggung Jawab&nbsp;
