@@ -143,13 +143,13 @@
                                 Penyusutan&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penyusutanpr' size='3' id='penyusutanpr' value="0" class='ratakanan' /> %
+								<input type='text' name='penyusutanps' size='3' id='penyusutanps' value="0" class='ratakanan' /> %
 							</td>
                             <td align="right">
                                 Lokasi&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '', '-Pilih Lokasi-', "id='lokasiidpr'");?>
+								<?=form_dropdownDB_init('lokasiidps', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPs'], '', '-Pilih Lokasi-', "id='lokasiidps'");?>
                             </td>
                         </tr>
                         <tr>
@@ -157,7 +157,7 @@
                                 Divisi&nbsp;
                             </td>
                             <td colspan="3">
-								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '00', '-Pilih Divisi-', "id='divisionidps'");?>
+								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '', '-Pilih Divisi-', "id='divisionidps'");?>
                             </td>
                         </tr>
 						<tr>
@@ -170,7 +170,7 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
+								<input type='text' name='penanggungjawabsi' size='30' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
                             </td>
                             <td align="right">
                                 Kondisi&nbsp;
@@ -180,10 +180,10 @@
 							</td>
                         </tr>
 						<tr>
-                            <td align="right">
+                            <td align="right" valign="top">
                                 Harga&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td valign="top">
                                 <input type='text' name='hargasi' size='20' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
                             </td>
                             <td align="right" valign="top">
