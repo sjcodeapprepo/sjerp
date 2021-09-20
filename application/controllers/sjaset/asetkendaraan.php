@@ -45,14 +45,14 @@ class Asetkendaraan extends Authcontroller
 		}
 		$dataperpage				= 11;
 		$config['per_page']         = $dataperpage;
-		$config['base_url']         = site_url() . "/sjaset/asetlengalat/index/$keywordurl/$keywordurl2/";
+		$config['base_url']         = site_url() . "/sjaset/asetkendaraan/index/$keywordurl/$keywordurl2/";
 		$config['uri_segment']      = $urisegment;
 		$config['total_rows']       = $this->_view_data(false, 0, 0, $keyword, $keywordurl2);
 
 		$this->pagination->initialize($config);
 		$fromurisegment				= $this->uri->segment($urisegment);
 		$data['view_data']			= $this->_view_data(true, $dataperpage, $fromurisegment, $keyword, $keywordurl2);
-		$this->load->view('sjasetview/asetlengalatview/asetlengalat_index', $data);
+		$this->load->view('sjasetview/asetkendaraanview/asetkend_index', $data);
 	}
 
 	function _view_data($isviewdata, $num, $offset, $key, $category)
