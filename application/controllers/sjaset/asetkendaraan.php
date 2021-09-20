@@ -333,7 +333,8 @@ class Asetkendaraan extends Authcontroller
 
 	function _editproc($itemid)
 	{
-		$submit				= $this->input->post('submit');
+		$submit						= $this->input->post('submit');
+		$assetorder					= $this->input->post('assetorder');
 		$katid						= $this->input->post('katid');
 		$jeniskendaraankatid		= $this->input->post('jeniskendaraankatid');
 		$tglpr						= $this->input->post('tglpr');
