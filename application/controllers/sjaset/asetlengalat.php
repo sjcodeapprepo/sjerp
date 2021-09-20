@@ -237,11 +237,11 @@ class Asetlengalat extends Authcontroller
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('piclocationsi')) {
-				$error					= array('error_info' => $this->upload->display_errors());
-				print_array($error);
+				// $error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
 			} else {
 				$data			= $this->upload->data();				
-				$filelocation	= $data['full_path'];
+				// $filelocation	= $data['full_path'];
 
 				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -267,8 +267,8 @@ class Asetlengalat extends Authcontroller
 								'PenanggungJawabSi'		=> $penanggungjawabps,
 								'KondisiKodeSi'			=> $kondisikodesi,
 								'HargaSi'				=> $hargasi,
-								'KeteranganSi'			=> $keterangansi,
-								'PicLocationSi'			=> $filelocation
+								'KeteranganSi'			=> $keterangansi
+								// 'PicLocationSi'			=> $filelocation
 							);
 				$this->db->insert('itemperlengperalatdetail', $datadetail);
 
@@ -340,8 +340,8 @@ class Asetlengalat extends Authcontroller
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('piclocationsi')) {
-				$error					= array('error_info' => $this->upload->display_errors());
-				print_array($error);
+				// $error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
 			} else {
 				$data			= $this->upload->data();
 				$filelocation	= $data['full_path'];
@@ -365,8 +365,8 @@ class Asetlengalat extends Authcontroller
 									'PenanggungJawabSi'		=> $penanggungjawabps,
 									'KondisiKodeSi'			=> $kondisikodesi,
 									'HargaSi'				=> $hargasi,
-									'KeteranganSi'			=> $keterangansi,
-									'PicLocationSi'			=> $filelocation
+									'KeteranganSi'			=> $keterangansi
+									// 'PicLocationSi'			=> $filelocation
 							);
 				$this->db->update('itemperlengperalatdetail', $datadetail, array('ItemID'	=> $itemid));
 
@@ -383,7 +383,7 @@ class Asetlengalat extends Authcontroller
 				$url	.= '/' . $uri;
 			$i++;
 		}
-		// redirect('sjaset/asetgelmes' . $url, 'refresh');
+		redirect('sjaset/asetlengalat' . $url, 'refresh');
 	}
 
 	function testqrcode()

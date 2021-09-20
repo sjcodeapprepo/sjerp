@@ -237,11 +237,11 @@ class AsetGElMes extends Authcontroller
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('piclocationsi')) {
-				$error					= array('error_info' => $this->upload->display_errors());
-				print_array($error);
+				// $error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
 			} else {
 				$data			= $this->upload->data();				
-				$filelocation	= $data['full_path'];
+				// $filelocation	= $data['full_path'];
 
 				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -267,8 +267,8 @@ class AsetGElMes extends Authcontroller
 								'PenanggungJawabPs'		=> $penanggungjawabps,
 								'KondisiKodeSi'			=> $kondisikodesi,
 								'HargaSi'				=> $hargasi,
-								'KeteranganSi'			=> $keterangansi,
-								'PicLocationSi'			=> $filelocation
+								'KeteranganSi'			=> $keterangansi
+								// 'PicLocationSi'			=> $filelocation
 							);
 				$this->db->insert('itemelkmesindetail', $datadetail);
 
@@ -340,11 +340,11 @@ class AsetGElMes extends Authcontroller
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('piclocationsi')) {
-				$error					= array('error_info' => $this->upload->display_errors());
-				print_array($error);
+				// $error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
 			} else {
 				$data			= $this->upload->data();
-				$filelocation	= $data['full_path'];
+				// $filelocation	= $data['full_path'];
 
 				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -365,8 +365,8 @@ class AsetGElMes extends Authcontroller
 								'PenanggungJawabPs'		=> $penanggungjawabps,
 								'KondisiKodeSi'			=> $kondisikodesi,
 								'HargaSi'				=> $hargasi,
-								'KeteranganSi'			=> $keterangansi,
-								'PicLocationSi'			=> $filelocation
+								'KeteranganSi'			=> $keterangansi
+								// 'PicLocationSi'			=> $filelocation
 							);
 				$this->db->update('itemelkmesindetail', $datadetail, array('ItemID'	=> $itemid));
 
@@ -383,7 +383,7 @@ class AsetGElMes extends Authcontroller
 				$url	.= '/' . $uri;
 			$i++;
 		}
-		// redirect('sjaset/asetgelmes' . $url, 'refresh');
+		redirect('sjaset/asetgelmes' . $url, 'refresh');
 	}
 
 	function testqrcode()

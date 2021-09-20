@@ -429,7 +429,7 @@ class Asetkendaraan extends Authcontroller
 				$url	.= '/' . $uri;
 			$i++;
 		}
-		// redirect('sjaset/asetkendaraan' . $url, 'refresh');
+		redirect('sjaset/asetkendaraan' . $url, 'refresh');
 	}
 
 	function testqrcode()
