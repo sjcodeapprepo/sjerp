@@ -150,7 +150,7 @@
                                 Lokasi&nbsp;
                             </td>
                             <td>
-								<?=form_dropdownDB_init('lokasiidpr', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPr'], '', '-Pilih Lokasi-', "id='lokasiidpr'");?>
+								<?=form_dropdownDB_init('lokasiidps', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPs'], '', '-Pilih Lokasi-', "id='lokasiidps'");?>
                             </td>
                         </tr>
                         <tr>
@@ -181,17 +181,17 @@
 							</td>
                         </tr>
 						<tr>
-                            <td align="right">
+                            <td align="right" valign="top">
                                 Harga&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td valign="top">
                                 <input type='text' name='hargasi' size='20' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
                             </td>
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
                             <td>
-								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?=$data['KeteranganSi']?></textarea>
+								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
 							</td>
                         </tr>
                         <tr>
@@ -234,7 +234,7 @@
         });
         new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("jenisperlengperalatkatid");
-        new Spry.Widget.ValidationSelect("lokasiidpr");
+        new Spry.Widget.ValidationSelect("lokasiidps");
         new Spry.Widget.ValidationSelect("kondisikodesi");
     </script>
 </body>

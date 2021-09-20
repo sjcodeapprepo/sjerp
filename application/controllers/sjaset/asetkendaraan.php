@@ -8,7 +8,7 @@ class Asetlengalat extends Authcontroller
 	function __construct()
 	{
 		parent::__construct();
-		define("MENU_ID", "104");
+		define("MENU_ID", "103");
 		$userid = $this->session->userdata('UserID');
 		$this->redirectNoAuthRead($userid, MENU_ID);
 		$this->isusermodify = $this->isUserAuthModify($userid, MENU_ID);
@@ -61,7 +61,7 @@ class Asetlengalat extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, d.PenanggungJawabSi
+					m.ItemID, m.AssetNo, mk.KatName, mj.JenisKendaraanKatName, md.DivisionAbbr, d.PenanggungJawabSi
 				FROM 
 					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj 
 				WHERE 
@@ -225,9 +225,9 @@ class Asetlengalat extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOne();
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-			
+
 			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-			$config['file_name']		= 'astla' . $assetno.rand(5, 16);
+			$config['file_name']		= 'aset' . $assetno.rand(5, 16);
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'gif|jpg|png|jpeg';
 			$config['max_size']			= 5000;
