@@ -115,29 +115,41 @@ class Asetkendaraan extends Authcontroller
 			'ItemID'				=> null,
 			'KatID'					=> '',
 			'AssetNo'				=> '',
+			'JenisKendaraanKatID'	=> '',
 			'TglPr'					=> '',
-			'AssetOrder'			=> '',
-			'JenisPerlengPeralatKatID'	=> '',
-			'NoDokumenPr'			=> '',
+			'NoDokumenPr'			=> '', 
 			'NilaiPr'				=> '',
-			'PenyusutanPs'			=> '',
+			'PenyusutanPr'			=> '',
+			'NoDokumenBPKBPr'		=> '',
+			'TglDokumenPr'			=> '',
+			'NoSTNKPr'				=> '',
+			'TglSTNKPr'				=> '',
+			'NoPolPr'				=> '',
+			'NoRangkaPr'			=> '',
+			'NoMesinPr'				=> '',
+			'TahunDibuatPr'			=> '',
+			'WarnaPr'				=> '',
+			'IsiSilinderPr'			=> '',
+			'BahanBakarPr'			=> '',
 			'LokasiIDPs'			=> '',
 			'DivisionIDPs'			=> '',
-			'PenanggungJawabSi'		=> '',
+			'PenanggungJawabPs'		=> '',
 			'KondisiKodeSi'			=> '',
-			'HargaSi'				=> '',
+			'NilaiSi'				=> '',
 			'KeteranganSi'			=> '',
 			'PicLocationSi'			=> ''
 		);
 
 		$sql = "SELECT 
-					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisPerlengPeralatKatID, 
-					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabSi, 
-					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
+					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisKendaraanKatID,
+					d.NoDokumenPr,d.NilaiPr, d.PenyusutanPr, d.NoDokumenBPKBPr, d.TglDokumenPr,
+					d.NoSTNKPr, d.TglSTNKPr, d.NoPolPr, d.NoRangkaPr, d.NoMesinPr, d.TahunDibuatPr, 
+					d.WarnaPr, d.IsiSilinderPr, d.BahanBakarPr, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabPs, 
+					d.KondisiKodeSi, d.NilaiSi, d.KeteranganSi, d.PicLocationSi
 				FROM
-					itemmaster m, itemperlengperalatdetail d
+					itemmaster m, itemkendaraandetail d
 				WHERE 
-					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='03'";
+					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='05'";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
@@ -156,7 +168,7 @@ class Asetkendaraan extends Authcontroller
 
 	function _getItemKatMasterData()
 	{
-		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='03'";
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='05'";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -309,26 +321,25 @@ class Asetkendaraan extends Authcontroller
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
 		$data['imgsrc']						= base_url().$url[5];
+		$data['data']								= $this->_getData($id);
 		$data['itemjeniskendaraankatmaster']		= $this->_getItemJenisKendaraankatmasterData();
-		$data['itemkatmaster']				= $this->_getItemKatMasterData();
-		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
-		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
-
-		$data['kondisikodesi']				= array(
-													array(
-														'KondisiKodeSi'	=> 'B',
-														'KondisiKodeSiName'	=> 'Baik'
-													),
-													array(
-														'KondisiKodeSi'	=> 'RR',
-														'KondisiKodeSiName'	=> 'Rusak Ringan'),
-													array(
-														'KondisiKodeSi'	=> 'RB',
-														'KondisiKodeSiName'	=> 'Rusak Berat')
-												);
-
+		$data['itemkatmaster']						= $this->_getItemKatMasterData();
+		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
+		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
+		$data['kondisikodesi']						= array(
+														array(
+															'KondisiKodeSi'	=> 'B',
+															'KondisiKodeSiName'	=> 'Baik'
+														),
+														array(
+															'KondisiKodeSi'	=> 'RR',
+															'KondisiKodeSiName'	=> 'Rusak Ringan'),
+														array(
+															'KondisiKodeSi'	=> 'RB',
+															'KondisiKodeSiName'	=> 'Rusak Berat')
+													);
 		$data['urlsegment']	= $this->uri->uri_string();
-		$this->load->view('sjasetview/asetlengalatview/asetlengalat_edit', $data);
+		$this->load->view('sjasetview/asetkendaraanview/asetkend_edit', $data);
 	}
 
 	function _editproc($itemid)

@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Aset Perlengkapan dan Peralatan - input</title>
+    <title>Aset Kendaraan - input</title>
     <link type="text/css" href="<?= base_url() ?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
     <?php
 		$this->load->view('js/jqueryui');
@@ -70,7 +70,7 @@
     <?php
     menulist();
     ?>
-    <form action="<?= site_url() ?>/sjaset/asetlengalat/inputeditproc/<?=$data['ItemID']?>" method='post' id='formin' enctype="multipart/form-data">
+    <form action="<?= site_url() ?>/sjaset/asetkendaraan/inputeditproc/" method='post' id='formin' enctype="multipart/form-data">
         <input type='hidden' name='urlsegment' id='urlsegment' value='<?= $urlsegment ?>' />
         <br />
         <br />
@@ -81,7 +81,7 @@
                     <table class='gridtable' width='600'>
                         <thead>
                             <tr>
-                                <th colspan='4'>Perlengkapan dan Peralatan</th>
+                                <th colspan='4'>Kendaraan</th>
                             </tr>
                         </thead>
 						<tr>
@@ -89,8 +89,7 @@
                                 No Aset&nbsp;
                             </td>
                             <td colspan='3'>
-                                <span id="assetdisplay"><?= $data['AssetNo'] ?></span>
-                                <input type='hidden' name='assetno' id='assetno' value="<?= $data['AssetNo'] ?>" />
+								&nbsp;
                             </td>
 						</tr>
                         <tr>
@@ -104,7 +103,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisperlengperalatkatid', $itemjenisperlengperalatkatmaster, 'JenisPerlengPeralatKatID', 'JenisPerlengPeralatKatName', $data['JenisPerlengPeralatKatID'], '', '-Pilih Jenis-', "id='jenisperlengperalatkatid'");?>
+                                <?=form_dropdownDB_init('jeniskendaraankatid', $itemjeniskendaraankatmaster, 'JenisKendaraanKatID', 'JenisKendaraanKatName', $data['JenisKendaraanKatID'], '', '-Pilih Jenis-', "id='jeniskendaraankatid'");?>
                             </td>
                         </tr>
                         <tr>
@@ -130,35 +129,132 @@
                             <td align="right">
                                 Nilai&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td>
 								<input type='text' name='nilaipr' size='20' id='nilaipr' value="<?= $data['NilaiPr'] ?>" class='ratakanan' />
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan='4' class='subdata'>
-                                Posisi&nbsp;
-                            </td>
-						</tr>
-                        <tr>
                             <td align="right">
                                 Penyusutan&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penyusutanps' size='3' id='penyusutanps' value="<?= $data['PenyusutanPs'] ?>" class='ratakanan' /> %
+								<input type='text' name='penyusutanpr' size='3' id='penyusutanpr' value="<?= $data['PenyusutanPr'] ?>" class='ratakanan' /> %
 							</td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dokumen Kendaraan&nbsp;
+                            </td>
+						</tr>
+                        <tr>
+                            <td align="right">
+                                No BPKB&nbsp;
+                            </td>
+                            <td>
+								<input type='text' name='nodokumenbpkbpr' size='12' id='nodokumenbpkbpr' value="<?= $data['NoDokumenBPKBPr'] ?>" class='ratakanan' />
+							</td>
+                            <td align="right">
+                                Tgl Dokumen&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='tgldokumenpr' size='9' id='tgldokumenpr' value="<?= $data['TglDokumenPr'] ?>" readonly />
+							</td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                No STNK&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='nostnkpr' size='9' id='nostnkpr' value="<?= $data['NoSTNKPr'] ?>" />
+                            </td>
+                            <td align="right">
+                                Tgl STNK&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='tglstnkpr' size='9' id='tglstnkpr' value="<?= $data['TglSTNKPr'] ?>" readonly />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detail Kendaraan&nbsp;
+                            </td>
+						</tr>
+                        <tr>
+                            <td align="right">
+                                No Polisi&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='nopolpr' size='9' id='nopolpr' value="<?= $data['NoPolPr'] ?>" />
+                            </td>
+                            <td align="right">
+                                No Rangka&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='norangkapr' size='9' id='norangkapr' value="<?= $data['NoRangkaPr'] ?>" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="right">
+                                No Mesin&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='nomesinpr' size='12' id='nomesinpr' value="<?= $data['NoMesinPr'] ?>" />
+                            </td>
+                            <td align="right">
+                                Tahun Dibuat&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='tahundibuatpr' size='9' id='tahundibuatpr' value="<?= $data['TahunDibuatPr'] ?>" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="right">
+                                Warna&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='warnapr' size='9' id='warnapr' value="<?= $data['WarnaPr'] ?>" />
+                            </td>
+                            <td align="right">
+                                Isi Silinder&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='isisilinderpr' size='12' id='isisilinderpr' value="<?= $data['IsiSilinderPr'] ?>" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="right">
+                                Bahan Bakar&nbsp;
+                            </td>
+                            <td coslpan="3">
+                                <input type='text' name='bahanbakarpr' size='9' id='bahanbakarpr' value="<?= $data['BahanBakarPr'] ?>" />
+                            </td>
+                        </tr>
+						<tr>
+                            <td colspan='4' class='subdata'>
+                                Posisi&nbsp;
+                            </td>
+						</tr>
+						<tr>
                             <td align="right">
                                 Lokasi&nbsp;
                             </td>
                             <td>
 								<?=form_dropdownDB_init('lokasiidps', $itemlokasimaster, 'LokasiID', 'LokasiName', $data['LokasiIDPs'], '', '-Pilih Lokasi-', "id='lokasiidps'");?>
                             </td>
-                        </tr>
-                        <tr>
                             <td align="right">
                                 Divisi&nbsp;
                             </td>
                             <td colspan="3">
-								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '', '-Pilih Divisi-', "id='divisionidps'");?>
+							    <?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '', '-Pilih Divisi-', "id='divisionidps'");?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                Penanggung Jawab&nbsp;
+                            </td>
+                            <td colspan="3">
+								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
                             </td>
                         </tr>
 						<tr>
@@ -168,29 +264,23 @@
 						</tr>
 						<tr>
                             <td align="right">
-                                Penanggung Jawab&nbsp;
-                            </td>
-                            <td>
-								<input type='text' name='penanggungjawabsi' size='30' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
-                            </td>
-                            <td align="right">
                                 Kondisi&nbsp;
                             </td>
                             <td>
                                 <?=form_dropdownDB_init('kondisikodesi', $kondisikodesi, 'KondisiKodeSi', 'KondisiKodeSiName', $data['KondisiKodeSi'], '', '-Pilih Kondisi-', "id='kondisikodesi'");?>
 							</td>
+                            <td align="right">
+                                Nilai&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='nilaisi' size='20' id='nilaisi' value="<?= $data['NilaiSi'] ?>" class='ratakanan' /> 
+                            </td>
                         </tr>
 						<tr>
                             <td align="right" valign="top">
-                                Harga&nbsp;
-                            </td>
-                            <td valign="top">
-                                <input type='text' name='hargasi' size='20' id='hargasi' value="<?= $data['HargaSi'] ?>" class='ratakanan' /> 
-                            </td>
-                            <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
 							</td>
                         </tr>
@@ -200,7 +290,6 @@
                             </td>
                             <td>
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
-                                <input type='hidden' name='oldpic' id='oldpic' value="<?= $data['PicLocationSi'] ?>" />
                                 <div id="picaset">Gambar</div>
                             </td>
                             <td align="right">
@@ -226,15 +315,13 @@
         new Spry.Widget.ValidationTextField("nilaipr", "integer", {
             minValue: "0",useCharacterMasking:true
         });
-        new Spry.Widget.ValidationTextField("hargasi", "integer", {
+        new Spry.Widget.ValidationTextField("nilaisi", "integer", {
             minValue: "0",useCharacterMasking:true
         });
         new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
             minValue: "0",maxValue: "100",useCharacterMasking:true
         });
         new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("jenisperlengperalatkatid");
-        new Spry.Widget.ValidationSelect("lokasiidps");
         new Spry.Widget.ValidationSelect("kondisikodesi");
     </script>
 </body>

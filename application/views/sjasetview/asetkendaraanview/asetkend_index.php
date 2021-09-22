@@ -44,7 +44,7 @@
         <td noWrap align=center>
 		<select name="option">
 			<option value='mk.KatName'>Kategori</option>
-			<option value='mj.JenisPerlengPeralatKatName'>Jenis</option>
+			<option value='mj.JenisKendaraanKatName'>Jenis</option>
 			<option value='d.NoPolPr'>No. Polisi</option>
 			<option value='d.MerkPr'>Merk</option>
 			<option value='d.PenanggungJawabPs'>Penanggung Jawab</option>
