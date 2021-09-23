@@ -91,24 +91,10 @@ class AsetTanah extends Authcontroller
 		$id											= null;
 		$data['data']								= $this->_getData($id);
 		$data['itemjenisdokumentanahmaster']		= $this->_getItemJenisDoktanahmasterData();
+		$data['itemstatuspenguasaanmaster']			= $this->_getStatusPenguasaanmaster();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 
-		/**
-		$data['kondisikodesi']						= array(
-														array(
-															'KondisiKodeSi'	=> 'B',
-															'KondisiKodeSiName'	=> 'Baik'
-														),
-														array(
-															'KondisiKodeSi'	=> 'RR',
-															'KondisiKodeSiName'	=> 'Rusak Ringan'),
-														array(
-															'KondisiKodeSi'	=> 'RB',
-															'KondisiKodeSiName'	=> 'Rusak Berat')
-													);
-		*/
-
-		$data['urlsegment']	= $this->uri->uri_string();
+		$data['urlsegment']							= $this->uri->uri_string();
 		$this->load->view('sjasetview/asettanahview/asettanah_input', $data);
 	}
 
@@ -117,42 +103,38 @@ class AsetTanah extends Authcontroller
 		$datakosong	= array(
 			'ItemID'				=> null,
 			'KatID'					=> '',
-			'AssetNo'				=> '',
-			'JenisKendaraanKatID'	=> '',
 			'TglPr'					=> '',
-			'NoDokumenPr'			=> '', 
-			'NilaiPr'				=> '',
-			'PenyusutanPr'			=> '',
-			'NoDokumenBPKBPr'		=> '',
+			'AssetOrder'			=> '',
+			'JenisDokumenTanahIDPr'	=> '',
 			'TglDokumenPr'			=> '',
-			'NoSTNKPr'				=> '',
-			'TglSTNKPr'				=> '',
-			'NoPolPr'				=> '',
-			'NoRangkaPr'			=> '',
-			'NoMesinPr'				=> '',
-			'TahunDibuatPr'			=> '',
-			'WarnaPr'				=> '',
-			'IsiSilinderPr'			=> '',
-			'BahanBakarPr'			=> '',
-			'LokasiIDPs'			=> '',
-			'DivisionIDPs'			=> '',
-			'PenanggungJawabPs'		=> '',
-			'KondisiKodeSi'			=> '',
+			'NomorDokumenPr'		=> '', 
+			'LuasPr'				=> '',
+			'NilaiPr'				=> '',
+			'ApresiasiPr'			=> '',
+			'LokasiPs'				=> '',
+			'LatPs'					=> '',
+			'LongPs'				=> '',
+			'PenanggungJawabSi'		=> '',
+			'StatusIDSi'			=> '',
+			'JenisDokumenTanahIDSi'	=> '',
+			'NoDokumenSi'			=> '', 
+			'TglDokumenSi'			=> '',
+			'PeruntukanIDSi'		=> '',
+			'LuasSi'				=> '',
 			'NilaiSi'				=> '',
 			'KeteranganSi'			=> '',
 			'PicLocationSi'			=> ''
 		);
 
 		$sql = "SELECT 
-					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisKendaraanKatID,
-					d.NoDokumenPr,d.NilaiPr, d.PenyusutanPr, d.NoDokumenBPKBPr, d.TglDokumenPr,
-					d.NoSTNKPr, d.TglSTNKPr, d.NoPolPr, d.NoRangkaPr, d.NoMesinPr, d.TahunDibuatPr, 
-					d.WarnaPr, d.IsiSilinderPr, d.BahanBakarPr, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabPs, 
-					d.KondisiKodeSi, d.NilaiSi, d.KeteranganSi, d.PicLocationSi
+					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisDokumenTanahIDPr, d.TglDokumenPr,
+					d.NomorDokumenPr, d.LuasPr, d.NilaiPr, d.ApresiasiPr, d.LokasiPs,
+					d.LatPs, d.LongPs, d.PenanggungJawabSi, d.StatusIDSi, d.JenisDokumenTanahIDSi, d.NoDokumenSi, 
+					d.TglDokumenSi, d.PeruntukanIDSi, d.LuasSi, d.NilaiSi, d.KeteranganSi, d.PicLocationSi
 				FROM
-					itemmaster m, itemkendaraandetail d
-				WHERE 
-					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='05'";
+					itemmaster m, itemtanahdetail d
+				WHERE
+					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='01'";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
@@ -164,6 +146,14 @@ class AsetTanah extends Authcontroller
 	function _getItemJenisDoktanahmasterData()
 	{
 		$sql = "SELECT JenisDokumenTanahID, JenisDokumenTanahName FROM itemjenisdokumentanahmaster";
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function _getStatusPenguasaanmaster() 
+	{
+		$sql = "SELECT StatusID, StatusName FROM itemstatuspenguasaanmaster";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -221,7 +211,6 @@ class AsetTanah extends Authcontroller
 		$nodokumenpr				= $this->input->post('nodokumenpr');
 		$nilaipr					= $this->input->post('nilaipr');
 		$penyusutanpr				= $this->input->post('penyusutanpr');
-
 		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
 		$nostnkpr					= $this->input->post('nostnkpr');
 		$tglstnkpr					= $this->input->post('tglstnkpr');
