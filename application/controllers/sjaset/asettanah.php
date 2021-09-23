@@ -1,14 +1,14 @@
 <?php
 include(APPPATH . '/controllers/auth/authcontroller' . EXT);
 
-class Asetkendaraan extends Authcontroller
+class AsetTanah extends Authcontroller
 {
 	var $isusermodify;
 
 	function __construct()
 	{
 		parent::__construct();
-		define("MENU_ID", "103");
+		define("MENU_ID", "106");
 		$userid = $this->session->userdata('UserID');
 		$this->redirectNoAuthRead($userid, MENU_ID);
 		$this->isusermodify = $this->isUserAuthModify($userid, MENU_ID);
@@ -45,14 +45,14 @@ class Asetkendaraan extends Authcontroller
 		}
 		$dataperpage				= 11;
 		$config['per_page']         = $dataperpage;
-		$config['base_url']         = site_url() . "/sjaset/asetkendaraan/index/$keywordurl/$keywordurl2/";
+		$config['base_url']         = site_url() . "/sjaset/asettanah/index/$keywordurl/$keywordurl2/";
 		$config['uri_segment']      = $urisegment;
 		$config['total_rows']       = $this->_view_data(false, 0, 0, $keyword, $keywordurl2);
 
 		$this->pagination->initialize($config);
 		$fromurisegment				= $this->uri->segment($urisegment);
 		$data['view_data']			= $this->_view_data(true, $dataperpage, $fromurisegment, $keyword, $keywordurl2);
-		$this->load->view('sjasetview/asetkendaraanview/asetkend_index', $data);
+		$this->load->view('sjasetview/asettanahview/asettanah_index', $data);
 	}
 
 	function _view_data($isviewdata, $num, $offset, $key, $category)
@@ -61,18 +61,19 @@ class Asetkendaraan extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisKendaraanKatName, d.MerkPr, d.NoPolPr, d.PenanggungJawabPs
+					m.ItemID, m.AssetNo, mk.KatName, mj.JenisDokumenTanahName, d.LokasiPs, d.LuasSi, 
+					d.PenanggungJawabSi, mp.PeruntukanName
 				FROM 
-					itemmaster m, itemkendaraandetail d, itemkatmaster mk, itemdivisionmaster md, itemjeniskendaraankatmaster mj 
+					itemmaster m, itemtanahdetail d, itemkatmaster mk, itemjenisdokumentanahmaster mj, itemperuntukanmaster mp
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisKendaraanKatID=mj.JenisKendaraanKatID AND d.DivisionIDPs=md.DivisionID
-					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='05'";
+					m.ItemID=d.ItemID AND d.JenisDokumenTanahIDSi=mj.JenisDokumenTanahID AND d.PeruntukanIDSi=mp.PeruntukanID
+					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='01'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
 		if($isviewdata) {
 			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
 		}
-		//---------------------------------------------------
+
 		$query = $this->db->query($sql);
 
 		if($isviewdata) {
@@ -89,10 +90,10 @@ class Asetkendaraan extends Authcontroller
 		$this->load->helper('text');
 		$id											= null;
 		$data['data']								= $this->_getData($id);
-		$data['itemjeniskendaraankatmaster']		= $this->_getItemJenisKendaraankatmasterData();
+		$data['itemjenisdokumentanahmaster']		= $this->_getItemJenisDoktanahmasterData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
-		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
-		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
+
+		/**
 		$data['kondisikodesi']						= array(
 														array(
 															'KondisiKodeSi'	=> 'B',
@@ -105,8 +106,10 @@ class Asetkendaraan extends Authcontroller
 															'KondisiKodeSi'	=> 'RB',
 															'KondisiKodeSiName'	=> 'Rusak Berat')
 													);
+		*/
+
 		$data['urlsegment']	= $this->uri->uri_string();
-		$this->load->view('sjasetview/asetkendaraanview/asetkend_input', $data);
+		$this->load->view('sjasetview/asettanahview/asettanah_input', $data);
 	}
 
 	function _getData($id)
@@ -158,9 +161,9 @@ class Asetkendaraan extends Authcontroller
 		return $retval;
 	}
 
-	function _getItemJenisKendaraankatmasterData()
+	function _getItemJenisDoktanahmasterData()
 	{
-		$sql = "SELECT JenisKendaraanKatID, JenisKendaraanKatName FROM itemjeniskendaraankatmaster";
+		$sql = "SELECT JenisDokumenTanahID, JenisDokumenTanahName FROM itemjenisdokumentanahmaster";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -168,7 +171,7 @@ class Asetkendaraan extends Authcontroller
 
 	function _getItemKatMasterData()
 	{
-		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='05'";
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='01'";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -181,14 +184,6 @@ class Asetkendaraan extends Authcontroller
 		$result = $query->result_array();
 		return $result;
 	}	//
-
-	function _getItemDivisionMasterData()
-	{
-		$sql = "SELECT DivisionID, DivisionAbbr FROM itemdivisionmaster";
-		$query = $this->db->query($sql);
-		$result = $query->result_array();
-		return $result;
-	}
 
 	function _getLastInsertID() 
 	{
