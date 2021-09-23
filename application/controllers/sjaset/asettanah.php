@@ -306,10 +306,8 @@ class AsetTanah extends Authcontroller
 		$url	= explode('/',$datas['PicLocationSi'],6);
 		$data['imgsrc']						= base_url().$url[5];
 		$data['data']								= $this->_getData($id);
-		$data['itemjeniskendaraankatmaster']		= $this->_getItemJenisKendaraankatmasterData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
-		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
 		$data['kondisikodesi']						= array(
 														array(
 															'KondisiKodeSi'	=> 'B',
