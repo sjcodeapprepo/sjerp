@@ -247,26 +247,6 @@
 								<input type='text' name='nilaisi' size='20' id='nilaisi' value="<?= $data['NilaiSi'] ?>" class='ratakanan' />
                             </td>
                         </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 						<tr>
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
