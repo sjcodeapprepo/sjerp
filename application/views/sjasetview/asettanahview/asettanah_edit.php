@@ -84,6 +84,11 @@
                                 <th colspan='4'>Tanah</th>
                             </tr>
                         </thead>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Identitas Barang&nbsp;
+                            </td>
+						</tr>
 						<tr>
                             <td align="right">
                                 No Aset&nbsp;

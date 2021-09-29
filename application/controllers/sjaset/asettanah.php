@@ -226,30 +226,32 @@ class AsetTanah extends Authcontroller
 		$luassi						= $this->input->post('luassi');
 		$nilaisi					= $this->input->post('nilaisi');
 		$keterangansi				= $this->input->post('keterangansi');
-		// $piclocationsi				= $this->input->post('piclocationsi');
-		$urlsegment					= $this->input->post('urlsegment');
+		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOne();
 			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
-/*
-			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-			$config['file_name']		= 'aset' . $assetno.rand(5, 16);
-			$config['overwrite']		= TRUE;
-			$config['allowed_types']	= 'gif|jpg|png|jpeg';
-			$config['max_size']			= 5000;
-			$config['max_width']		= 1500;
-			$config['max_height']		= 1500;
 
-			$this->load->library('upload', $config);
+			if($piclocationsi!='') {
+			
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['file_name']		= 'tnh' . $assetno;
+				$config['overwrite']		= TRUE;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['max_size']			= 5000;
+				$config['max_width']		= 1500;
+				$config['max_height']		= 1500;
 
-			if (!$this->upload->do_upload('piclocationsi')) {
-				// $error					= array('error_info' => $this->upload->display_errors());
-				// print_array($error);
-			} else {
-				$data			= $this->upload->data();				
-				$filelocation	= $data['full_path'];
-*/
+				$this->load->library('upload', $config);
+
+				if (!$this->upload->do_upload('piclocationsi')) {
+					$error					= array('error_info' => $this->upload->display_errors());
+					print_array($error);
+				} else {
+					$data			= $this->upload->data();				
+					$piclocationsi	= $data['full_path'];
+				}
+					
 				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 				$datamaster	= array(
@@ -281,16 +283,16 @@ class AsetTanah extends Authcontroller
 								'TglDokumenSi'			=> $tgldokumensi,
 								'NoDokumenSi'			=> $nodokumensi,
 								'LuasSi'				=> $luassi,
-								'NilaiSi'				=> $nilaisi
-								// 'KeteranganSi'			=> $keterangansi
-								// 'PicLocationSi'			=> $filelocation
+								'NilaiSi'				=> $nilaisi,
+								'KeteranganSi'			=> $keterangansi,
+								'PicLocationSi'			=> $piclocationsi
 							);
 				$this->db->insert('itemtanahdetail', $datadetail);
 
 				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 			}
-		// }
-		redirect('sjaset/asettanah', 'refresh');
+			redirect('sjaset/asettanah', 'refresh');
+		}
 	}
 
 	function edit($id)
@@ -333,61 +335,61 @@ class AsetTanah extends Authcontroller
 		$luassi						= $this->input->post('luassi');
 		$nilaisi					= $this->input->post('nilaisi');
 		$keterangansi				= $this->input->post('keterangansi');
-		// $piclocationsi				= $this->input->post('piclocationsi');
+		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
 			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
-/*
-			$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-			$config['file_name']		= 'em' . $assetno.rand(5, 16);
-			$config['overwrite']		= TRUE;
-			$config['allowed_types']	= 'gif|jpg|png|jpeg';
-			$config['max_size']			= 5000;
-			$config['max_width']		= 1500;
-			$config['max_height']		= 1500;
+			if($piclocationsi != '') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['file_name']		= 'tnh' . $assetno;
+				$config['overwrite']		= TRUE;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['max_size']			= 5000;
+				$config['max_width']		= 1500;
+				$config['max_height']		= 1500;
 
-			$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 
-			if (!$this->upload->do_upload('piclocationsi')) {
-				// $error					= array('error_info' => $this->upload->display_errors());
-				// print_array($error);
-			} else {
-				$data			= $this->upload->data();
-				$filelocation	= $data['full_path'];
-*/
-				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
+				if (!$this->upload->do_upload('piclocationsi')) {
+					$error					= array('error_info' => $this->upload->display_errors());
+					print_array($error);
+				} else {
+					$data			= $this->upload->data();
+					$piclocationsi	= $data['full_path'];
+				}
+			}
+			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
-				$datamaster	= array(
-								'KatID'			=> $katid,
-								'AssetNo'		=> $assetno,
-								'TglPr'			=> $tglpr
-							);
-				$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+			$datamaster	= array(
+							'KatID'			=> $katid,
+							'AssetNo'		=> $assetno,
+							'TglPr'			=> $tglpr
+						);
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+			$datadetail	= array(
+				'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
+				'TglDokumenPr'			=> $tgldokumenpr,
+				'NomorDokumenPr'		=> $nomordokumenpr,
+				'LuasPr'				=> $luaspr,
+				'NilaiPr'				=> $nilaipr,
+				'ApresiasiPr'			=> $apresiasipr,
+				'LokasiPs'				=> $lokasips,
+				'LatPs'					=> $latps,
+				'LongPs'				=> $longps,
+				'PenanggungJawabSi'		=> $penanggungjawabsi,
+				'StatusIDSi'			=> $statusidsi,
+				'JenisDokumenTanahIDSi'	=> $jenisdokumentanahidsi,
+				'PeruntukanIDSi'		=> $peruntukanidsi,
+				'TglDokumenSi'			=> $tgldokumensi,
+				'NoDokumenSi'			=> $nodokumensi,
+				'LuasSi'				=> $luassi,
+				'NilaiSi'				=> $nilaisi,
+				'KeteranganSi'			=> $keterangansi,
+				'PicLocationSi'			=> $piclocationsi
 
-				$datadetail	= array(
-					'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
-					'TglDokumenPr'			=> $tgldokumenpr,
-					'NomorDokumenPr'		=> $nomordokumenpr,
-					'LuasPr'				=> $luaspr,
-					'NilaiPr'				=> $nilaipr,
-					'ApresiasiPr'			=> $apresiasipr,
-					'LokasiPs'				=> $lokasips,
-					'LatPs'					=> $latps,
-					'LongPs'				=> $longps,
-					'PenanggungJawabSi'		=> $penanggungjawabsi,
-					'StatusIDSi'			=> $statusidsi,
-					'JenisDokumenTanahIDSi'	=> $jenisdokumentanahidsi,
-					'PeruntukanIDSi'		=> $peruntukanidsi,
-					'TglDokumenSi'			=> $tgldokumensi,
-					'NoDokumenSi'			=> $nodokumensi,
-					'LuasSi'				=> $luassi,
-					'NilaiSi'				=> $nilaisi
-					// 'PicLocationSi'			=> $filelocation
-				);
-				$this->db->update('itemtanahdetail', $datadetail, array('ItemID'	=> $itemid));
-
-				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
-			// }
+			);
+			$this->db->update('itemtanahdetail', $datadetail, array('ItemID'	=> $itemid));
+			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
 		}
 		// back to page asal
 		$urlstring	= $this->input->post('urlsegment');
