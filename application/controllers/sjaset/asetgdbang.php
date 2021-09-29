@@ -337,27 +337,7 @@ class AsetGdBang extends Authcontroller
 
 		if ($submit == 'SIMPAN') {
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
-
-			if($piclocationsi!='') {
 			
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-				$config['file_name']		= 'gdb' . $assetno;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
-				} else {
-					$data			= $this->upload->data();
-					$piclocationsi	= $data['full_path'];
-				}
-			}
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -390,6 +370,31 @@ class AsetGdBang extends Authcontroller
 				'KeteranganSi'			=> $keterangansi,
 				'PicLocationSi'			=> $piclocationsi
 			);
+
+			//========================================FILE GAMBAR=====================
+			if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['file_name']		= 'gdb' . $assetno;
+				$config['overwrite']		= TRUE;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['max_size']			= 5000;
+				$config['max_width']		= 1500;
+				$config['max_height']		= 1500;
+
+				$this->load->library('upload', $config);
+
+				if (!$this->upload->do_upload('piclocationsi')) {
+					$error					= array('error_info' => $this->upload->display_errors());
+					print_array($error);
+				} else {
+					$data						= $this->upload->data();				
+					$piclocationsi				= $data['full_path'];
+					$datadetail['PicLocationSi']= $piclocationsi;
+					
+				}
+			}
+			//==============================================================================
+
 			$this->db->update('itemgdgbangdetail', $datadetail, array('ItemID'	=> $itemid));
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			

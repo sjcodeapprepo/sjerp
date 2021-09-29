@@ -339,25 +339,7 @@ class AsetTanah extends Authcontroller
 
 		if ($submit == 'SIMPAN') {
 			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
-			if($piclocationsi != '') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-				$config['file_name']		= 'tnh' . $assetno;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
-				} else {
-					$data			= $this->upload->data();
-					$piclocationsi	= $data['full_path'];
-				}
-			}
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -366,6 +348,7 @@ class AsetTanah extends Authcontroller
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+
 			$datadetail	= array(
 				'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
 				'TglDokumenPr'			=> $tgldokumenpr,
@@ -384,10 +367,31 @@ class AsetTanah extends Authcontroller
 				'NoDokumenSi'			=> $nodokumensi,
 				'LuasSi'				=> $luassi,
 				'NilaiSi'				=> $nilaisi,
-				'KeteranganSi'			=> $keterangansi,
-				'PicLocationSi'			=> $piclocationsi
+				'KeteranganSi'			=> $keterangansi
 
 			);
+			//========================================FILE GAMBAR=====================
+			if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['file_name']		= 'tnh' . $assetno;
+				$config['overwrite']		= TRUE;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['max_size']			= 5000;
+				$config['max_width']		= 1500;
+				$config['max_height']		= 1500;
+
+				$this->load->library('upload', $config);
+
+				if (!$this->upload->do_upload('piclocationsi')) {
+					$error					= array('error_info' => $this->upload->display_errors());
+					print_array($error);
+				} else {
+					$data						= $this->upload->data();				
+					$piclocationsi				= $data['full_path'];
+					$datadetail['PicLocationSi']= $piclocationsi;					
+				}
+			}
+			//==============================================================================
 			$this->db->update('itemtanahdetail', $datadetail, array('ItemID'	=> $itemid));
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
 		}

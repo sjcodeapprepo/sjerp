@@ -84,6 +84,11 @@
                                 <th colspan='4'>Perlengkapan dan Peralatan</th>
                             </tr>
                         </thead>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Identitas Barang&nbsp;
+                            </td>
+						</tr>
 						<tr>
                             <td align="right">
                                 No Aset&nbsp;
@@ -197,15 +202,8 @@
                             <td align="right">
                                 File Foto&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
-                                <div id="picaset">Gambar</div>
-                            </td>
-                            <td align="right">
-                                Label&nbsp;
-                            </td>
-                            <td colspan="3">                                
-                                <div id="labelaset">Label</div>
                             </td>
                         </tr>
                     </table>
