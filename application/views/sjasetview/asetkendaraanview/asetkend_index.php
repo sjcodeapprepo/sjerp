@@ -35,6 +35,11 @@
 </head>
 <body>
 <?php menulist()?>
+
+<br />
+<br />
+<br />
+
 <form action=<?=site_url().'/sjaset/asetkendaraan/index'?> method='post'>
 <table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridtable'>
 	<thead>

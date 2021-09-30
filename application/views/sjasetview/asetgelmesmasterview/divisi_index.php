@@ -1,7 +1,8 @@
 <html>
 
 <head>
-    <title>Master Divisi </title>
+    <title>Master Divisi</title>
+    <link type="text/css" href="<?= base_url() ?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
     <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csstable/tablegrid2.css" media="screen" rel="stylesheet" />
     <?php
 		$this->load->view('js/jqueryui');
@@ -58,12 +59,18 @@
     <br />
     <br />
     <br />
-    <form action="<?= site_url() ?>/sjaset/asetdivisimaster/index" method='post' id='formin' enctype="multipart/form-data">
-    <table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
-	<thead>
+    <table align="center">
+    <tr><td>
+    <table class='gridtable' width='600'>
+    <thead>
         <tr>
             <th colspan="2">MASTER DIVISI</th>
 	  </tr>
+    </thead>
+    </table>
+    <form action="<?= site_url() ?>/sjaset/asetdivisimaster/index" method='post' id='formin' enctype="multipart/form-data">
+    <table border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
+	<thead>
 	  <tr>
 		<th>NO KODE</th>
 		<th>NAMA DIVISI</th>
@@ -84,7 +91,7 @@ for($a=0; $a<count($view_data); $a++) {
 	  </tr>
 <?php } ?>
         <tr>
-            <td align='left'>
+            <td align='center'>
                 <input type='text' name='divisionid' size='4' id='divisionid' class='ratakanan' /> 
             </td>
             <td align='left'>
@@ -93,13 +100,18 @@ for($a=0; $a<count($view_data); $a++) {
             <td align='left'>
                 <input type='text' name='divisionabbr' size='20' id='divisionabbr' />
             </td>
-            <td align='center'>
+	    </tr>
+        <tr>
+            <td align='right' colspan="3">
                 <input type='submit' name='submit' value='TAMBAH' />
             </td>
-	    </tr>
+        </tr>
 	</tbody>
 </table>
     </form>
+
+</td></tr>
+</table>
     <script>
         new Spry.Widget.ValidationTextField("divisionname", "none");
         new Spry.Widget.ValidationTextField("divisionabbr", "none");

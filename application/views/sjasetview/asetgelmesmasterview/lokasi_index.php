@@ -2,6 +2,7 @@
 
 <head>
     <title>Master Aset Lokasi </title>
+    <link type="text/css" href="<?= base_url() ?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
     <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csstable/tablegrid2.css" media="screen" rel="stylesheet" />
     <?php
 		$this->load->view('js/jqueryui');
@@ -58,12 +59,18 @@
     <br />
     <br />
     <br />
+    <table align="center">
+    <tr><td>
     <form action="<?= site_url() ?>/sjaset/asetlokasimaster/index" method='post' id='formin' enctype="multipart/form-data">
-    <table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
-	<thead>
-        <tr>
-            <th colspan="2">MASTER LOKASI</th>
-	  </tr>
+    <table class='gridtable' width='600'>
+        <thead>
+            <tr>
+                <th>MASTER LOKASI</th>
+            </tr>
+        </thead>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
+    <thead>
 	  <tr>
 		<th>NO KODE</th>
 		<th>LOKASI</th>
@@ -81,19 +88,25 @@ for($a=0; $a<count($view_data); $a++) {
 	  </tr>
 <?php } ?>
         <tr>
-            <td align='left'>
+            <td align='center'>
                 <input type='text' name='lokasiid' size='4' id='lokasiid' class='ratakanan' /> 
             </td>
             <td align='left'>
                 <input type='text' name='lokasiname' size='20' id='lokasiname' />
             </td>
-            <td align='center'>
+	    </tr>
+        <tr>
+            <td align='right' colspan="3">
                 <input type='submit' name='submit' value='TAMBAH' />
             </td>
-	    </tr>
+        </tr>
 	</tbody>
 </table>
     </form>
+
+
+</td></tr>
+</table>
     <script>
         new Spry.Widget.ValidationTextField("katname", "none");
         new Spry.Widget.ValidationTextField("katid", "integer");

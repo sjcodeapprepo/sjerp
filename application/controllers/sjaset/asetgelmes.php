@@ -286,7 +286,7 @@ class AsetGElMes extends Authcontroller
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
-		$data['imgsrc']						= base_url().$url[5];
+		// $data['imgsrc']						= base_url().$url[5];
 		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();

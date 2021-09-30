@@ -35,6 +35,11 @@
 </head>
 <body>
 <?php menulist()?>
+
+<br />
+<br />
+<br />
+
 <form action=<?=site_url().'/sjaset/asettanah/index'?> method='post'>
 <table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridtable'>
 	<thead>
@@ -54,7 +59,8 @@
 	  </tr>
 </table>
 
-<br><br>
+<br />
+<br />
 
 <table align=center border="0" cellpadding="0" cellspacing="3" width="800" class='gridua'>
 	<thead>
