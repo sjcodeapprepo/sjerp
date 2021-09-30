@@ -1,41 +1,44 @@
 <?php
 include(APPPATH . '/controllers/auth/authcontroller' . EXT);
 
-class AsetDivisimaster extends Authcontroller
+class AsetPenguasaanTanahMaster extends Authcontroller
 {
 	var $isusermodify;
 
 	function __construct()
 	{
 		parent::__construct();
-		define("MENU_ID", "110");
+		define("MENU_ID", "113");
 		$userid = $this->session->userdata('UserID');
 		$this->redirectNoAuthRead($userid, MENU_ID);
 		$this->isusermodify = $this->isUserAuthModify($userid, MENU_ID);
 	}
 
+    function _index() 
+    {
+        echo "asdfasdf";
+    }
+
 	function index()
 	{
 		$submit	= $this->input->post('submit');
 		if ($submit == 'TAMBAH') {
-			$divabbr	= $this->input->post('divisionabbr');
-            $divname	= $this->input->post('divisionname');
-			$id		    = $this->input->post('divisionid');
+            $statusname	= $this->input->post('StatusName');
+			$id		    = $this->input->post('StatusID');
 
 			$datamaster	= array(
-							'DivisionID'	 => $id,
-                            'DivisionAbbr'	=> $divabbr,
-							'DivisionName'	=> $divname
+							'StatusID'	 => $id,
+                            'StatusName'	=> $statusname
 						);
-			$this->db->insert('itemdivisionmaster', $datamaster);
+			$this->db->insert('itemstatuspenguasaanmaster', $datamaster);
 		}
 		$data['view_data']	= $this->_getData();
-		$this->load->view('sjasetview/asetgelmesmasterview/divisi_index', $data);
+		$this->load->view('sjasetview/asettanahview/penguasaantanah_index', $data);
 	}
 
 	function _getData() 
 	{
-		$sql = "SELECT  DivisionID, DivisionName, DivisionAbbr FROM  itemdivisionmaster ORDER BY DivisionID DESC";
+		$sql = "SELECT  StatusID, StatusName FROM  itemstatuspenguasaanmaster ORDER BY StatusID DESC";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

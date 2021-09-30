@@ -1,14 +1,14 @@
 <?php
 include(APPPATH . '/controllers/auth/authcontroller' . EXT);
 
-class AsetDivisimaster extends Authcontroller
+class AsetJenisDokTanahMaster extends Authcontroller
 {
 	var $isusermodify;
 
 	function __construct()
 	{
 		parent::__construct();
-		define("MENU_ID", "110");
+		define("MENU_ID", "111");
 		$userid = $this->session->userdata('UserID');
 		$this->redirectNoAuthRead($userid, MENU_ID);
 		$this->isusermodify = $this->isUserAuthModify($userid, MENU_ID);
@@ -18,24 +18,22 @@ class AsetDivisimaster extends Authcontroller
 	{
 		$submit	= $this->input->post('submit');
 		if ($submit == 'TAMBAH') {
-			$divabbr	= $this->input->post('divisionabbr');
-            $divname	= $this->input->post('divisionname');
-			$id		    = $this->input->post('divisionid');
+            $jenisdokumentanahname	= $this->input->post('JenisDokumenTanahName');
+			$id		    = $this->input->post('JenisDokumenTanahID');
 
 			$datamaster	= array(
-							'DivisionID'	 => $id,
-                            'DivisionAbbr'	=> $divabbr,
-							'DivisionName'	=> $divname
+							'JenisDokumenTanahID'	 => $id,
+                            'JenisDokumenTanahName'	=> $jenisdokumentanahname
 						);
-			$this->db->insert('itemdivisionmaster', $datamaster);
+			$this->db->insert('itemjenisdokumentanahmaster', $datamaster);
 		}
 		$data['view_data']	= $this->_getData();
-		$this->load->view('sjasetview/asetgelmesmasterview/divisi_index', $data);
+		$this->load->view('sjasetview/asettanahview/jenisdoktanah_index', $data);
 	}
 
 	function _getData() 
 	{
-		$sql = "SELECT  DivisionID, DivisionName, DivisionAbbr FROM  itemdivisionmaster ORDER BY DivisionID DESC";
+		$sql = "SELECT  JenisDokumenTanahID, JenisDokumenTanahName FROM  itemjenisdokumentanahmaster ORDER BY JenisDokumenTanahID DESC";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
