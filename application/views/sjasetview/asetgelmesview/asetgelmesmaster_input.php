@@ -84,6 +84,11 @@
                                 <th colspan='4'>Elektronika dan Mesin</th>
                             </tr>
                         </thead>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Identitas Barang&nbsp;
+                            </td>
+						</tr>
 						<tr>
                             <td align="right">
                                 No Aset&nbsp;
@@ -197,12 +202,9 @@
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"></textarea>
 							</td>
-                            <td colspan="3">                                
-                                <div id="picaset">Gambar</div>
-                            </td>
                         </tr>
                     </table>
                 </td>

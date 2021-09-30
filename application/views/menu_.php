@@ -2,7 +2,7 @@
 <link type="text/css" href="<?=base_url()?>publicfolder/jslib/fg-menu/fg-menu/fg.menu.css" media="screen" rel="stylesheet" />
 
 	<style type="text/css">
-	input, select, textarea { border:1px solid #D4E0EE; background-color: white;}
+	input, select { border:1px solid #D4E0EE; background-color: white;}
 	/*
 	input[type="submit"], button, input[type="button"], input[type="reset"] {
 		padding: 4px 15px 4px !important;
@@ -34,25 +34,18 @@
 	#menuLog { font-size:1.4em; margin:20px; }
 	.hidden { position:absolute; top:0; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
-	.fg-button { clear:left; margin:32px 4px 40px 10px; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: absolute; text-align: center; zoom: 1; }
+	.fg-button { clear:left; margin:26px 4px 40px 10px; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: absolute; text-align: center; zoom: 1; }
 	.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
 	a.fg-button { float:left;  }
 	button.fg-button { width:auto; overflow:visible; } /* removes extra button width in IE */
 
-	/* .fg-button-icon-left { padding-left: 2.1em; }
+	.fg-button-icon-left { padding-left: 2.1em; }
 	.fg-button-icon-right { padding-right: 2.1em; }
 	.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
 	.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
-	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 solo icon buttons must have block properties for the text-indent to work */
+	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */
 
-	/* .fg-button.ui-state-loading .ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; } */
-
-	div.menudash {
-		width: 22px;
-		height: 3px;
-		background-color: #414476;
-		margin: 2px 0;
-	}
+	.fg-button.ui-state-loading .ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
 	#headermenu{
 		position:relative;
 		clear:left;
@@ -62,14 +55,14 @@
 		position:absolute;
 		top:2px;
 		left:10px;
-		height:px;
+		height:34px;
 		width:98%;
 		border: 1px solid #D4E0EE;
 		border-collapse: collapse;
 		font-family: "Trebuchet MS", Arial, sans-serif;
 		font-weight:bold;
 		font-size:24px;
-		background-color: white;
+		background-color: #f4f4f4;
 		color: #414476;
 		text-align:right;
 		overflow:hidden;
@@ -101,13 +94,11 @@ $(document).ready(function(){
  </script>
 <div id="headermenu">
 <div id="header">
-	<img src="<?=base_url()?>publicfolder/image/sjlog.png" width="200" height="50" />&nbsp;&nbsp;&nbsp;
+	Sarana Jaya&nbsp;&nbsp;<br />
 </div>
 <div class="menu">	
-<a tabindex="0" href="#homenu" class="fg-button" id="programho">
-	<div class="menudash"></div>
-	<div class="menudash"></div>
-	<div class="menudash"></div>
+<a tabindex="0" href="#homenu" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="programho">
+	<span class="ui-icon ui-icon-triangle-1-s"></span>Menu
 </a>
 <div id="homenu" class="hidden">
 <ul>	

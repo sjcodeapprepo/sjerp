@@ -53,6 +53,16 @@
             changeYear: true,
             yearRange: "1960:2022"
         });
+        $("#tgldokumenpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
+        $("#tglstnkpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
         $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
@@ -84,6 +94,11 @@
                                 <th colspan='4'>Kendaraan</th>
                             </tr>
                         </thead>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Identitas Barang&nbsp;
+                            </td>
+						</tr>
 						<tr>
                             <td align="right">
                                 No Aset&nbsp;
@@ -103,7 +118,8 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniskendaraankatid', $itemjeniskendaraankatmaster, 'JenisKendaraanKatID', 'JenisKendaraanKatName', $data['JenisKendaraanKatID'], '', '-Pilih Jenis-', "id='jeniskendaraankatid'");?>
+                                <?=form_dropdownDB_init('jeniskendaraankatid', $itemjeniskendaraanmst, 'JenisKendaraanKatID', 'JenisKendaraanKatName', $data['JenisKendaraanKatID'], '', '-Pilih Jenis Kendaraan-', "id='jeniskendaraankatid'");?>
+                                <?//print_array($itemkatmaster)?>
                             </td>
                         </tr>
                         <tr>
@@ -179,10 +195,10 @@
 						</tr>
                         <tr>
                             <td align="right">
-                                No Polisi&nbsp;
+                                Merk&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='nopolpr' size='9' id='nopolpr' value="<?= $data['NoPolPr'] ?>" />
+                                <input type='text' name='merkpr' size='30' id='merkpr' value="<?= $data['MerkPr'] ?>" />
                             </td>
                             <td align="right">
                                 No Rangka&nbsp;
@@ -191,7 +207,20 @@
                                 <input type='text' name='norangkapr' size='9' id='norangkapr' value="<?= $data['NoRangkaPr'] ?>" />
                             </td>
                         </tr>
-
+                        <tr>
+                            <td align="right">
+                                No Polisi&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='nopolpr' size='9' id='nopolpr' value="<?= $data['NoPolPr'] ?>" />
+                            </td>
+                            <td align="right">
+                                Tahun Dibuat&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='tahundibuatpr' size='9' id='tahundibuatpr' value="<?= $data['TahunDibuatPr'] ?>" />
+                            </td>                            
+                        </tr>
                         <tr>
                             <td align="right">
                                 No Mesin&nbsp;
@@ -200,13 +229,12 @@
                                 <input type='text' name='nomesinpr' size='12' id='nomesinpr' value="<?= $data['NoMesinPr'] ?>" />
                             </td>
                             <td align="right">
-                                Tahun Dibuat&nbsp;
+                                Isi Silinder&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='tahundibuatpr' size='9' id='tahundibuatpr' value="<?= $data['TahunDibuatPr'] ?>" />
+                                <input type='text' name='isisilinderpr' size='12' id='isisilinderpr' value="<?= $data['IsiSilinderPr'] ?>" />
                             </td>
                         </tr>
-
                         <tr>
                             <td align="right">
                                 Warna&nbsp;
@@ -215,18 +243,9 @@
                                 <input type='text' name='warnapr' size='9' id='warnapr' value="<?= $data['WarnaPr'] ?>" />
                             </td>
                             <td align="right">
-                                Isi Silinder&nbsp;
-                            </td>
-                            <td>
-                                <input type='text' name='isisilinderpr' size='12' id='isisilinderpr' value="<?= $data['IsiSilinderPr'] ?>" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td align="right">
                                 Bahan Bakar&nbsp;
                             </td>
-                            <td coslpan="3">
+                            <td>
                                 <input type='text' name='bahanbakarpr' size='9' id='bahanbakarpr' value="<?= $data['BahanBakarPr'] ?>" />
                             </td>
                         </tr>
@@ -285,18 +304,12 @@
 							</td>
                         </tr>
                         <tr>
+                        <tr>
                             <td align="right">
                                 File Foto&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
-                                <div id="picaset">Gambar</div>
-                            </td>
-                            <td align="right">
-                                Label&nbsp;
-                            </td>
-                            <td colspan="3">                                
-                                <div id="labelaset">Label</div>
                             </td>
                         </tr>
                     </table>

@@ -86,6 +86,11 @@
                                 <th colspan='4'>Elektronika dan Mesin</th>
                             </tr>
                         </thead>
+                        <tr>
+                            <td colspan='4' class='subdata'>
+                                Identitas Barang&nbsp;
+                            </td>
+						</tr>
 						<tr>
                             <td align="right">
                                 No Aset&nbsp;
@@ -194,21 +199,16 @@
                             </td>
                             <td>
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
+                                <input type='hidden' name='oldpic' id='oldpic' value="<?= $data['PicLocationSi'] ?>" />
                             </td>
                         </tr>
 						<tr>
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
 							</td>
-                            <td colspan="3">                     
-                                <div id="picaset">
-                                    <img src="<?= $imgsrc ?>" alt="" width="100" height="50">
-                                </div>
-                                <input type='hidden' name='oldpic' id='oldpic' value="<?= $data['PicLocationSi'] ?>" /> 
-                            </td>
                         </tr>
                     </table>
                 </td>
