@@ -300,7 +300,7 @@ class AsetTanah extends Authcontroller
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 			
-			// redirect('sjaset/asettanah', 'refresh');
+			redirect('sjaset/asettanah', 'refresh');
 		}
 	}
 
