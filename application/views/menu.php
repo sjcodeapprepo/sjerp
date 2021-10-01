@@ -101,7 +101,7 @@ $(document).ready(function(){
  </script>
 <div id="headermenu">
 <div id="header">
-	<img src="<?=base_url()?>publicfolder/image/sjlog.png" width="200" height="50" />&nbsp;&nbsp;&nbsp;
+	<img src="<?=base_url()?>publicfolder/image/sjlog.png" width="200" height="50" />&nbsp;&nbsp;
 </div>
 <div class="menu">	
 <a tabindex="0" href="#homenu" class="fg-button" id="programho">

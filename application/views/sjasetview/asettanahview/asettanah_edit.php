@@ -94,7 +94,7 @@
                                 No Aset&nbsp;
                             </td>
                             <td colspan='3'>
-								&nbsp;
+								<?=$data['AssetNo']?>&nbsp;
                             </td>
 						</tr>
                         <tr>
@@ -220,7 +220,7 @@
                                 Peruntukan&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='peruntukanidsi' size='20' id='peruntukanidsi' value="<?= $data['PeruntukanIDSi'] ?>" />
+                                <?=form_dropdownDB_init('peruntukanidsi', $itemperuntukanmaster, 'PeruntukanID', 'PeruntukanName', $data['PeruntukanIDSi'], '', '-Pilih Jenis Peruntukan-', "id='peruntukanidsi'");?>
                             </td>
                         </tr>
 

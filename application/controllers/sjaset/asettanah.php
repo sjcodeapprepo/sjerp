@@ -92,6 +92,7 @@ class AsetTanah extends Authcontroller
 		$data['data']								= $this->_getData($id);
 		$data['itemjenisdokumentanahmaster']		= $this->_getItemJenisDoktanahmasterData();
 		$data['itemstatuspenguasaanmaster']			= $this->_getStatusPenguasaanmaster();
+		$data['itemperuntukanmaster']				= $this->_getItemPeruntukanMasterData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 
 		$data['urlsegment']							= $this->uri->uri_string();
@@ -154,6 +155,14 @@ class AsetTanah extends Authcontroller
 	function _getStatusPenguasaanmaster() 
 	{
 		$sql = "SELECT StatusID, StatusName FROM itemstatuspenguasaanmaster";
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function _getItemPeruntukanMasterData()
+	{
+		$sql = "SELECT PeruntukanID, PeruntukanName FROM itemperuntukanmaster";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -306,6 +315,7 @@ class AsetTanah extends Authcontroller
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemjenisdokumentanahmaster']= $this->_getItemJenisDoktanahmasterData();
 		$data['itemstatuspenguasaanmaster']= $this->_getStatusPenguasaanmaster();
+		$data['itemperuntukanmaster']		= $this->_getItemPeruntukanMasterData();
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asettanahview/asettanah_edit', $data);
 	}
