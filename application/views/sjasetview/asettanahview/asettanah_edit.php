@@ -52,7 +52,20 @@
             changeMonth: true,
             changeYear: true,
             yearRange: "1960:2022"
+        }); //
+
+        $("#tgldokumenpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
         });
+
+        $("#tgldokumensi").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
+
         $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
@@ -280,18 +293,24 @@
         </table>
     </form>
     <script>
-        new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("kondisikodesi");
+        new Spry.Widget.ValidationTextField("nomordokumenpr", "none");
+        new Spry.Widget.ValidationTextField("luaspr", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("apresiasipr", "integer", { minValue: "0",useCharacterMasking:true});
+        
+        new Spry.Widget.ValidationTextField("lokasips", "none");
+        new Spry.Widget.ValidationTextField("latps", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("longps", "integer", { minValue: "0",useCharacterMasking:true});
+        
+        new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
+        new Spry.Widget.ValidationSelect("statusidsi");
+        new Spry.Widget.ValidationSelect("jenisdokumentanahidsi");
+        new Spry.Widget.ValidationSelect("peruntukanidsi");
+
+        new Spry.Widget.ValidationTextField("luassi", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaisi", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("keterangansi", "none");
+        new Spry.Widget.ValidationTextField("nodokumensi", "none");
     </script>
 </body>
 

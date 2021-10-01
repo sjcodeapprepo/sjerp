@@ -52,7 +52,20 @@
             changeMonth: true,
             changeYear: true,
             yearRange: "1960:2022"
+        }); //
+
+        $("#tgldokumenpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
         });
+
+        $("#tgldokumensi").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
+
         $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
@@ -143,7 +156,7 @@
                                 Luas&nbsp;
                             </td>
                             <td>
-								<input type='text' name='luaspr' size='20' id='luaspr' value="<?= $data['LuasPr'] ?>" class='ratakanan' />
+								<input type='text' name='luaspr' size='10' id='luaspr' value="<?= $data['LuasPr'] ?>" class='ratakanan' /> M2
                             </td>
                             <td align="right">
                                 Nilai&nbsp;
@@ -157,7 +170,7 @@
                                 Apresiasi&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='apresiasipr' size='3' id='apresiasipr' value="<?= $data['ApresiasiPr'] ?>" class='ratakanan' />
+								<input type='text' name='apresiasipr' size='3' id='apresiasipr' value="<?= $data['ApresiasiPr'] ?>" class='ratakanan' />%
 							</td>
                         </tr>
                         <tr>
@@ -170,7 +183,7 @@
                                 Lokasi&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='lokasips' size='30' id='lokasips' value="<?= $data['LokasiPs'] ?>" />
+								<input type='text' name='lokasips' size='66' id='lokasips' value="<?= $data['LokasiPs'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -178,7 +191,7 @@
                                 Latitude&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='latps' size='30' id='latps' value="<?= $data['LatPs'] ?>" />
+								<input type='text' name='latps' size='20' id='latps' value="<?= $data['LatPs'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -186,7 +199,7 @@
                                 Longitude&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='longps' size='30' id='longps' value="<?= $data['LongPs'] ?>" />
+								<input type='text' name='longps' size='20' id='longps' value="<?= $data['LongPs'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -243,7 +256,7 @@
                                 Luas&nbsp;
                             </td>
                             <td>
-								<input type='text' name='luassi' size='10' id='luassi' value="<?= $data['LuasSi'] ?>" class='ratakanan' />
+								<input type='text' name='luassi' size='10' id='luassi' value="<?= $data['LuasSi'] ?>" class='ratakanan' /> M2
                             </td>
                             <td align="right">
                                 Nilai&nbsp;
@@ -257,7 +270,7 @@
                                 Keterangan&nbsp;
                             </td>
                             <td colspan="3">
-								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
+								<textarea name="keterangansi" id="keterangansi" rows="4" cols="66"><?= $data['KeteranganSi'] ?></textarea>
 							</td>
                         </tr>
                         <tr>
@@ -280,18 +293,25 @@
         </table>
     </form>
     <script>
-        new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("kondisikodesi");
+        new Spry.Widget.ValidationTextField("nomordokumenpr", "none");
+        new Spry.Widget.ValidationTextField("luaspr", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("apresiasipr", "integer", { minValue: "0",useCharacterMasking:true});
+        
+        new Spry.Widget.ValidationTextField("lokasips", "none");
+        new Spry.Widget.ValidationTextField("latps", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("longps", "integer", { minValue: "0",useCharacterMasking:true});
+        
+        new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
+        new Spry.Widget.ValidationSelect("statusidsi");
+        new Spry.Widget.ValidationSelect("jenisdokumentanahidsi");
+        new Spry.Widget.ValidationSelect("peruntukanidsi");
+
+        new Spry.Widget.ValidationTextField("luassi", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaisi", "integer", { minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("keterangansi", "none");
+        new Spry.Widget.ValidationTextField("nodokumensi", "none");
+
     </script>
 </body>
 
