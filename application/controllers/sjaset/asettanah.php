@@ -260,47 +260,47 @@ class AsetTanah extends Authcontroller
 					$data			= $this->upload->data();				
 					$piclocationsi	= $data['full_path'];
 				}
-					
-				$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
-
-				$datamaster	= array(
-								'GolID'			=> '01',
-								'KatID'			=> $katid,
-								'AssetNo'		=> $assetno,
-								'TglPr'			=> $tglpr
-							);
-				$this->db->insert('itemmaster', $datamaster);
-
-				$itemid		= $this->_getLastInsertID();
-
-				$datadetail	= array(
-								'ItemID'				=> $itemid,
-								'AssetOrder'			=> $assetorder,
-								'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
-								'TglDokumenPr'			=> $tgldokumenpr,
-								'NomorDokumenPr'		=> $nomordokumenpr,
-								'LuasPr'				=> $luaspr,
-								'NilaiPr'				=> $nilaipr,
-								'ApresiasiPr'			=> $apresiasipr,
-								'LokasiPs'				=> $lokasips,
-								'LatPs'					=> $latps,
-								'LongPs'				=> $longps,
-								'PenanggungJawabSi'		=> $penanggungjawabsi,
-								'StatusIDSi'			=> $statusidsi,
-								'JenisDokumenTanahIDSi'	=> $jenisdokumentanahidsi,
-								'PeruntukanIDSi'		=> $peruntukanidsi,
-								'TglDokumenSi'			=> $tgldokumensi,
-								'NoDokumenSi'			=> $nodokumensi,
-								'LuasSi'				=> $luassi,
-								'NilaiSi'				=> $nilaisi,
-								'KeteranganSi'			=> $keterangansi,
-								'PicLocationSi'			=> $piclocationsi
-							);
-				$this->db->insert('itemtanahdetail', $datadetail);
-
-				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 			}
-			redirect('sjaset/asettanah', 'refresh');
+			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
+
+			$datamaster	= array(
+							'GolID'			=> '01',
+							'KatID'			=> $katid,
+							'AssetNo'		=> $assetno,
+							'TglPr'			=> $tglpr
+						);
+			$this->db->insert('itemmaster', $datamaster);
+
+			$itemid		= $this->_getLastInsertID();
+
+			$datadetail	= array(
+							'ItemID'				=> $itemid,
+							'AssetOrder'			=> $assetorder,
+							'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
+							'TglDokumenPr'			=> $tgldokumenpr,
+							'NomorDokumenPr'		=> $nomordokumenpr,
+							'LuasPr'				=> $luaspr,
+							'NilaiPr'				=> $nilaipr,
+							'ApresiasiPr'			=> $apresiasipr,
+							'LokasiPs'				=> $lokasips,
+							'LatPs'					=> $latps,
+							'LongPs'				=> $longps,
+							'PenanggungJawabSi'		=> $penanggungjawabsi,
+							'StatusIDSi'			=> $statusidsi,
+							'JenisDokumenTanahIDSi'	=> $jenisdokumentanahidsi,
+							'PeruntukanIDSi'		=> $peruntukanidsi,
+							'TglDokumenSi'			=> $tgldokumensi,
+							'NoDokumenSi'			=> $nodokumensi,
+							'LuasSi'				=> $luassi,
+							'NilaiSi'				=> $nilaisi,
+							'KeteranganSi'			=> $keterangansi,
+							'PicLocationSi'			=> $piclocationsi
+						);
+			$this->db->insert('itemtanahdetail', $datadetail);
+
+			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			
+			// redirect('sjaset/asettanah', 'refresh');
 		}
 	}
 
