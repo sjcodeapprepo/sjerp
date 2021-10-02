@@ -16,7 +16,7 @@ class Groupmodel extends CI_Model {
 
 	function view_menumst()
 	{
-        $sql = 'SELECT * FROM menumst order by GroupName, MenuName ASC';
+        $sql = 'SELECT * FROM menumst order by ParentGroupName, GroupName, SortNo';
         $query = $this->db->query($sql);
         $result = $query->result_array();
         return $result;
@@ -40,9 +40,9 @@ class Groupmodel extends CI_Model {
 
 	function view_usergroupdtlmst_edit($UserGroupID)
 	{
-        $sql = "SELECT u.UserGroupID, u.MenuID, u.ReadFlg, u.ModifyFlg, m.MenuName, m.GroupName
+        $sql = "SELECT u.UserGroupID, u.MenuID, u.ReadFlg, u.ModifyFlg, m.ParentGroupName, m.MenuName, m.GroupName
                 FROM usergroupdtlmst AS u, menumst AS m WHERE u.MenuID=m.MenuID AND u.UserGroupID='$UserGroupID'
-				order by m.GroupName, m.MenuName ASC";
+				order by m.ParentGroupName, m.GroupName, m.SortNo";
         $query = $this->db->query($sql);
         $result = $query->result_array();
         return $result;

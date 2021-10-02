@@ -75,7 +75,7 @@ table thead tr th, table tbody tr td {
 			<? for($a=0 ; $a<count($menumst) ; $a++){ ?>
 			<tr>
 			<td width=130><input type=hidden name='MenuID[]' value='<?=$menumst[$a]['MenuID'];?>' readonly=1>
-			<?=$menumst[$a]['GroupName'];?>
+			<?=$menumst[$a]['ParentGroupName'];?> - <?=$menumst[$a]['GroupName'];?>
 			</td>
 			<td width=300><?=$menumst[$a]['MenuName'];?></td>
 
