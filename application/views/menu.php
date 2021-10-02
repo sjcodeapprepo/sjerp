@@ -23,7 +23,7 @@
 	*/
 	input[readonly] {
 		background-color: #F6F6F6;
-		color: #A2A2A2;
+		color: #4D4D4D;
 	}
 	
 	.ui-datepicker{
