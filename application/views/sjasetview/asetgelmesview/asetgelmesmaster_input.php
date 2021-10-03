@@ -53,16 +53,33 @@
             changeYear: true,
             yearRange: "1960:2022"
         });
+
+        $("#katid").change(function() {
+            var katid   = $(this).val();            
+            getJenis(katid);
+        });
+
         $( "#penyusutanpr" ).focusin(function() {
             $(this).val('');
         });
-
         $( "#penyusutanpr" ).focusout(function() {
             if($(this).val()=='') {
                 $(this).val(0);
             }
         });
     });
+
+    function getJenis(katid) {
+        if(katid != '') {
+            $.post('<?=site_url()?>/sjaset/asetgelmes/getJenis/'+katid, function(data){
+                $('#jeniselkmesinkatid').empty();
+                $('#jeniselkmesinkatid').append(data);
+            });
+        } else {
+            $('#jeniselkmesinkatid').empty();
+            $('#jeniselkmesinkatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+        }
+    }
 </script>
 </head>
 
@@ -108,7 +125,9 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniselkmesinkatid', $itemjeniselkmesinmaster, 'JenisElkmesinKatID', 'JenisElkmesinKatName', $data['JenisElkmesinKatID'], '', '-Pilih Jenis-', "id='jeniselkmesinkatid'");?>
+                                <select name="jeniselkmesinkatid" id="jeniselkmesinkatid">
+                                    <option value="-1">--Pilih Kategori dahulu--</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -219,19 +238,15 @@
     </form>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("hargasi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("hargasi", "integer", {minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true });
         new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("jeniselkmesinkatid");
         new Spry.Widget.ValidationSelect("lokasiidpr");
         new Spry.Widget.ValidationSelect("kondisikodesi");
+        new Spry.Widget.ValidationSelect("divisionidps");
+        new Spry.Widget.ValidationTextField("penanggungjawabps", "none");
     </script>
 </body>
 

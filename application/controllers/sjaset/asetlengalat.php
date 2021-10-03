@@ -89,7 +89,6 @@ class Asetlengalat extends Authcontroller
 		$this->load->helper('text');
 		$id											= null;
 		$data['data']								= $this->_getData($id);
-		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
@@ -146,17 +145,34 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
-	function _getItemJenisPerlengPeralatkatmasterData()
+	function _getItemJenisPerlengPeralatkatmasterData($id)
 	{
-		$sql = "SELECT JenisPerlengPeralatKatID, JenisPerlengPeralatKatName FROM itemjenisperlengperalatkatmaster";
+		$sql = "SELECT j.JenisPerlengPeralatKatID , j.JenisPerlengPeralatKatName 
+		FROM itemjenisperlengperalatkatmaster j, itemmaster i
+		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisPerlengPeralatKatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
 	}
 
+	function getJenis($katid)
+	{
+		$sql = "SELECT JenisPerlengPeralatKatID, JenisPerlengPeralatKatName 
+		FROM itemjenisperlengperalatkatmaster 
+		WHERE KatID='$katid' ORDER BY JenisPerlengPeralatKatName";
+		$query = $this->db->query($sql);
+		$results = $query->result_array();
+
+		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
+		foreach ($results as $result) {
+			$jenisid	.= "<option value='".$result['JenisPerlengPeralatKatID']."'>".$result['JenisPerlengPeralatKatName']."</option>\n";
+		}
+		echo $jenisid;
+	}
+
 	function _getItemKatMasterData()
 	{
-		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='03'";
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='03' ORDER BY KatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -291,8 +307,8 @@ class Asetlengalat extends Authcontroller
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
-		$data['imgsrc']						= base_url().$url[5];
-		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData();
+		// $data['imgsrc']						= base_url().$url[5];
+		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData($id);
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();

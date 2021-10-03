@@ -89,7 +89,6 @@ class Asetkendaraan extends Authcontroller
 		$this->load->helper('text');
 		$id											= null;
 		$data['data']								= $this->_getData($id);
-		$data['itemjeniskendaraanmst']				= $this->_getItemJenisKendmstData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
@@ -159,12 +158,28 @@ class Asetkendaraan extends Authcontroller
 		return $retval;
 	}
 
-	function _getItemJenisKendmstData()
+	function _getItemJenisKendmstData($id)
 	{
-		$sql = "SELECT  JenisKendaraanKatID,  JenisKendaraanKatName FROM itemjeniskendaraankatmaster";
+		$sql = "SELECT j.JenisKendaraanKatID , j.JenisKendaraanKatName 
+		FROM itemjeniskendaraankatmaster j, itemmaster i
+		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisKendaraanKatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
+	}
+
+	function getJenis($katid)
+	{
+		$sql = "SELECT  JenisKendaraanKatID,  JenisKendaraanKatName FROM itemjeniskendaraankatmaster
+		WHERE KatID='$katid'";
+		$query = $this->db->query($sql);
+		$results = $query->result_array();
+
+		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
+		foreach ($results as $result) {
+			$jenisid	.= "<option value='".$result['JenisKendaraanKatID']."'>".$result['JenisKendaraanKatName']."</option>\n";
+		}
+		echo $jenisid;
 	}
 
 	function _getItemKatMasterData()
@@ -484,7 +499,7 @@ class Asetkendaraan extends Authcontroller
 		$url	= explode('/',$datas['PicLocationSi'],6);
 		// $data['imgsrc']						= base_url().$url[5];
 		$data['data']								= $this->_getData($id);
-		$data['itemjeniskendaraankatmaster']				= $this->_getItemJenisKendmstData();
+		$data['itemjeniskendaraankatmaster']				= $this->_getItemJenisKendmstData($id);
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();

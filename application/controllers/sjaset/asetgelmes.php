@@ -89,7 +89,6 @@ class AsetGElMes extends Authcontroller
 		$this->load->helper('text');
 		$id									= null;
 		$data['data']						= $this->_getData($id);
-		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
@@ -146,13 +145,30 @@ class AsetGElMes extends Authcontroller
 		return $retval;
 	}
 
-	function _getItemjeniselkmesinmasterData()
+	function _getItemjeniselkmesinmasterData($id)
 	{
-		$sql = "SELECT JenisElkmesinKatID, JenisElkmesinKatName FROM itemjeniselkmesinmaster";
+		$sql = "SELECT j.JenisElkmesinKatID , j.JenisElkmesinKatName 
+		FROM itemjeniselkmesinmaster j, itemmaster i
+		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisElkmesinKatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
 	}
+
+	function getJenis($katid)
+	{
+		$sql = "SELECT JenisElkmesinKatID, JenisElkmesinKatName 
+		FROM itemjeniselkmesinmaster
+		WHERE KatID='$katid'";
+		$query = $this->db->query($sql);
+		$results = $query->result_array();
+
+		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
+		foreach ($results as $result) {
+			$jenisid	.= "<option value='".$result['JenisElkmesinKatID']."'>".$result['JenisElkmesinKatName']."</option>\n";
+		}
+		echo $jenisid;
+	}	
 
 	function _getItemKatMasterData()
 	{
@@ -291,7 +307,7 @@ class AsetGElMes extends Authcontroller
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
 		// $data['imgsrc']						= base_url().$url[5];
-		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData();
+		$data['itemjeniselkmesinmaster']	= $this->_getItemjeniselkmesinmasterData($id);
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();

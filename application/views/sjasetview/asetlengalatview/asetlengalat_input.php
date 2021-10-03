@@ -53,16 +53,52 @@
             changeYear: true,
             yearRange: "1960:2022"
         });
+
+        $("#katid").change(function() {
+            var katid   = $(this).val();            
+            getJenis(katid);
+        });
+
         $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
-
         $( "#penyusutanps" ).focusout(function() {
             if($(this).val()=='') {
                 $(this).val(0);
             }
         });
+
+        $( "#nilaipr" ).focusin(function() {
+            $(this).val('');
+        });
+        $( "#nilaipr" ).focusout(function() {
+            if($(this).val()=='') {
+                $(this).val(0);
+            }
+        });
+
+        $( "#hargasi" ).focusin(function() {
+            $(this).val('');
+        });
+        $( "#hargasi" ).focusout(function() {
+            if($(this).val()=='') {
+                $(this).val(0);
+            }
+        });
+
     });
+
+    function getJenis(katid) {
+        if(katid != '') {
+		    $.post('<?=site_url()?>/sjaset/asetlengalat/getJenis/'+katid, function(data){
+                $('#jenisperlengperalatkatid').empty();
+                $('#jenisperlengperalatkatid').append(data);
+            });
+        } else {
+            $('#jenisperlengperalatkatid').empty();
+            $('#jenisperlengperalatkatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+        }
+    }
 </script>
 </head>
 
@@ -108,7 +144,9 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisperlengperalatkatid', $itemjenisperlengperalatkatmaster, 'JenisPerlengPeralatKatID', 'JenisPerlengPeralatKatName', $data['JenisPerlengPeralatKatID'], '', '-Pilih Jenis-', "id='jenisperlengperalatkatid'");?>
+                                <select name="jenisperlengperalatkatid" id="jenisperlengperalatkatid">
+                                    <option value="-1">--Pilih Kategori dahulu--</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -219,18 +257,14 @@
     </form>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("hargasi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("hargasi", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {  minValue: "0",maxValue: "100",useCharacterMasking:true });
         new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("jenisperlengperalatkatid");
-        new Spry.Widget.ValidationSelect("lokasiidpr");
+        new Spry.Widget.ValidationSelect("divisionidps");
+        new Spry.Widget.ValidationSelect("lokasiidps");
+        new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
         new Spry.Widget.ValidationSelect("kondisikodesi");
     </script>
 </body>

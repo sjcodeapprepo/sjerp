@@ -48,6 +48,11 @@
 
 <script type="text/javascript">
     $(function() {
+        $("#katid").change(function() {
+            var katid   = $(this).val();            
+            getJenis(katid);
+        });
+
         $("#tglpr").datepicker({              
             changeMonth: true,
             changeYear: true,
@@ -63,6 +68,18 @@
             }
         });
     });
+
+    function getJenis(katid) {
+        if(katid != '') {
+            $.post('<?=site_url()?>/sjaset/asetgdbang/getJenis/'+katid, function(data){
+                $('#jenisgdgbangunanidsi').empty();
+                $('#jenisgdgbangunanidsi').append(data);
+            });
+        } else {
+                $('#jenisgdgbangunanidsi').empty();
+                $('#jenisgdgbangunanidsi').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+            }
+    }
 </script>
 </head>
 
@@ -247,7 +264,9 @@
                                 Jenis Gedung / Bangunan&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisgdgbangunanidsi', $itemjenisbangunanmaster, 'JenisGdgBangunanID', 'JenisGdgBangunanName', $data['JenisGdgBangunanIDSi'], '', '-Pilih Jenis Gedung/Bangunan-', "id='jenisgdgbangunanidsi'");?> 
+                                <select name="jenisgdgbangunanidsi" id="jenisgdgbangunanidsi">
+                                    <option value="-1">--Pilih Kategori dahulu--</option>
+                                </select>
                             </td>                            
                         </tr>
 						<tr>

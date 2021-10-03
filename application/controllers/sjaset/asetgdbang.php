@@ -92,7 +92,6 @@ class AsetGdBang extends Authcontroller
 		$data['data']								= $this->_getData($id);
 
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
-		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 
 		$data['urlsegment']							= $this->uri->uri_string();
@@ -154,12 +153,30 @@ class AsetGdBang extends Authcontroller
 		return $result;
 	}
 
-	function _getItemJenisGdBangMaster() 
+	function _getItemJenisGdBangMaster($id) 
 	{
 		$sql = "SELECT JenisGdgBangunanID, JenisGdgBangunanName FROM itemjenisbangunanmaster";
+		$sql = "SELECT j.JenisGdgBangunanID , j.JenisGdgBangunanName 
+		FROM itemjenisbangunanmaster j, itemmaster i
+		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisGdgBangunanName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
+	}
+
+	function getJenis($katid)
+	{
+		$sql = "SELECT JenisGdgBangunanID, JenisGdgBangunanName 
+		FROM itemjenisbangunanmaster
+		WHERE KatID='$katid'";
+		$query = $this->db->query($sql);
+		$results = $query->result_array();
+
+		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
+		foreach ($results as $result) {
+			$jenisid	.= "<option value='".$result['JenisGdgBangunanID']."'>".$result['JenisGdgBangunanName']."</option>\n";
+		}
+		echo $jenisid;
 	}
 
 	function _getItemKatMasterData()
@@ -304,7 +321,7 @@ class AsetGdBang extends Authcontroller
 		$data['imgsrc']						= '';//base_url().$url[5];
 		$data['data']						= $this->_getData($id);
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
-		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster();
+		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster($id);
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetgdbangview/asetgdbang_edit', $data);

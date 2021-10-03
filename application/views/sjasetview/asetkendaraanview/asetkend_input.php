@@ -48,6 +48,11 @@
 
 <script type="text/javascript">
     $(function() {
+        $("#katid").change(function() {
+            var katid   = $(this).val();            
+            getJenis(katid);
+        });
+
         $("#tglpr").datepicker({              
             changeMonth: true,
             changeYear: true,
@@ -73,6 +78,18 @@
             }
         });
     });
+
+    function getJenis(katid) {
+        if(katid != '') {
+            $.post('<?=site_url()?>/sjaset/asetkendaraan/getJenis/'+katid, function(data){
+                $('#jeniskendaraankatid').empty();
+                $('#jeniskendaraankatid').append(data);
+            });
+        } else {
+            $('#jeniskendaraankatid').empty();
+            $('#jeniskendaraankatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+        }
+    }
 </script>
 </head>
 
@@ -118,8 +135,9 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniskendaraankatid', $itemjeniskendaraanmst, 'JenisKendaraanKatID', 'JenisKendaraanKatName', $data['JenisKendaraanKatID'], '', '-Pilih Jenis Kendaraan-', "id='jeniskendaraankatid'");?>
-                                <?//print_array($itemkatmaster)?>
+                                <select name="jeniskendaraankatid" id="jeniskendaraankatid">
+                                    <option value="-1">--Pilih Kategori dahulu--</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
