@@ -19,22 +19,36 @@ class AsetJenisLengLatMaster extends Authcontroller
 		$submit	= $this->input->post('submit');
 		if ($submit == 'TAMBAH') {
             $id		    = $this->input->post('JenisPerlengPeralatKatID');
-            $jenislenglatname	= $this->input->post('JenisPerlengPeralatKatName');			
+            $jenislenglatname	= $this->input->post('JenisPerlengPeralatKatName');		
+			$katid		    = $this->input->post('katid');	
 
 			$datamaster	= array(
 							'JenisPerlengPeralatKatID'	 => $id,
-                            'JenisPerlengPeralatKatName'	=> $jenislenglatname
+                            'JenisPerlengPeralatKatName'	=> $jenislenglatname,
+							'KatID'	=> $katid
 						);
 			$this->db->insert('itemjenisperlengperalatkatmaster', $datamaster);
 		}
-		$data['view_data']	= $this->_getData();
+		$data['view_data']		= $this->_getData();
+		$data['itemkatmaster']	= $this->_getItemKatMasterData();
 		$this->load->view('sjasetview/asetlengalatview/jenislenglat_index', $data);
 	}
 
 	function _getData() 
 	{
-		$sql = "SELECT  JenisPerlengPeralatKatID, JenisPerlengPeralatKatName FROM  itemjenisperlengperalatkatmaster ORDER BY JenisPerlengPeralatKatID DESC";
+		$sql = "SELECT  j.JenisPerlengPeralatKatID, j.JenisPerlengPeralatKatName, k.KatName
+		FROM  itemjenisperlengperalatkatmaster j, itemkatmaster k
+		WHERE k.KatID=j.KatID AND k.GolID='03'
+		ORDER BY j.JenisPerlengPeralatKatID DESC";
 		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function _getItemKatMasterData()
+	{
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='03' ORDER BY KatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
