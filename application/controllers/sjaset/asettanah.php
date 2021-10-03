@@ -192,9 +192,13 @@ class AsetTanah extends Authcontroller
 		return $result[0]['lii'];
 	}
 
-	function _getLastAsetOrderPlusOne() 
+	function _getLastAsetOrderPlusOne($katid) 
 	{
-		$sql	= "SELECT LPAD(AssetOrder+1, 3, 0) AS AO FROM itemtanahdetail ORDER BY AssetOrder DESC";
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemtanahdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' 
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
@@ -238,7 +242,7 @@ class AsetTanah extends Authcontroller
 		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne();
+			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
 			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
 
 			if($piclocationsi!='') {
@@ -323,8 +327,8 @@ class AsetTanah extends Authcontroller
 	function _editproc($itemid)
 	{
 		$submit						= $this->input->post('submit');
-		$assetorder					= $this->input->post('assetorder');
 		$katid						= $this->input->post('katid');
+		$assetorder					= $this->input->post('assetorder');
 		$tglpr						= $this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 		$jenisdokumentanahidpr		= $this->input->post('jenisdokumentanahidpr');
@@ -348,6 +352,7 @@ class AsetTanah extends Authcontroller
 		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
+			// $assetorder	= $this->_getLastAsetOrderPlusOne($katid);
 			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 

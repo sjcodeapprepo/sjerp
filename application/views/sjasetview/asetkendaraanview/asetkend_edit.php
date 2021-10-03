@@ -82,6 +82,7 @@
     ?>
     <form action="<?= site_url() ?>/sjaset/asetkendaraan/inputeditproc/" method='post' id='formin' enctype="multipart/form-data">
         <input type='hidden' name='urlsegment' id='urlsegment' value='<?= $urlsegment ?>' />
+        <input type='hidden' name='assetorder' id='assetorder' value='<<?=$data['AssetOrder']?>' />
         <br />
         <br />
         <br />
