@@ -199,9 +199,13 @@ class Asetkendaraan extends Authcontroller
 		return $result[0]['lii'];
 	}
 
-	function _getLastAsetOrderPlusOne() 
+	function _getLastAsetOrderPlusOne($katid) 
 	{
-		$sql	= "SELECT LPAD(AssetOrder+1, 3, 0) AS AO FROM itemkendaraandetail ORDER BY AssetOrder DESC";
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemkendaraandetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' 
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
@@ -247,7 +251,7 @@ class Asetkendaraan extends Authcontroller
 		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne();
+			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
 			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
 			if($piclocationsi!='') {
@@ -314,6 +318,7 @@ class Asetkendaraan extends Authcontroller
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI		
 			
 			redirect('sjaset/asetkendaraan', 'refresh');
+		}
 	}
 
 	function _editproc($itemid)
@@ -350,63 +355,62 @@ class Asetkendaraan extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetno					= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
-				$datamaster	= array(
-								'KatID'			=> $katid,
-								'AssetNo'		=> $assetno,
-								'TglPr'			=> $tglpr
-							);
-				$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+			$datamaster	= array(
+							'KatID'			=> $katid,
+							'AssetNo'		=> $assetno,
+							'TglPr'			=> $tglpr
+						);
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 
-				$datadetail	= array(
-								'JenisKendaraanKatID'	=> $jeniskendaraankatid,
-								'NoDokumenPr'			=> $nodokumenpr,
-								'NilaiPr'				=> $nilaipr,
-								'PenyusutanPr'			=> $penyusutanpr,
-								'NoDokumenBPKBPr'		=> $nodokumenbpkbpr,
-								'NoSTNKPr'				=> $nostnkpr,
-								'TglSTNKPr'				=> $tglstnkpr,
-								'NoPolPr'				=> $nopolpr,
-								'NoRangkaPr'			=> $norangkapr,
-								'NoMesinPr'				=> $nomesinpr,
-								'TahunDibuatPr'			=> $tahundibuatpr,
-								'MerkPr'				=> $merkpr,
-								'TypePr'				=> $typepr,
-								'IsiSilinderPr'			=> $isisilinderpr,
-								'BahanBakarPr'			=> $bahanbakarpr,
-								'LokasiIDPs'			=> $lokasiidps,
-								'DivisionIDPs'			=> $penanggungjawabps,
-								'PenanggungJawabPs'		=> $penanggungjawabps,
-								'KondisiKodeSi'			=> $kondisikodesi,
-								'NilaiSi'				=> $nilaisi,
-								'KeteranganSi'			=> $keterangansi
-							);
-				//========================================FILE GAMBAR=====================
-				if($piclocationsi!='') {
-					$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
-					$config['file_name']		= 'tnh' . $assetno;
-					$config['overwrite']		= TRUE;
-					$config['allowed_types']	= 'gif|jpg|png|jpeg';
-					$config['max_size']			= 5000;
-					$config['max_width']		= 1500;
-					$config['max_height']		= 1500;
+			$datadetail	= array(
+							'JenisKendaraanKatID'	=> $jeniskendaraankatid,
+							'NoDokumenPr'			=> $nodokumenpr,
+							'NilaiPr'				=> $nilaipr,
+							'PenyusutanPr'			=> $penyusutanpr,
+							'NoDokumenBPKBPr'		=> $nodokumenbpkbpr,
+							'NoSTNKPr'				=> $nostnkpr,
+							'TglSTNKPr'				=> $tglstnkpr,
+							'NoPolPr'				=> $nopolpr,
+							'NoRangkaPr'			=> $norangkapr,
+							'NoMesinPr'				=> $nomesinpr,
+							'TahunDibuatPr'			=> $tahundibuatpr,
+							'MerkPr'				=> $merkpr,
+							'TypePr'				=> $typepr,
+							'IsiSilinderPr'			=> $isisilinderpr,
+							'BahanBakarPr'			=> $bahanbakarpr,
+							'LokasiIDPs'			=> $lokasiidps,
+							'DivisionIDPs'			=> $penanggungjawabps,
+							'PenanggungJawabPs'		=> $penanggungjawabps,
+							'KondisiKodeSi'			=> $kondisikodesi,
+							'NilaiSi'				=> $nilaisi,
+							'KeteranganSi'			=> $keterangansi
+						);
+			//========================================FILE GAMBAR=====================
+			if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['file_name']		= 'kdr' . $assetno;
+				$config['overwrite']		= TRUE;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['max_size']			= 5000;
+				$config['max_width']		= 1500;
+				$config['max_height']		= 1500;
 
-					$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 
-					if (!$this->upload->do_upload('piclocationsi')) {
-						$error					= array('error_info' => $this->upload->display_errors());
-						print_array($error);
-					} else {
-						$data						= $this->upload->data();				
-						$piclocationsi				= $data['full_path'];
-						$datadetail['PicLocationSi']= $piclocationsi;					
-					}
+				if (!$this->upload->do_upload('piclocationsi')) {
+					$error					= array('error_info' => $this->upload->display_errors());
+					print_array($error);
+				} else {
+					$data						= $this->upload->data();				
+					$piclocationsi				= $data['full_path'];
+					$datadetail['PicLocationSi']= $piclocationsi;					
 				}
-				//==============================================================================
-				$this->db->update('itemkendaraandetail', $datadetail, array('ItemID'	=> $itemid));
-
-				$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 			}
-		}
+			//==============================================================================
+			$this->db->update('itemkendaraandetail', $datadetail, array('ItemID'	=> $itemid));
+
+			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+		}		
 		// back to page asal
 		$urlstring	= $this->input->post('urlsegment');
 		$urlarr = explode("/", $urlstring);
@@ -499,4 +503,5 @@ class Asetkendaraan extends Authcontroller
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetkendaraanview/asetkend_edit', $data);
 	}
+
 }

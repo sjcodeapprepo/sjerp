@@ -178,13 +178,17 @@ class AsetGdBang extends Authcontroller
 		return $result[0]['lii'];
 	}
 
-	function _getLastAsetOrderPlusOne() 
+	function _getLastAsetOrderPlusOne($katid)
 	{
-		$sql	= "SELECT LPAD(AssetOrder+1, 3, 0) AS AO FROM itemgdgbangdetail ORDER BY AssetOrder DESC";
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemgdgbangdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' 
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
-		return $retval;
+		return $retval;		
 	}
 
 	function inputeditproc($id = null)
@@ -226,7 +230,7 @@ class AsetGdBang extends Authcontroller
 		$piclocationsi			= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne();
+			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 
 			if($piclocationsi != '') {
@@ -468,4 +472,5 @@ class AsetGdBang extends Authcontroller
 	{
 		print_array('asdf');
 	}
+
 }

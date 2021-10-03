@@ -186,9 +186,13 @@ class Asetlengalat extends Authcontroller
 		return $result[0]['lii'];
 	}
 
-	function _getLastAsetOrderPlusOne() 
+	function _getLastAsetOrderPlusOne($katid) 
 	{
-		$sql	= "SELECT LPAD(AssetOrder+1, 3, 0) AS AO FROM itemperlengperalatdetail ORDER BY AssetOrder DESC";
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemperlengperalatdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' 
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
@@ -223,7 +227,7 @@ class Asetlengalat extends Authcontroller
 		$piclocationsi		= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne();
+			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			//========================================FILE GAMBAR=====================
 			if($piclocationsi!='') {			
