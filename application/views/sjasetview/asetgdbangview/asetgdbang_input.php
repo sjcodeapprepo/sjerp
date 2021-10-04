@@ -335,7 +335,6 @@
         new Spry.Widget.ValidationTextField("penyusutanps", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("latps", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("longps", "integer", {useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("", "integer", {useCharacterMasking:true});
 
         new Spry.Widget.ValidationSelect("jenisperolehanidpr");
         new Spry.Widget.ValidationSelect("jenisperolehanidsi");
