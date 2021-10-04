@@ -182,7 +182,7 @@
                                 No BPKB&nbsp;
                             </td>
                             <td>
-								<input type='text' name='nodokumenbpkbpr' size='12' id='nodokumenbpkbpr' value="<?= $data['NoDokumenBPKBPr'] ?>" class='ratakanan' />
+								<input type='text' name='nodokumenbpkbpr' size='12' id='nodokumenbpkbpr' value="<?= $data['NoDokumenBPKBPr'] ?>" />
 							</td>
                             <td align="right">
                                 Tgl Dokumen&nbsp;
@@ -196,7 +196,7 @@
                                 No STNK&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='nostnkpr' size='9' id='nostnkpr' value="<?= $data['NoSTNKPr'] ?>" />
+                                <input type='text' name='nostnkpr' size='12' id='nostnkpr' value="<?= $data['NoSTNKPr'] ?>" />
                             </td>
                             <td align="right">
                                 Tgl STNK&nbsp;
@@ -221,7 +221,7 @@
                                 No Rangka&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='norangkapr' size='9' id='norangkapr' value="<?= $data['NoRangkaPr'] ?>" />
+                                <input type='text' name='norangkapr' size='12' id='norangkapr' value="<?= $data['NoRangkaPr'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -235,7 +235,7 @@
                                 Tahun Dibuat&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='tahundibuatpr' size='9' id='tahundibuatpr' value="<?= $data['TahunDibuatPr'] ?>" />
+                                <input type='text' name='tahundibuatpr' size='8' id='tahundibuatpr' value="<?= $data['TahunDibuatPr'] ?>" />
                             </td>                            
                         </tr>
                         <tr>
@@ -249,7 +249,7 @@
                                 Isi Silinder&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='isisilinderpr' size='12' id='isisilinderpr' value="<?= $data['IsiSilinderPr'] ?>" />
+                                <input type='text' name='isisilinderpr' size='8' id='isisilinderpr' value="<?= $data['IsiSilinderPr'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -257,13 +257,13 @@
                                 Warna&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='warnapr' size='9' id='warnapr' value="<?= $data['WarnaPr'] ?>" />
+                                <input type='text' name='warnapr' size='12' id='warnapr' value="<?= $data['WarnaPr'] ?>" />
                             </td>
                             <td align="right">
                                 Bahan Bakar&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='bahanbakarpr' size='9' id='bahanbakarpr' value="<?= $data['BahanBakarPr'] ?>" />
+                                <input type='text' name='bahanbakarpr' size='12' id='bahanbakarpr' value="<?= $data['BahanBakarPr'] ?>" />
                             </td>
                         </tr>
 						<tr>
@@ -342,17 +342,28 @@
     </form>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", {minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true});
+        
         new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("kondisikodesi");
+
+        new Spry.Widget.ValidationTextField("nodokumenbpkbpr", "none"); 
+        new Spry.Widget.ValidationTextField("nostnkpr", "none");
+        new Spry.Widget.ValidationTextField("merkpr", "none");
+        new Spry.Widget.ValidationTextField("norangkapr", "none");
+        new Spry.Widget.ValidationTextField("nopolpr", "none");
+        new Spry.Widget.ValidationTextField("nomesinpr", "none");
+        new Spry.Widget.ValidationTextField("warnapr", "none");
+        new Spry.Widget.ValidationTextField("bahanbakarpr", "none");
+        new Spry.Widget.ValidationTextField("penanggungjawabps", "none");
+
+        new Spry.Widget.ValidationTextField("tahundibuatpr", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("isisilinderpr", "integer", {useCharacterMasking:true});
+        
+        new Spry.Widget.ValidationSelect("lokasiidps");
+        new Spry.Widget.ValidationSelect("divisionidps");
     </script>
 </body>
 
