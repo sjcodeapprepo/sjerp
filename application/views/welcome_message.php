@@ -10,5 +10,5 @@
 	?>
 </body>
 <br /><br /><br />
-<center><h1>User <?=$username?> sedang login</h1</center>
+<center><h1>Login user <?=$username?></h1></center>
 </html>

@@ -252,6 +252,7 @@ class Asetkendaraan extends Authcontroller
 		$nopolpr					= $this->input->post('nopolpr');
 		$norangkapr					= $this->input->post('norangkapr');
 		$nomesinpr					= $this->input->post('nomesinpr');
+		$warnapr					= $this->input->post('warnapr');
 		$tahundibuatpr				= $this->input->post('tahundibuatpr');
 		$merkpr						= $this->input->post('merkpr');
 		$typepr						= $this->input->post('typepr');
@@ -315,6 +316,7 @@ class Asetkendaraan extends Authcontroller
 							'NoPolPr'				=> $nopolpr,
 							'NoRangkaPr'			=> $norangkapr,
 							'NoMesinPr'				=> $nomesinpr,
+							'WarnaPr'				=> $warnapr,
 							'TahunDibuatPr'			=> $tahundibuatpr,
 							'MerkPr'				=> $merkpr,
 							'TypePr'				=> $typepr,
@@ -353,6 +355,7 @@ class Asetkendaraan extends Authcontroller
 		$tglstnkpr					= $this->input->post('tglstnkpr');
 		$nopolpr					= $this->input->post('nopolpr');
 		$norangkapr					= $this->input->post('norangkapr');
+		$warnapr					= $this->input->post('warnapr');
 		$nomesinpr					= $this->input->post('nomesinpr');
 		$tahundibuatpr				= $this->input->post('tahundibuatpr');
 		$merkpr						= $this->input->post('merkpr');
@@ -389,7 +392,8 @@ class Asetkendaraan extends Authcontroller
 							'NoRangkaPr'			=> $norangkapr,
 							'NoMesinPr'				=> $nomesinpr,
 							'TahunDibuatPr'			=> $tahundibuatpr,
-							'MerkPr'				=> $merkpr,
+							'WarnaPr'				=> $merkpr,
+							'MerkPr'				=> $warnapr,
 							'TypePr'				=> $typepr,
 							'IsiSilinderPr'			=> $isisilinderpr,
 							'BahanBakarPr'			=> $bahanbakarpr,
