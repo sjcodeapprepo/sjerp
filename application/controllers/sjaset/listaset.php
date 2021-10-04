@@ -64,10 +64,11 @@ class ListAset extends Authcontroller {
 		$laporan->getActiveSheet()->setCellValue('A1','Perumda Sarana Jaya');
 		$laporan->getActiveSheet()->setCellValue('A2','List Aset Golongan Perlengkapan dan Peralatan');
 		//-------------TABEL HEADER
-		$laporan->getActiveSheet()->mergeCells('A5:A7');
-		$laporan->getActiveSheet()->setCellValue('A5','No');
-		$laporan->getActiveSheet()->mergeCells('B5:B7');
-		$laporan->getActiveSheet()->setCellValue('B5','Nama Karyawan');
+		$laporan->getActiveSheet()->mergeCells('A5:A6');
+		$laporan->getActiveSheet()->setCellValue('A5','Golongan');
+		$laporan->getActiveSheet()->mergeCells('B5:B6');
+		$laporan->getActiveSheet()->setCellValue('B5','Kategori');
+		$laporan->getActiveSheet()->mergeCells('B5:B6');
 		$laporan->getActiveSheet()->setCellValue('C5','Jam Absen');
 		$laporan->getActiveSheet()->freezePane('C8');
 		//--------------eo TABLE HEADER		

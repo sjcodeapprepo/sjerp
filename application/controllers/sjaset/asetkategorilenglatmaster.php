@@ -1,7 +1,7 @@
 <?php
 include(APPPATH . '/controllers/auth/authcontroller' . EXT);
 
-class AsetKategorLengLatMaster extends Authcontroller
+class AsetKategoriLengLatMaster extends Authcontroller
 {
 	var $isusermodify;
 
