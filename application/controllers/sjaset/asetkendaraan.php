@@ -398,7 +398,7 @@ class Asetkendaraan extends Authcontroller
 							'IsiSilinderPr'			=> $isisilinderpr,
 							'BahanBakarPr'			=> $bahanbakarpr,
 							'LokasiIDPs'			=> $lokasiidps,
-							'DivisionIDPs'			=> $penanggungjawabps,
+							'DivisionIDPs'			=> $divisionidps,
 							'PenanggungJawabPs'		=> $penanggungjawabps,
 							'KondisiKodeSi'			=> $kondisikodesi,
 							'NilaiSi'				=> $nilaisi,
