@@ -58,10 +58,20 @@
             changeYear: true,
             yearRange: "1960:2022"
         });
+        $("#tgldokumenpr").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
+        $("#tgldokumensi").datepicker({              
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2022"
+        });
+
         $( "#penyusutanps" ).focusin(function() {
             $(this).val('');
         });
-
         $( "#penyusutanps" ).focusout(function() {
             if($(this).val()=='') {
                 $(this).val(0);
@@ -138,7 +148,7 @@
                                 Luas Bangunan&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='luasbangunanpr' size='20' id='luasbangunanpr' value="<?= $data['LuasBangunanPr'] ?>" class='ratakanan' />
+                                <input type='text' name='luasbangunanpr' size='12' id='luasbangunanpr' value="<?= $data['LuasBangunanPr'] ?>" class='ratakanan' /> M2
                             </td>
                         </tr>
 						<tr>
@@ -152,7 +162,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisperolehanidpr', $itemjenisperolehanmaster, 'JenisPerolehanID', 'JenisPerolehanName', $data['JenisPerolehanIDPr'], '', '-Pilih Kategori-', "id='jenisperolehanidpr'");?>
+                                <?=form_dropdownDB_init('jenisperolehanidpr', $itemjenisperolehanmaster, 'JenisPerolehanID', 'JenisPerolehanName', $data['JenisPerolehanIDPr'], '', '-Pilih Jenis Perolehan-', "id='jenisperolehanidpr'");?>
                             </td>
                         </tr>
 						<tr>
@@ -166,7 +176,7 @@
                                 No Dokumen&nbsp;
                             </td>
                             <td>
-                                <input type='text' name='nodokumenpr' size='30' id='nodokumenpr' value="<?= $data['NoDokumenPr'] ?>" />
+                                <input type='text' name='nodokumenpr' size='12' id='nodokumenpr' value="<?= $data['NoDokumenPr'] ?>" />
 							</td>
                         </tr>
                         <tr>
@@ -187,7 +197,7 @@
                                 Penyusutan&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='penyusutanps' size='10' id='penyusutanps' value="<?= $data['PenyusutanPs'] ?>" class='ratakanan' /> %
+								<input type='text' name='penyusutanps' size='8' id='penyusutanps' value="<?= $data['PenyusutanPs'] ?>" class='ratakanan' /> %
                             </td>
                         </tr>
                         <tr>
@@ -195,7 +205,7 @@
                                 Lokasi&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='lokasips' size='30' id='lokasips' value="<?= $data['LokasiPs'] ?>" />
+								<input type='text' name='lokasips' size='50' id='lokasips' value="<?= $data['LokasiPs'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -203,7 +213,7 @@
                                 Berdiri diatas tanah&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='berdiriatastanahps' size='30' id='berdiriatastanahps' value="<?= $data['BerdiriAtasTanahPs'] ?>" />
+								<input type='text' name='berdiriatastanahps' size='50' id='berdiriatastanahps' value="<?= $data['BerdiriAtasTanahPs'] ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -230,7 +240,7 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
-								<input type='text' name='penanggungjawabsi' size='20' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
+								<input type='text' name='penanggungjawabsi' size='30' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
                             </td>
                             <td align="right">
                                 Jenis Perolehan&nbsp;
@@ -270,16 +280,18 @@
                             </td>                            
                         </tr>
 						<tr>
-                        <td align="right">
+                            <td align="right">
                                 Nilai&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<input type='text' name='nilaisi' size='20' id='nilaisi' value="<?= $data['NilaiSi'] ?>" class='ratakanan' />
                             </td>
+                            </tr>
+						<tr>   
                             <td align="right" valign="top">
                                 Keterangan&nbsp;
                             </td>
-                            <td>
+                            <td colspan="3">
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
 							</td>
                         </tr>
@@ -304,17 +316,30 @@
     </form>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", {
-            minValue: "0",useCharacterMasking:true
-        });
-        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {
-            minValue: "0",maxValue: "100",useCharacterMasking:true
-        });
+        new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true});
+
         new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("kondisikodesi");
+
+        new Spry.Widget.ValidationTextField("mitrakerjasamapr", "none");
+        new Spry.Widget.ValidationTextField("nodokumenpr", "none");
+        new Spry.Widget.ValidationTextField("lokasips", "none");
+        new Spry.Widget.ValidationTextField("berdiriatastanahps", "none");
+        new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
+        new Spry.Widget.ValidationTextField("mitrakerjasamasi", "none");
+        new Spry.Widget.ValidationTextField("nodokumensi", "none");
+
+        new Spry.Widget.ValidationTextField("luasbangunanpr", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("nilaiperolehanpr", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("penyusutanps", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("latps", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("longps", "integer", {useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("", "integer", {useCharacterMasking:true});
+
+        new Spry.Widget.ValidationSelect("jenisperolehanidpr");
+        new Spry.Widget.ValidationSelect("jenisperolehanidsi");
+        new Spry.Widget.ValidationSelect("jenisgdgbangunanidsi");
     </script>
 </body>
 
