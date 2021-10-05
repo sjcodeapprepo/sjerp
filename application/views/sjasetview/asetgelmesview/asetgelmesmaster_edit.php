@@ -73,12 +73,12 @@
         function getJenis(katid) {
             if(katid != '') {
                 $.post('<?=site_url()?>/sjaset/asetgelmes/getJenis/'+katid, function(data){
-                    $('#jeniselkmesinkatid').empty();
-                    $('#jeniselkmesinkatid').append(data);
+                    $('#jenisidj').empty();
+                    $('#jenisidj').append(data);
                 });
             } else {
-                $('#jeniselkmesinkatid').empty();
-                $('#jeniselkmesinkatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+                $('#jenisidj').empty();
+                $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
             }
         }
 </script>
@@ -128,7 +128,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jeniselkmesinkatid', $itemjeniselkmesinmaster, 'JenisElkmesinKatID', 'JenisElkmesinKatName', $data['JenisElkmesinKatID'], '', '-Pilih Jenis-', "id='jeniselkmesinkatid'");?>
+                                <?=form_dropdownDB_init('jenisidj', $itemjeniselkmesinmaster, 'IDJ', 'JenisElkmesinKatName', $data['jenisidj'], '', '-Pilih Jenis-', "id='jenisidj'");?>
                             </td>
                         </tr>
                         <tr>
@@ -244,7 +244,7 @@
         new Spry.Widget.ValidationTextField("hargasi", "integer", {minValue: "0",useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true });
         new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("jeniselkmesinkatid");
+        new Spry.Widget.ValidationSelect("jenisidj");
         new Spry.Widget.ValidationSelect("lokasiidpr");
         new Spry.Widget.ValidationSelect("kondisikodesi");
         new Spry.Widget.ValidationSelect("divisionidps");

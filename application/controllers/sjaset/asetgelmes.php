@@ -117,6 +117,7 @@ class AsetGElMes extends Authcontroller
 			'TglPr'					=> '',
 			'AssetOrder'			=> '',
 			'JenisElkmesinKatID'	=> '',
+			'jenisidj'=> '',
 			'NoDokumenPr'			=> '',
 			'NilaiPr'				=> '',
 			'PenyusutanPr'			=> '',
@@ -131,6 +132,7 @@ class AsetGElMes extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisElkmesinKatID, 
+					CONCAT(d.JenisID,'|',d.JenisElkmesinKatID) AS jenisidj, 
 					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPr, d.LokasiIDPr, d.DivisionIDPs, d.PenanggungJawabPs, 
 					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
 				FROM 
@@ -147,7 +149,7 @@ class AsetGElMes extends Authcontroller
 
 	function _getItemjeniselkmesinmasterData($id)
 	{
-		$sql = "SELECT j.JenisElkmesinKatID , j.JenisElkmesinKatName 
+		$sql = "SELECT j.JenisElkmesinKatID , j.JenisElkmesinKatName, CONCAT(j.ID,'|', j.JenisElkmesinKatID) AS IDJ
 		FROM itemjeniselkmesinmaster j, itemmaster i
 		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisElkmesinKatName";
 		$query = $this->db->query($sql);
@@ -157,7 +159,7 @@ class AsetGElMes extends Authcontroller
 
 	function getJenis($katid)
 	{
-		$sql = "SELECT JenisElkmesinKatID, JenisElkmesinKatName 
+		$sql = "SELECT JenisElkmesinKatID, CONCAT(ID, '|', JenisElkmesinKatID) AS IDJ, JenisElkmesinKatName 
 		FROM itemjeniselkmesinmaster
 		WHERE KatID='$katid'";
 		$query = $this->db->query($sql);
@@ -165,7 +167,7 @@ class AsetGElMes extends Authcontroller
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['JenisElkmesinKatID']."'>".$result['JenisElkmesinKatName']."</option>\n";
+			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisElkmesinKatName']."</option>\n";
 		}
 		echo $jenisid;
 	}	
@@ -219,7 +221,7 @@ class AsetGElMes extends Authcontroller
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
 					FROM itemelkmesindetail d, itemmaster i 
-					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' d.JenisElkmesinKatID AND ='$jenisid'
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID='$jenisid'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
@@ -241,7 +243,7 @@ class AsetGElMes extends Authcontroller
 	{
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
-		$jeniselkmesinkatid	= $this->input->post('jeniselkmesinkatid');
+		$jenisidj			= $this->input->post('jenisidj');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -255,8 +257,12 @@ class AsetGElMes extends Authcontroller
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
 
+		$jenises			= explode("|", $jenisidj);
+		$jenisid			= $jenises[0];
+		$jeniselkmesinkatid	= $jenises[1];
+
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniselkmesinkatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
 			if($piclocationsi!='') {
@@ -294,6 +300,7 @@ class AsetGElMes extends Authcontroller
 							'ItemID'				=> $itemid,
 							'AssetOrder'			=> $assetorder,
 							'JenisElkmesinKatID'	=> $jeniselkmesinkatid,
+							'JenisID'				=> $jenisid,
 							'NoDokumenPr'			=> $nodokumenpr,
 							'NilaiPr'				=> $nilaipr,
 							'PenyusutanPr'			=> $penyusutanpr,
@@ -347,7 +354,7 @@ class AsetGElMes extends Authcontroller
 		$submit				= $this->input->post('submit');
 
 		$katid				= $this->input->post('katid');
-		$jeniselkmesinkatid	= $this->input->post('jeniselkmesinkatid');
+		$jenisidj			= $this->input->post('jenisidj');
 		// $assetorder			= $this->input->post('assetorder');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
@@ -362,8 +369,11 @@ class AsetGElMes extends Authcontroller
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
 
+		$jenises			= explode("|", $jenisidj);
+		$jenisid			= $jenises[0];
+		$jeniselkmesinkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniselkmesinkatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
@@ -377,6 +387,7 @@ class AsetGElMes extends Authcontroller
 
 			$datadetail	= array(
 							'JenisElkmesinKatID'	=> $jeniselkmesinkatid,
+							'JenisID'				=> $jenisid,
 							'NoDokumenPr'			=> $nodokumenpr,
 							'NilaiPr'				=> $nilaipr,
 							'PenyusutanPr'			=> $penyusutanpr,

@@ -354,7 +354,7 @@ class Asetlengalat extends Authcontroller
 	{
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
-		$jenisperlengperalatkatid	= $this->input->post('jenisperlengperalatkatid');
+		$jenisidj			= $this->input->post('jenisidj');
 		// $oldassetorder			= $this->input->post('assetorder');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
@@ -369,8 +369,11 @@ class Asetlengalat extends Authcontroller
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
 
+		$jenises					= explode("|", $jenisidj);
+		$jenisid					= $jenises[0];
+		$jenisperlengperalatkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisperlengperalatkatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
@@ -384,6 +387,7 @@ class Asetlengalat extends Authcontroller
 
 			$datadetail	= array(
 								'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
+								'JenisID'				=> $jenisid,
 								'NoDokumenPr'			=> $nodokumenpr,
 								'NilaiPr'				=> $nilaipr,
 								'PenyusutanPs'			=> $penyusutanps,
