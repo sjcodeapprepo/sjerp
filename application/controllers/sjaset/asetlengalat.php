@@ -215,6 +215,19 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
+	function _getLastAsetOrderPlusOneV2($katid, $jenisid) 
+	{
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemperlengperalatdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisPerlengPeralatKatID='$jenisid'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		return $retval;
+	}
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -243,7 +256,7 @@ class Asetlengalat extends Authcontroller
 		$piclocationsi		= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisperlengperalatkatid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			//========================================FILE GAMBAR=====================
 			if($piclocationsi!='') {			
@@ -335,7 +348,7 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisperlengperalatkatid	= $this->input->post('jenisperlengperalatkatid');
-		$assetorder			= $this->input->post('assetorder');
+		// $oldassetorder			= $this->input->post('assetorder');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -350,7 +363,8 @@ class Asetlengalat extends Authcontroller
 		$piclocationsi		= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetno					= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisperlengperalatkatid);
+			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 

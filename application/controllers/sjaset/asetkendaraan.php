@@ -227,6 +227,19 @@ class Asetkendaraan extends Authcontroller
 		return $retval;
 	}
 
+	function _getLastAsetOrderPlusOneV2($katid, $jenisid) 
+	{
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+					FROM itemkendaraandetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisKendaraanKatID ='$jenisid'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		return $retval;
+	}
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -267,7 +280,7 @@ class Asetkendaraan extends Authcontroller
 		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniskendaraankatid);
 			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
 			if($piclocationsi!='') {
@@ -341,7 +354,7 @@ class Asetkendaraan extends Authcontroller
 	function _editproc($itemid)
 	{
 		$submit						= $this->input->post('submit');
-		$assetorder					= $this->input->post('assetorder');
+		// $assetorder					= $this->input->post('assetorder');
 		$katid						= $this->input->post('katid');
 		$jeniskendaraankatid		= $this->input->post('jeniskendaraankatid');
 		$tglpr						= $this->input->post('tglpr');
@@ -371,6 +384,7 @@ class Asetkendaraan extends Authcontroller
 		$piclocationsi				= $this->input->post('piclocationsi');
 
 		if ($submit == 'SIMPAN') {
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniskendaraankatid);
 			$assetno					= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
 			$datamaster	= array(
