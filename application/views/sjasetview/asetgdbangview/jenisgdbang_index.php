@@ -87,6 +87,7 @@ for($a=0; $a<count($view_data); $a++) {
 	  <tr>
 	  	<td align='center'><?=$id?></td>
 		<td align='left'><?=$jenis?></td>
+        <td align='left'><?=$kat?></td>
 	  </tr>
 <?php } ?>
         <tr>
