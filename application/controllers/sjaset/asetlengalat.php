@@ -117,6 +117,8 @@ class Asetlengalat extends Authcontroller
 			'TglPr'					=> '',
 			'AssetOrder'			=> '',
 			'JenisPerlengPeralatKatID'	=> '',
+			'JenisID'				=> '',
+			'jenisidj'=> '',
 			'NoDokumenPr'			=> '',
 			'NilaiPr'				=> '',
 			'PenyusutanPs'			=> '',
@@ -130,7 +132,8 @@ class Asetlengalat extends Authcontroller
 		);
 
 		$sql = "SELECT 
-					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisPerlengPeralatKatID, 
+					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisPerlengPeralatKatID, d.JenisID,
+					CONCAT(d.JenisID,'|',d.JenisPerlengPeralatKatID) AS jenisidj, 
 					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabSi, 
 					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
 				FROM 
@@ -147,7 +150,7 @@ class Asetlengalat extends Authcontroller
 
 	function _getItemJenisPerlengPeralatkatmasterData($id)
 	{
-		$sql = "SELECT j.JenisPerlengPeralatKatID , j.JenisPerlengPeralatKatName 
+		$sql = "SELECT j.ID, j.JenisPerlengPeralatKatID, CONCAT(j.ID,'|', j.JenisPerlengPeralatKatID) AS IDJ, j.JenisPerlengPeralatKatName 
 		FROM itemjenisperlengperalatkatmaster j, itemmaster i
 		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisPerlengPeralatKatName";
 		$query = $this->db->query($sql);
@@ -157,7 +160,7 @@ class Asetlengalat extends Authcontroller
 
 	function getJenis($katid)
 	{
-		$sql = "SELECT JenisPerlengPeralatKatID, JenisPerlengPeralatKatName 
+		$sql = "SELECT ID, JenisPerlengPeralatKatID, CONCAT(ID, '|', JenisPerlengPeralatKatID) AS IDJ, JenisPerlengPeralatKatName 
 		FROM itemjenisperlengperalatkatmaster 
 		WHERE KatID='$katid' ORDER BY JenisPerlengPeralatKatName";
 		$query = $this->db->query($sql);
@@ -165,7 +168,7 @@ class Asetlengalat extends Authcontroller
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['JenisPerlengPeralatKatID']."'>".$result['JenisPerlengPeralatKatName']."</option>\n";
+			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisPerlengPeralatKatName']."</option>\n";
 		}
 		echo $jenisid;
 	}
@@ -219,7 +222,7 @@ class Asetlengalat extends Authcontroller
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
 					FROM itemperlengperalatdetail d, itemmaster i 
-					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisPerlengPeralatKatID='$jenisid'
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID='$jenisid'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
@@ -241,7 +244,7 @@ class Asetlengalat extends Authcontroller
 	{
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
-		$jenisperlengperalatkatid	= $this->input->post('jenisperlengperalatkatid');
+		$jenisidj			= $this->input->post('jenisidj');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -255,8 +258,11 @@ class Asetlengalat extends Authcontroller
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
 
+		$jenises					= explode("|", $jenisidj);
+		$jenisid					= $jenises[0];
+		$jenisperlengperalatkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisperlengperalatkatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			//========================================FILE GAMBAR=====================
 			if($piclocationsi!='') {
@@ -296,6 +302,7 @@ class Asetlengalat extends Authcontroller
 							'ItemID'				=> $itemid,
 							'AssetOrder'			=> $assetorder,
 							'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
+							'JenisID'				=> $jenisid,
 							'NoDokumenPr'			=> $nodokumenpr,
 							'NilaiPr'				=> $nilaipr,
 							'PenyusutanPs'			=> $penyusutanps,

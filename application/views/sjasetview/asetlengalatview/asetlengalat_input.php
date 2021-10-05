@@ -91,12 +91,12 @@
     function getJenis(katid) {
         if(katid != '') {
 		    $.post('<?=site_url()?>/sjaset/asetlengalat/getJenis/'+katid, function(data){
-                $('#jenisperlengperalatkatid').empty();
-                $('#jenisperlengperalatkatid').append(data);
+                $('#jenisidj').empty();
+                $('#jenisidj').append(data);
             });
         } else {
-            $('#jenisperlengperalatkatid').empty();
-            $('#jenisperlengperalatkatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+            $('#jenisidj').empty();
+            $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
         }
     }
 </script>
@@ -144,7 +144,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <select name="jenisperlengperalatkatid" id="jenisperlengperalatkatid">
+                                <select name="jenisidj" id="jenisidj">
                                     <option value="-1">--Pilih Kategori dahulu--</option>
                                 </select>
                             </td>
@@ -261,7 +261,7 @@
         new Spry.Widget.ValidationTextField("hargasi", "integer", { minValue: "0",useCharacterMasking:true });
         new Spry.Widget.ValidationTextField("penyusutanps", "integer", {  minValue: "0",maxValue: "100",useCharacterMasking:true });
         new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("jenisperlengperalatkatid");
+        new Spry.Widget.ValidationSelect("jenisidj");
         new Spry.Widget.ValidationSelect("divisionidps");
         new Spry.Widget.ValidationSelect("lokasiidps");
         new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
