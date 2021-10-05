@@ -65,7 +65,7 @@ class Asetlengalat extends Authcontroller
 				FROM 
 					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisPerlengPeralatKatID=mj.JenisPerlengPeralatKatID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
@@ -259,7 +259,7 @@ class Asetlengalat extends Authcontroller
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisperlengperalatkatid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			//========================================FILE GAMBAR=====================
-			if($piclocationsi!='') {			
+			if($piclocationsi!='') {
 				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
 				$config['file_name']		= 'lat' . $assetno;
 				$config['overwrite']		= TRUE;

@@ -65,7 +65,7 @@ class AsetGElMes extends Authcontroller
 				FROM 
 					itemmaster m, itemelkmesindetail d, itemkatmaster mk, itemdivisionmaster md, itemjeniselkmesinmaster mj 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisElkmesinKatID=mj.JenisElkmesinKatID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='04'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";

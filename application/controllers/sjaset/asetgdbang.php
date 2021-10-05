@@ -66,7 +66,7 @@ class AsetGdBang extends Authcontroller
 				FROM 
 					itemmaster m, itemgdgbangdetail d, itemkatmaster mk, itemjenisperolehanmaster mj, itemjenisbangunanmaster mb
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisPerolehanIDSi=mj.JenisPerolehanID AND d.JenisGdgBangunanIDSi=mb.JenisGdgBangunanID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.JenisGdgBangunanIDSi=mb.JenisGdgBangunanID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='02'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";

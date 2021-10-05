@@ -65,7 +65,7 @@ class Asetkendaraan extends Authcontroller
 				FROM 
 					itemmaster m, itemkendaraandetail d, itemkatmaster mk, itemdivisionmaster md, itemjeniskendaraankatmaster mj 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisKendaraanKatID=mj.JenisKendaraanKatID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='05'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
