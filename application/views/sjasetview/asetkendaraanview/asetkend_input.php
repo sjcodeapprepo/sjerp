@@ -82,12 +82,12 @@
     function getJenis(katid) {
         if(katid != '') {
             $.post('<?=site_url()?>/sjaset/asetkendaraan/getJenis/'+katid, function(data){
-                $('#jeniskendaraankatid').empty();
-                $('#jeniskendaraankatid').append(data);
+                $('#jenisidj').empty();
+                $('#jenisidj').append(data);
             });
         } else {
-            $('#jeniskendaraankatid').empty();
-            $('#jeniskendaraankatid').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+            $('#jenisidj').empty();
+            $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
         }
     }
 </script>
@@ -135,7 +135,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <select name="jeniskendaraankatid" id="jeniskendaraankatid">
+                                <select name="jenisidj" id="jenisidj">
                                     <option value="-1">--Pilih Kategori dahulu--</option>
                                 </select>
                             </td>
@@ -365,6 +365,7 @@
         
         new Spry.Widget.ValidationSelect("lokasiidps");
         new Spry.Widget.ValidationSelect("divisionidps");
+        new Spry.Widget.ValidationSelect("jenisidj");
     </script>
 </body>
 

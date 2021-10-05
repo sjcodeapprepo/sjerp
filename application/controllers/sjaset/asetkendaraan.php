@@ -115,6 +115,8 @@ class Asetkendaraan extends Authcontroller
 			'KatID'					=> '',
 			'AssetNo'				=> '',
 			'JenisKendaraanKatID'	=> '',
+			'JenisID'				=> '',
+			'jenisidj'=> '',
 			'TglPr'					=> '',
 			'NoDokumenPr'			=> '', 
 			'NilaiPr'				=> '',
@@ -142,6 +144,7 @@ class Asetkendaraan extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisKendaraanKatID,
+					CONCAT(d.JenisID,'|',d.JenisKendaraanKatID) AS jenisidj, d.JenisID,
 					d.NoDokumenPr,d.NilaiPr, d.PenyusutanPr, d.NoDokumenBPKBPr, d.TglDokumenPr,
 					d.NoSTNKPr, d.TglSTNKPr, d.NoPolPr, d.NoRangkaPr, d.NoMesinPr, d.TahunDibuatPr, d.MerkPr,
 					d.WarnaPr, d.IsiSilinderPr, d.BahanBakarPr, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabPs, 
@@ -160,7 +163,7 @@ class Asetkendaraan extends Authcontroller
 
 	function _getItemJenisKendmstData($id)
 	{
-		$sql = "SELECT j.JenisKendaraanKatID , j.JenisKendaraanKatName 
+		$sql = "SELECT j.JenisKendaraanKatID , j.JenisKendaraanKatName, CONCAT(j.ID,'|',j.JenisKendaraanKatID) AS IDJ
 		FROM itemjeniskendaraankatmaster j, itemmaster i
 		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisKendaraanKatName";
 		$query = $this->db->query($sql);
@@ -170,14 +173,15 @@ class Asetkendaraan extends Authcontroller
 
 	function getJenis($katid)
 	{
-		$sql = "SELECT  JenisKendaraanKatID,  JenisKendaraanKatName FROM itemjeniskendaraankatmaster
+		$sql = "SELECT  JenisKendaraanKatID,  JenisKendaraanKatName, CONCAT(ID, '|', JenisKendaraanKatID) AS IDJ
+		FROM itemjeniskendaraankatmaster
 		WHERE KatID='$katid'";
 		$query = $this->db->query($sql);
 		$results = $query->result_array();
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['JenisKendaraanKatID']."'>".$result['JenisKendaraanKatName']."</option>\n";
+			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisKendaraanKatName']."</option>\n";
 		}
 		echo $jenisid;
 	}
@@ -231,7 +235,7 @@ class Asetkendaraan extends Authcontroller
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
 					FROM itemkendaraandetail d, itemmaster i 
-					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisKendaraanKatID ='$jenisid'
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID ='$jenisid'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
@@ -253,13 +257,14 @@ class Asetkendaraan extends Authcontroller
 	{
 		$submit						= $this->input->post('submit');
 		$katid						= $this->input->post('katid');
-		$jeniskendaraankatid		= $this->input->post('jeniskendaraankatid');
+		$jenisidj		= $this->input->post('jenisidj');
 		$tglpr						= $this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 		$nodokumenpr				= $this->input->post('nodokumenpr');
 		$nilaipr					= $this->input->post('nilaipr');
 		$penyusutanpr				= $this->input->post('penyusutanpr');
 		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
+		$tgldokumenpr = $this->input->post('tgldokumenpr');
 		$nostnkpr					= $this->input->post('nostnkpr');
 		$tglstnkpr					= $this->input->post('tglstnkpr');
 		$nopolpr					= $this->input->post('nopolpr');
@@ -279,8 +284,12 @@ class Asetkendaraan extends Authcontroller
 		$keterangansi				= $this->input->post('keterangansi');
 		$piclocationsi				= $this->input->post('piclocationsi');
 
+		$jenises			= explode("|", $jenisidj);
+		$jenisid			= $jenises[0];
+		$jeniskendaraankatid	= $jenises[1];
+
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniskendaraankatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
 			if($piclocationsi!='') {
@@ -324,6 +333,7 @@ class Asetkendaraan extends Authcontroller
 							'NilaiPr'				=> $nilaipr,
 							'PenyusutanPr'			=> $penyusutanpr,
 							'NoDokumenBPKBPr'		=> $nodokumenbpkbpr,
+							'TglDokumenPr'			=> $tgldokumenpr,
 							'NoSTNKPr'				=> $nostnkpr,
 							'TglSTNKPr'				=> $tglstnkpr,
 							'NoPolPr'				=> $nopolpr,
@@ -356,7 +366,7 @@ class Asetkendaraan extends Authcontroller
 		$submit						= $this->input->post('submit');
 		// $assetorder					= $this->input->post('assetorder');
 		$katid						= $this->input->post('katid');
-		$jeniskendaraankatid		= $this->input->post('jeniskendaraankatid');
+		$jenisidj					= $this->input->post('jenisidj');
 		$tglpr						= $this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 		$nodokumenpr				= $this->input->post('nodokumenpr');
@@ -364,6 +374,7 @@ class Asetkendaraan extends Authcontroller
 		$penyusutanpr				= $this->input->post('penyusutanpr');
 
 		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
+		$tgldokumenpr					= $this->input->post('tgldokumenpr');
 		$nostnkpr					= $this->input->post('nostnkpr');
 		$tglstnkpr					= $this->input->post('tglstnkpr');
 		$nopolpr					= $this->input->post('nopolpr');
@@ -383,8 +394,11 @@ class Asetkendaraan extends Authcontroller
 		$keterangansi				= $this->input->post('keterangansi');
 		$piclocationsi				= $this->input->post('piclocationsi');
 
+		$jenises					= explode("|", $jenisidj);
+		$jenisid					= $jenises[0];
+		$jeniskendaraankatid		= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jeniskendaraankatid);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno					= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
 			$datamaster	= array(
@@ -396,12 +410,14 @@ class Asetkendaraan extends Authcontroller
 
 			$datadetail	= array(
 							'JenisKendaraanKatID'	=> $jeniskendaraankatid,
+							'JenisID'				=> $jenisid,
 							'NoDokumenPr'			=> $nodokumenpr,
 							'NilaiPr'				=> $nilaipr,
 							'PenyusutanPr'			=> $penyusutanpr,
 							'NoDokumenBPKBPr'		=> $nodokumenbpkbpr,
 							'NoSTNKPr'				=> $nostnkpr,
 							'TglSTNKPr'				=> $tglstnkpr,
+							'TglDokumenPr'			=> $tgldokumenpr,
 							'NoPolPr'				=> $nopolpr,
 							'NoRangkaPr'			=> $norangkapr,
 							'NoMesinPr'				=> $nomesinpr,

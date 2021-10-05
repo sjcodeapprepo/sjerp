@@ -117,6 +117,7 @@ class AsetGElMes extends Authcontroller
 			'TglPr'					=> '',
 			'AssetOrder'			=> '',
 			'JenisElkmesinKatID'	=> '',
+			'JenisID'				=> '',
 			'jenisidj'=> '',
 			'NoDokumenPr'			=> '',
 			'NilaiPr'				=> '',
@@ -132,7 +133,7 @@ class AsetGElMes extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisElkmesinKatID, 
-					CONCAT(d.JenisID,'|',d.JenisElkmesinKatID) AS jenisidj, 
+					CONCAT(d.JenisID,'|',d.JenisElkmesinKatID) AS jenisidj, d.JenisID,
 					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPr, d.LokasiIDPr, d.DivisionIDPs, d.PenanggungJawabPs, 
 					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
 				FROM 
