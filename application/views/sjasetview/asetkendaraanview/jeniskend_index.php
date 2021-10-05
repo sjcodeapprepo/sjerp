@@ -73,7 +73,8 @@
 	<thead>
 	  <tr>
 		<th>NO KODE</th>
-		<th>JENIS KATEGORI KENDARAAN</th>
+		<th>JENIS KENDARAAN</th>
+        <th>KATEGORI KENDARAAN</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -86,6 +87,7 @@ for($a=0; $a<count($view_data); $a++) {
 	  <tr>
 	  	<td align='center'><?=$id?></td>
 		<td align='left'><?=$jenis?></td>
+        <td align='left'><?=$jenis?></td>
 	  </tr>
 <?php } ?>
         <tr>

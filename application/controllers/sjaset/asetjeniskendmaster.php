@@ -30,6 +30,7 @@ class AsetJenisKendMaster extends Authcontroller
 			$this->db->insert('itemjeniskendaraankatmaster', $datamaster);
 		}
 		$data['view_data']	= $this->_getData();
+		$data['itemkatmaster']	= $this->_getItemKatMasterData();
 		$this->load->view('sjasetview/asetkendaraanview/jeniskend_index', $data);
 	}
 
