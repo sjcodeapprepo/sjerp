@@ -74,6 +74,7 @@
 	  <tr>
 		<th>NO KODE</th>
 		<th>JENIS GEDUNG DAN BANGUNAN</th>
+        <th>KATEGORI</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -81,6 +82,7 @@
 for($a=0; $a<count($view_data); $a++) {	
 	$id			= $view_data[$a]['JenisGdgBangunanID'];
 	$jenis		= $view_data[$a]['JenisGdgBangunanName'];
+    $kat		= $view_data[$a]['KatName'];
 ?>
 	  <tr>
 	  	<td align='center'><?=$id?></td>
@@ -93,6 +95,9 @@ for($a=0; $a<count($view_data); $a++) {
             </td>
             <td align='left'>
                 <input type='text' name='JenisGdgBangunanName' size='16' id='JenisGdgBangunanName' />
+            </td>
+            <td align='left'>
+                <?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', '', '', '-Pilih Kategori-', "id='katid'");?>
             </td>
         </tr>
         <tr>
