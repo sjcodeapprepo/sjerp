@@ -83,12 +83,12 @@
     function getJenis(katid) {
         if(katid != '') {
             $.post('<?=site_url()?>/sjaset/asetgdbang/getJenis/'+katid, function(data){
-                $('#jenisgdgbangunanidsi').empty();
-                $('#jenisgdgbangunanidsi').append(data);
+                $('#jenisidj').empty();
+                $('#jenisidj').append(data);
             });
         } else {
-                $('#jenisgdgbangunanidsi').empty();
-                $('#jenisgdgbangunanidsi').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+                $('#jenisidj').empty();
+                $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
             }
     }
 </script>
@@ -123,7 +123,8 @@
                                 No Aset&nbsp;
                             </td>
                             <td colspan='3'>
-								&nbsp;
+                                <span id="assetdisplay"><?= $data['AssetNo'] ?></span>
+                                <input type='hidden' name='assetno' id='assetno' value="<?= $data['AssetNo'] ?>" />
                             </td>
 						</tr>
                         <tr>
@@ -276,7 +277,7 @@
                                 Jenis Gedung / Bangunan&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisgdgbangunanidsi', $itemjenisbangunanmaster, 'JenisGdgBangunanID', 'JenisGdgBangunanName', $data['JenisGdgBangunanIDSi'], '', '-Pilih Jenis Gedung/Bangunan-', "id='jenisgdgbangunanidsi'");?> 
+                                <?=form_dropdownDB_init('jenisidj', $itemjenisbangunanmaster, 'IDJ', 'JenisGdgBangunanName', $data['jenisidj'], '', '-Pilih Jenis Gedung/Bangunan-', "id='jenisidj'");?> 
                             </td>                            
                         </tr>
 						<tr>
@@ -318,10 +319,6 @@
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("penyusutanps", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true});
-
-        new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("kondisikodesi");
-
         new Spry.Widget.ValidationTextField("mitrakerjasamapr", "none");
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         new Spry.Widget.ValidationTextField("lokasips", "none");
@@ -329,7 +326,6 @@
         new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
         new Spry.Widget.ValidationTextField("mitrakerjasamasi", "none");
         new Spry.Widget.ValidationTextField("nodokumensi", "none");
-
         new Spry.Widget.ValidationTextField("luasbangunanpr", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("nilaiperolehanpr", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("penyusutanps", "integer", {useCharacterMasking:true});
@@ -337,9 +333,10 @@
         new Spry.Widget.ValidationTextField("longps", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("", "integer", {useCharacterMasking:true});
 
+        new Spry.Widget.ValidationSelect("katid");
         new Spry.Widget.ValidationSelect("jenisperolehanidpr");
         new Spry.Widget.ValidationSelect("jenisperolehanidsi");
-        new Spry.Widget.ValidationSelect("jenisgdgbangunanidsi");
+        new Spry.Widget.ValidationSelect("jenisidj");
     </script>
 </body>
 

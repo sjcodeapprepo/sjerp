@@ -66,7 +66,7 @@ class AsetGdBang extends Authcontroller
 				FROM 
 					itemmaster m, itemgdgbangdetail d, itemkatmaster mk, itemjenisperolehanmaster mj, itemjenisbangunanmaster mb
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.JenisGdgBangunanIDSi=mb.JenisGdgBangunanID
+					m.ItemID=d.ItemID AND d.JenisPerolehanIDSi=mj.JenisPerolehanID AND d.JenisID=mb.ID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='02'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
@@ -122,6 +122,8 @@ class AsetGdBang extends Authcontroller
 			'NoDokumenSi'			=> '',
 			'TglDokumenSi'			=> '',
 			'JenisGdgBangunanIDSi'	=> '',
+			'JenisID'				=> '',
+			'jenisidj'=> '',
 			'NilaiSi'				=> '',
 			'KeteranganSi'			=> '',
 			'PicLocationSi'			=> ''
@@ -130,9 +132,12 @@ class AsetGdBang extends Authcontroller
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.LuasBangunanPr, d.NilaiPerolehanPr,
 					d.JenisPerolehanIDPr, d.MitraKerjasamaPr, d.NoDokumenPr, d.TglDokumenPr, d.PenyusutanPs,
-					d.LokasiPs, d.LatPs, d.LongPs, d.BerdiriAtasTanahPs, d.PenanggungJawabSi, d.JenisPerolehanIDSi, 
+					d.LokasiPs, d.LatPs, d.LongPs, d.BerdiriAtasTanahPs, d.PenanggungJawabSi, d.JenisPerolehanIDSi,
 					d.JenisPerolehanIDSi, d.MitraKerjasamaSi, d.NoDokumenSi, d.TglDokumenSi,
-					d.JenisGdgBangunanIDSi, d.NilaiSi,d.KeteranganSi, d.PicLocationSi
+					d.JenisGdgBangunanIDSi, 
+					d.JenisID,
+					CONCAT(d.JenisID,'|',d.JenisGdgBangunanIDSi) AS jenisidj, 
+					d.NilaiSi,d.KeteranganSi, d.PicLocationSi
 				FROM
 					itemmaster m, itemgdgbangdetail d
 				WHERE
@@ -155,8 +160,7 @@ class AsetGdBang extends Authcontroller
 
 	function _getItemJenisGdBangMaster($id) 
 	{
-		$sql = "SELECT JenisGdgBangunanID, JenisGdgBangunanName FROM itemjenisbangunanmaster";
-		$sql = "SELECT j.JenisGdgBangunanID , j.JenisGdgBangunanName 
+		$sql = "SELECT j.JenisGdgBangunanID , j.JenisGdgBangunanName, CONCAT(j.ID,'|', j.JenisGdgBangunanID) AS IDJ
 		FROM itemjenisbangunanmaster j, itemmaster i
 		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisGdgBangunanName";
 		$query = $this->db->query($sql);
@@ -166,7 +170,7 @@ class AsetGdBang extends Authcontroller
 
 	function getJenis($katid)
 	{
-		$sql = "SELECT JenisGdgBangunanID, JenisGdgBangunanName 
+		$sql = "SELECT JenisGdgBangunanID, JenisGdgBangunanName, CONCAT(ID, '|', JenisGdgBangunanID) AS IDJ
 		FROM itemjenisbangunanmaster
 		WHERE KatID='$katid'";
 		$query = $this->db->query($sql);
@@ -174,7 +178,7 @@ class AsetGdBang extends Authcontroller
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['JenisGdgBangunanID']."'>".$result['JenisGdgBangunanName']."</option>\n";
+			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisGdgBangunanName']."</option>\n";
 		}
 		echo $jenisid;
 	}
@@ -212,7 +216,7 @@ class AsetGdBang extends Authcontroller
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
 					FROM itemgdgbangdetail d, itemmaster i 
-					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisGdgBangunanIDSi='$jenisid'
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID='$jenisid'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
@@ -253,14 +257,19 @@ class AsetGdBang extends Authcontroller
 		$mitrakerjasamasi		= $this->input->post('mitrakerjasamasi');
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
-		$jenisgdgbangunanidsi	= $this->input->post('jenisgdgbangunanidsi');
+		
+		$jenisidj			= $this->input->post('jenisidj');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
 
+		$jenises					= explode("|", $jenisidj);
+		$jenisid					= $jenises[0];
+		$jenisgdgbangunanidsi	= $jenises[1];
+
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisgdgbangunanidsi);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 
 			if($piclocationsi != '') {
@@ -314,6 +323,7 @@ class AsetGdBang extends Authcontroller
 							'NoDokumenSi'			=> $nodokumensi ,
 							'TglDokumenSi'			=> $tgldokumensi ,
 							'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
+							'JenisID'				=> $jenisid,
 							'NilaiSi'				=> $nilaisi,
 							'KeteranganSi'			=> $keterangansi,
 							'PicLocationSi'			=> $piclocationsi
@@ -363,14 +373,18 @@ class AsetGdBang extends Authcontroller
 		$mitrakerjasamasi		= $this->input->post('mitrakerjasamasi');
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
-		$jenisgdgbangunanidsi	= $this->input->post('jenisgdgbangunanidsi');
+		$jenisidj			= $this->input->post('jenisidj');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
 
+		$jenises					= explode("|", $jenisidj);
+		$jenisid					= $jenises[0];
+		$jenisgdgbangunanidsi	= $jenises[1];
+
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisgdgbangunanidsi);
+			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
@@ -401,6 +415,7 @@ class AsetGdBang extends Authcontroller
 				'NoDokumenSi'			=> $nodokumensi ,
 				'TglDokumenSi'			=> $tgldokumensi ,
 				'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
+				'JenisID'				=> $jenisid,
 				'NilaiSi'				=> $nilaisi,
 				'KeteranganSi'			=> $keterangansi,
 				'PicLocationSi'			=> $piclocationsi
