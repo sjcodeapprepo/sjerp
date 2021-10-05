@@ -81,6 +81,7 @@
 for($a=0; $a<count($view_data); $a++) {	
 	$id			= $view_data[$a]['JenisKendaraanKatID'];
 	$jenis		= $view_data[$a]['JenisKendaraanKatName'];
+    $kat		= $view_data[$a]['KatName'];
 ?>
 	  <tr>
 	  	<td align='center'><?=$id?></td>
@@ -93,6 +94,9 @@ for($a=0; $a<count($view_data); $a++) {
             </td>
             <td align='left'>
                 <input type='text' name='JenisKendaraanKatName' size='16' id='JenisKendaraanKatName' />
+            </td>
+            <td align='left'>
+                <?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', '', '', '-Pilih Kategori-', "id='katid'");?>
             </td>
         </tr>
         <tr>

@@ -62,18 +62,19 @@
     <form action="<?= site_url() ?>/sjaset/asetitemjeniselkmesinmaster/index" method='post' id='formin' enctype="multipart/form-data">
     <table align="center">
     <tr><td>
-    <table class='gridtable' width='400'>
+    <table class='gridtable' width='600'>
     <thead>
         <tr>
             <th>JENIS ELEKTRONIKA DAN MESIN</th>
 	  </tr>
     </thead>
     </table>
-    <table border="0" cellpadding="0" cellspacing="3" width="400" class='gridua'>
+    <table border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
 	<thead>
 	  <tr>
 		<th>NO KODE</th>
 		<th>JENIS</th>
+        <th>KATEGORI</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -81,6 +82,7 @@
 for($a=0; $a<count($view_data); $a++) {	
 	$id			= $view_data[$a]['JenisElkmesinKatID'];
 	$jenis		= $view_data[$a]['JenisElkmesinKatName'];
+    $kat		= $view_data[$a]['KatName'];
 ?>
 	  <tr>
 	  	<td align='center'><?=$id?></td>
@@ -93,6 +95,9 @@ for($a=0; $a<count($view_data); $a++) {
             </td>
             <td align='left'>
                 <input type='text' name='jeniselkmesinkatname' size='16' id='jeniselkmesinkatname' />
+            </td>
+            <td align='left'>
+                <?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', '', '', '-Pilih Kategori-', "id='katid'");?>
             </td>
         </tr>
         <tr>
@@ -108,6 +113,7 @@ for($a=0; $a<count($view_data); $a++) {
     <script>
         new Spry.Widget.ValidationTextField("jeniselkmesinkatname", "none");
         new Spry.Widget.ValidationTextField("jeniselkmesinkatid", "integer");
+        new Spry.Widget.ValidationSelect("katid");
     </script>
 </body>
 

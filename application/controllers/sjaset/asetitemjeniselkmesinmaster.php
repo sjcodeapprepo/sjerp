@@ -20,10 +20,12 @@ class AsetItemJeniselkmesinmaster extends Authcontroller
 		if ($submit == 'TAMBAH') {
 			$jenis	= $this->input->post('jeniselkmesinkatname');
 			$id		= $this->input->post('jeniselkmesinkatid');
+			$katid		    = $this->input->post('katid');
 
 			$datamaster	= array(
 							'JenisElkmesinKatID'	=> $id,
-							'JenisElkmesinKatName'	=> $jenis
+							'JenisElkmesinKatName'	=> $jenis,
+							'KatID'	=> $katid
 						);
 			$this->db->insert('itemjeniselkmesinmaster', $datamaster);
 		}
@@ -33,8 +35,19 @@ class AsetItemJeniselkmesinmaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  JenisElkmesinKatID, JenisElkmesinKatName FROM  itemjeniselkmesinmaster ORDER BY JenisElkmesinKatID DESC";
+		$sql = "SELECT  j.JenisElkmesinKatID, j.JenisElkmesinKatName, k.KatName
+		FROM  itemjeniselkmesinmaster j, itemkatmaster k
+		WHERE k.KatID=j.KatID AND k.GolID='04'
+		ORDER BY j.JenisElkmesinKatID";
 		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function _getItemKatMasterData()
+	{
+		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='04' ORDER BY KatName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
