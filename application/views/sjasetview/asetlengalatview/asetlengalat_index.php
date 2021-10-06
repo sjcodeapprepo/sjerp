@@ -97,8 +97,8 @@ for($a=0; $a<count($view_data); $a++) {
 	  	<td align='center'><?=$asno?></td>
 		<td align='center'><?=$katname?></td>
 	  	<td align='center'><?=$jkat?></td>
-          <td align='center'><?=$divname?></td>
-          <td align='center'><?=$pngjwb?></td>
+		<td align='center'><?=$divname?></td>
+		<td align='center'><?=$pngjwb?></td>
 		<td width=40 align='center'>
 			<?php 
 				$url	=$this->uri->uri_string();
@@ -106,6 +106,13 @@ for($a=0; $a<count($view_data); $a++) {
 			<a href="<?=site_url()?>/sjaset/asetlengalat/edit/<?=$id?>/<?=$url?>">
 				<div class='ui-state-default ui-corner-all lebariconkecil' title='EDIT DATA ASET PERLENGKAPAN DAN PERALATAN'>
 					<span class='ui-icon ui-icon-pencil' />
+				</div>
+			</a>
+		</td>
+		<td width=40 align='center'>
+			<a href="<?=site_url()?>/sjaset/asetlengalat/pdf/<?=$id?>/<?=$url?>">
+				<div class='ui-state-default ui-corner-all lebariconkecil' title='PDF'>
+					<span class='ui-icon ui-icon-document' />
 				</div>
 			</a>
 		</td>

@@ -439,6 +439,42 @@ class Asetlengalat extends Authcontroller
 		redirect('sjaset/asetlengalat' . $url, 'refresh');
 	}
 
+	function pdf($id)
+	{
+		$datas	= $this->_getData($id);
+
+		$this->load->library('ciqrcode');
+
+        $config['cacheable']    = true;
+        $config['cachedir']     = './publicfolder/qrcode/';
+        $config['errorlog']     = './publicfolder/qrcode/';
+        $config['imagedir']     = './publicfolder/qrcode/images/';
+        $config['quality']      = true;
+        $config['size']         = '1024';
+        $config['black']        = array(224,255,255);
+        $config['white']        = array(70,130,180);
+        $this->ciqrcode->initialize($config);
+
+		$image_name			= 'test_pertama_qrcode.png';
+        $params['data']		= $datas['AssetNo'];
+        $params['level']	= 'H';
+        $params['size']		= 4;
+        $params['savename']	= FCPATH.$config['imagedir'].$image_name;
+        $this->ciqrcode->generate($params);
+		
+		$imageurl = base_url()."publicfolder/qrcode/images/".$image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'A4');
+		$pdf->AddPage();		
+		$pdf->Image($imageurl, 0, 0, 20, 20);
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->Text(20, 3, 'Perumda Sarana Jaya');
+		$pdf->Text(20, 7, $datas['AssetNo']);
+
+		$pdf->Output('test.pdf', 'I');
+
+	}
+
 	function testqrcode()
 	{
         $nim='test_pertama_qrcode';
