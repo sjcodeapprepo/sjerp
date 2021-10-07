@@ -439,6 +439,65 @@ class AsetGElMes extends Authcontroller
 		redirect('sjaset/asetgelmes' . $url, 'refresh');
 	}
 
+	function _getBarQrCodeData($id) 
+	{
+		$sql = "SELECT 
+					m.AssetNo, d.DivisionIDPs, v.DivisionAbbr, d.PenanggungJawabPs, d.KeteranganSi
+				FROM 
+					itemmaster m, itemelkmesindetail d, itemdivisionmaster v
+				WHERE 
+					m.ItemID=d.ItemID AND d.DivisionIDPs=v.DivisionID AND m.ItemID='$id' AND m.GolID='04'";
+		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= $result[0];
+		return $retval;
+	}
+
+	function pdf($id)
+	{
+		$datas	= $this->_getBarQrCodeData($id);
+		$keterangan_arr	= explode("\n",$datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0])?$keterangan_arr[0]:'';
+		$keterangan2	= isset($keterangan_arr[1])?$keterangan_arr[1]:'';
+
+		$this->load->library('ciqrcode');
+
+        $config['cacheable']    = true;
+        $config['cachedir']     = './publicfolder/qrcode/';
+        $config['errorlog']     = './publicfolder/qrcode/';
+        $config['imagedir']     = './publicfolder/qrcode/images/';
+        $config['quality']      = true;
+        $config['size']         = '1024';
+        $config['black']        = array(224,255,255);
+        $config['white']        = array(70,130,180);
+        $this->ciqrcode->initialize($config);
+
+		$image_name			= 'bc.png';
+        $params['data']		= $datas['AssetNo'];
+        $params['level']	= 'H';
+        $params['size']		= 4;
+        $params['savename']	= FCPATH.$config['imagedir'].$image_name;
+        $this->ciqrcode->generate($params);
+		
+		$imageurl = base_url()."publicfolder/qrcode/images/".$image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'printerbarcode');
+		$pdf->AddPage();		
+		$pdf->Image($imageurl, 0, 0, 20, 20);
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->Text(20, 3, 'Perumda Sarana Jaya');
+		$pdf->Text(20, 7,  $datas['DivisionAbbr']);
+		$pdf->Text(20, 11, $datas['PenanggungJawabSi']);
+		$pdf->Text(20, 15, $keterangan1);
+		$pdf->Text(20, 19, $keterangan2);
+		$logo = base_url()."publicfolder/image/sjlogo.png";
+		$pdf->Image($logo, 44, 2, 26, 12);
+		$pdf->Text(2, 23, $datas['AssetNo']);
+		$pdf->Output('test.pdf', 'I');
+
+	}
+
 	function testqrcode()
 	{
         $nim='test_pertama_qrcode';

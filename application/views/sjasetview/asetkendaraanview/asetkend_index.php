@@ -114,6 +114,13 @@ for($a=0; $a<count($view_data); $a++) {
 				</div>
 			</a>
 		</td>
+		<td width=40 align='center'>
+			<a href="<?=site_url()?>/sjaset/asetkendaraan/pdf/<?=$id?>/<?=$url?>">
+				<div class='ui-state-default ui-corner-all lebariconkecil' title='PDF'>
+					<span class='ui-icon ui-icon-document' />
+				</div>
+			</a>
+		</td>
 	  </tr>
 <?php } ?>
 	</tbody>
