@@ -444,7 +444,7 @@ class Asetlengalat extends Authcontroller
 		$sql = "SELECT 
 					m.AssetNo, d.DivisionIDPs, v.DivisionAbbr, d.PenanggungJawabSi, d.KeteranganSi
 				FROM 
-					itemmaster m, itemperlengperalatdetail d, itemdivisionmaster v
+					itemmaster m, itemperlengperalatdetail d, itemjenisperlengperalatkatmaster j, itemdivisionmaster v
 				WHERE 
 					m.ItemID=d.ItemID AND d.DivisionIDPs=v.DivisionID AND m.ItemID='$id' AND m.GolID='03'";
 		
@@ -484,18 +484,16 @@ class Asetlengalat extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
 		$pdf->AddPage();		
-		$pdf->Image($imageurl, 0, 0, 20, 20);
+		$pdf->Image($imageurl, 1, 6, 20, 20);
 		$pdf->SetFont('Arial', '', 8);
-		$pdf->Text(20, 3, 'Perumda Sarana Jaya');
-		$pdf->Text(20, 7,  $datas['DivisionAbbr']);
-		$pdf->Text(20, 11, $datas['PenanggungJawabSi']);
-		$pdf->Text(20, 15, $keterangan1);
-		$pdf->Text(20, 19, $keterangan2);
+		$pdf->Text(21, 9,  $datas['AssetNo']);
+		$pdf->Text(21, 13,  $datas['KatName']);
+		$pdf->Text(21, 17, $datas['JenisElkmesinKatName']);
+		$pdf->Text(21, 21, $keterangan1);
+		$pdf->Text(21, 25, $keterangan2);
 		$logo = base_url()."publicfolder/image/sjlogo.png";
-		$pdf->Image($logo, 44, 2, 26, 12);
-		$pdf->Text(2, 23, $datas['AssetNo']);
+		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('test.pdf', 'I');
-
 	}
 
 	function testqrcode()
@@ -548,6 +546,38 @@ class Asetlengalat extends Authcontroller
 	{
 		// echo "<img src='".site_url()."/sjaset/asetgelmes/barcode'  alt='not show' /></div>";
 		echo "<img src='".base_url()."/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
+	}
+
+	function testzpl()
+	{
+		
+		$print_data = "
+		^XA
+
+		^FX Top section with logo, name and address.
+		^CF0,60
+		^FO50,50^GB100,100,100^FS
+		^FO75,75^FR^GB100,100,100^FS
+		^FO93,93^GB40,40,40^FS
+		^FO220,50^FDIntershipping, Inc.^FS
+		^CF0,30
+		^FO220,115^FD1000 Shipping Lane^FS
+		^FO220,155^FDShelbyville TN 38102^FS
+		^FO220,195^FDUnited States (USA)^FS
+		^FO50,250^GB700,3,3^FS
+		^XZ";
+		try
+		{
+			$fp=fsockopen("localhost",9100);
+			fputs($fp,$print_data);
+			fclose($fp);
+
+			echo 'Successfully Printed';
+		}
+		catch (Exception $e) 
+		{
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
 	}
 
 	function test()

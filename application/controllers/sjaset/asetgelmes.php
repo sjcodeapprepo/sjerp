@@ -442,11 +442,11 @@ class AsetGElMes extends Authcontroller
 	function _getBarQrCodeData($id) 
 	{
 		$sql = "SELECT 
-					m.AssetNo, d.DivisionIDPs, v.DivisionAbbr, d.PenanggungJawabPs, d.KeteranganSi
-				FROM 
-					itemmaster m, itemelkmesindetail d, itemdivisionmaster v
+					m.AssetNo, k.KatName, d.KeteranganSi ,j.JenisElkmesinKatName  
+				FROM 					itemmaster m, itemelkmesindetail d, itemkatmaster k, itemjeniselkmesinmaster j
 				WHERE 
-					m.ItemID=d.ItemID AND d.DivisionIDPs=v.DivisionID AND m.ItemID='$id' AND m.GolID='04'";
+					m.ItemID=d.ItemID AND m.KatID=k.KatID AND m.GolID=k.GolID 
+					AND d.JenisID=j.ID AND m.ItemID='$id' AND m.GolID='04'";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
@@ -484,16 +484,15 @@ class AsetGElMes extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
 		$pdf->AddPage();		
-		$pdf->Image($imageurl, 0, 0, 20, 20);
+		$pdf->Image($imageurl, 1, 6, 20, 20);
 		$pdf->SetFont('Arial', '', 8);
-		$pdf->Text(20, 3, 'Perumda Sarana Jaya');
-		$pdf->Text(20, 7,  $datas['DivisionAbbr']);
-		$pdf->Text(20, 11, $datas['PenanggungJawabSi']);
-		$pdf->Text(20, 15, $keterangan1);
-		$pdf->Text(20, 19, $keterangan2);
+		$pdf->Text(21, 9,  $datas['AssetNo']);
+		$pdf->Text(21, 13,  $datas['KatName']);
+		$pdf->Text(21, 17, $datas['JenisElkmesinKatName']);
+		$pdf->Text(21, 21, $keterangan1);
+		$pdf->Text(21, 25, $keterangan2);
 		$logo = base_url()."publicfolder/image/sjlogo.png";
-		$pdf->Image($logo, 44, 2, 26, 12);
-		$pdf->Text(2, 23, $datas['AssetNo']);
+		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('test.pdf', 'I');
 
 	}

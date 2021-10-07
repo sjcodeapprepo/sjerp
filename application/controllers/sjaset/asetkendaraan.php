@@ -328,6 +328,7 @@ class Asetkendaraan extends Authcontroller
 			$datadetail	= array(
 							'ItemID'				=> $itemid,
 							'AssetOrder'			=> $assetorder,
+							'JenisID'				=> $jenisid,
 							'JenisKendaraanKatID'	=> $jeniskendaraankatid,
 							'NoDokumenPr'			=> $nodokumenpr,
 							'NilaiPr'				=> $nilaipr,
@@ -476,7 +477,7 @@ class Asetkendaraan extends Authcontroller
 	function _getBarQrCodeData($id) 
 	{
 		$sql = "SELECT 
-					m.AssetNo, d.NoPolPr, d.TypePr, d.DivisionIDPs, v.DivisionAbbr, d.PenanggungJawabPs, d.KeteranganSi
+					m.AssetNo, d.NoPolPr, d.TypePr, d.DivisionIDPs, v.DivisionAbbr, d.MerkPr, d.PenanggungJawabPs, d.KeteranganSi
 				FROM 
 					itemmaster m, itemkendaraandetail d, itemdivisionmaster v
 				WHERE 
@@ -518,16 +519,15 @@ class Asetkendaraan extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
 		$pdf->AddPage();		
-		$pdf->Image($imageurl, 0, 0, 20, 20);
+		$pdf->Image($imageurl, 1, 6, 20, 20);
 		$pdf->SetFont('Arial', '', 8);
-		$pdf->Text(20, 3, 'Perumda Sarana Jaya');
-		$pdf->Text(20, 7,  $datas['DivisionAbbr']);
-		$pdf->Text(20, 11, $datas['PenanggungJawabSi']);
-		$pdf->Text(20, 15, $keterangan1);
-		$pdf->Text(20, 19, $keterangan2);
+		$pdf->Text(21, 9,  $datas['AssetNo']);
+		$pdf->Text(21, 13,  $datas['MerkPr']);
+		$pdf->Text(21, 17, $datas['NoPolPr']);
+		$pdf->Text(21, 21, $keterangan1);
+		$pdf->Text(21, 25, $keterangan2);
 		$logo = base_url()."publicfolder/image/sjlogo.png";
-		$pdf->Image($logo, 44, 2, 26, 12);
-		$pdf->Text(2, 23, $datas['AssetNo']);
+		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('test.pdf', 'I');
 
 	}
