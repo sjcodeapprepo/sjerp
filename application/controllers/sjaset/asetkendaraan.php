@@ -292,12 +292,12 @@ class Asetkendaraan extends Authcontroller
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
-			if($piclocationsi!='') {
+			// if($piclocationsi!='') {
 			
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/kendr/';
 				$config['file_name']		= 'kdr' . $assetno;
 				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;
 				$config['max_width']		= 1500;
 				$config['max_height']		= 1500;
@@ -306,12 +306,12 @@ class Asetkendaraan extends Authcontroller
 
 				if (!$this->upload->do_upload('piclocationsi')) {
 					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
+					// print_array($error);
 				} else {
 					$data			= $this->upload->data();				
-					$piclocationsi	= $data['full_path'];
+					$piclocationsi	= $data['file_name'];
 				}
-			}
+			// }
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -436,11 +436,11 @@ class Asetkendaraan extends Authcontroller
 							'KeteranganSi'			=> $keterangansi
 						);
 			//========================================FILE GAMBAR=====================
-			if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+			// if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/kendr/';
 				$config['file_name']		= 'kdr' . $assetno;
 				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;
 				$config['max_width']		= 1500;
 				$config['max_height']		= 1500;
@@ -449,13 +449,13 @@ class Asetkendaraan extends Authcontroller
 
 				if (!$this->upload->do_upload('piclocationsi')) {
 					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
+					// print_array($error);
 				} else {
 					$data						= $this->upload->data();				
-					$piclocationsi				= $data['full_path'];
+					$piclocationsi				= $data['file_name'];
 					$datadetail['PicLocationSi']= $piclocationsi;					
 				}
-			}
+			// }
 			//==============================================================================
 			$this->db->update('itemkendaraandetail', $datadetail, array('ItemID'	=> $itemid));
 
