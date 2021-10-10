@@ -131,7 +131,7 @@
                             </td>
                             <td colspan='3'>
                                 <span id="assetdisplay"><?= $data['AssetNo'] ?></span>
-                                <input type='hidden' name='assetno' id='assetno' value="<?= $data['AssetNo'] ?>" />
+                                <input type='hidden' name='AssetNo' id='AssetNo' value="<?= $data['AssetNo'] ?>" />
                             </td>
 						</tr>
                         <tr>

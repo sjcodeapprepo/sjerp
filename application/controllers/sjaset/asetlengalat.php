@@ -265,11 +265,11 @@ class Asetlengalat extends Authcontroller
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			//========================================FILE GAMBAR=====================
-			if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+			// if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/lenglat/';
 				$config['file_name']		= 'lat' . $assetno;
 				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;
 				$config['max_width']		= 1500;
 				$config['max_height']		= 1500;
@@ -278,12 +278,14 @@ class Asetlengalat extends Authcontroller
 
 				if (!$this->upload->do_upload('piclocationsi')) {
 					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
+					$piclocationsi			= "";
+					// print_array($error);
 				} else {
 					$data						= $this->upload->data();				
-					$piclocationsi				= $data['full_path'];
+					// $piclocationsi				= $data['full_path'];
+					$piclocationsi				= $data['file_name'];
 				}
-			}
+			// }
 			//========================================================================
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
@@ -355,7 +357,7 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		// $oldassetorder			= $this->input->post('assetorder');
+		$AssetNo			= $this->input->post('AssetNo');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -375,6 +377,10 @@ class Asetlengalat extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+
+			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
+			
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -399,11 +405,11 @@ class Asetlengalat extends Authcontroller
 								'KeteranganSi'			=> $keterangansi
 						);
 			//========================================FILE GAMBAR=====================
-			if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/';
+			// if($piclocationsi!='') {
+				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/lenglat/';
 				$config['file_name']		= 'lat' . $assetno;
 				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'gif|jpg|png|jpeg';
+				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;
 				$config['max_width']		= 1500;
 				$config['max_height']		= 1500;
@@ -412,14 +418,14 @@ class Asetlengalat extends Authcontroller
 
 				if (!$this->upload->do_upload('piclocationsi')) {
 					$error					= array('error_info' => $this->upload->display_errors());
-					print_array($error);
+					// print_array($error);
 				} else {
 					$data						= $this->upload->data();				
-					$piclocationsi				= $data['full_path'];
+					$piclocationsi				= $data['file_name'];
 					$datadetail['PicLocationSi']= $piclocationsi;
 					
 				}
-			}
+			// }
 			//========================================F=======================================
 			
 			$this->db->update('itemperlengperalatdetail', $datadetail, array('ItemID'	=> $itemid));
@@ -437,6 +443,12 @@ class Asetlengalat extends Authcontroller
 			$i++;
 		}
 		redirect('sjaset/asetlengalat' . $url, 'refresh');
+	}
+
+	function isBerubah($old, $new)
+	{
+		// 031402 002 20210103
+		return true;
 	}
 
 	function _getBarQrCodeData($id) 
@@ -472,7 +484,8 @@ class Asetlengalat extends Authcontroller
         $config['white']        = array(70,130,180);
         $this->ciqrcode->initialize($config);
 
-		$image_name			= 'lenglat.png';
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'lenglat'.$userid.'.png';
         $params['data']		= $datas['AssetNo'];
         $params['level']	= 'H';
         $params['size']		= 4;

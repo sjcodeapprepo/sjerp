@@ -122,7 +122,8 @@
                                 No Aset&nbsp;
                             </td>
                             <td colspan='3'>
-								&nbsp;
+                            &nbsp;<?= $data['AssetNo'] ?>
+                                <input type='hidden' name='AssetNo' id='AssetNo' value="<?= $data['AssetNo'] ?>" />
                             </td>
 						</tr>
                         <tr>

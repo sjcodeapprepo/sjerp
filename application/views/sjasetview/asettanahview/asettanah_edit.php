@@ -109,6 +109,7 @@
                             </td>
                             <td colspan='3'>
 								<?=$data['AssetNo']?>&nbsp;
+                                <input type='hidden' name='AssetNo' id='AssetNo' value="<?= $data['AssetNo'] ?>" />
                             </td>
 						</tr>
                         <tr>
