@@ -33,7 +33,7 @@ class AsetJenPerolGdbangMaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  JenisPerolehanID, JenisPerolehanName FROM  itemjenisperolehanmaster ORDER BY JenisPerolehanID DESC";
+		$sql = "SELECT  JenisPerolehanID, JenisPerolehanName FROM  itemjenisperolehanmaster ORDER BY JenisPerolehanID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

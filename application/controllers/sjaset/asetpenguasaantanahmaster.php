@@ -38,7 +38,7 @@ class AsetPenguasaanTanahMaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  StatusID, StatusName FROM  itemstatuspenguasaanmaster ORDER BY StatusID DESC";
+		$sql = "SELECT  StatusID, StatusName FROM  itemstatuspenguasaanmaster ORDER BY StatusID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

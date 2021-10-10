@@ -34,7 +34,7 @@ class AsetKategorielkmesinmaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  KatID, KatName FROM  itemkatmaster WHERE GolID='04' ORDER BY KatID DESC";
+		$sql = "SELECT  KatID, KatName FROM  itemkatmaster WHERE GolID='04' ORDER BY KatID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

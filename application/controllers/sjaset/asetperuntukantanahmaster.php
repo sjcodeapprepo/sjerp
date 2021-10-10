@@ -38,7 +38,7 @@ class AsetPeruntukanTanahMaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  PeruntukanID, PeruntukanName FROM  itemperuntukanmaster ORDER BY PeruntukanID DESC";
+		$sql = "SELECT  PeruntukanID, PeruntukanName FROM  itemperuntukanmaster ORDER BY PeruntukanID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

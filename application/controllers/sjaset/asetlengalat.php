@@ -442,12 +442,11 @@ class Asetlengalat extends Authcontroller
 	function _getBarQrCodeData($id) 
 	{
 		$sql = "SELECT 
-					m.AssetNo, d.DivisionIDPs, v.DivisionAbbr, d.PenanggungJawabSi, d.KeteranganSi
-				FROM 
-					itemmaster m, itemperlengperalatdetail d, itemjenisperlengperalatkatmaster j, itemdivisionmaster v
+					m.AssetNo, k.KatName, d.KeteranganSi ,j.JenisPerlengPeralatKatName  
+				FROM 					itemmaster m, itemperlengperalatdetail d, itemkatmaster k, itemjenisperlengperalatkatmaster j
 				WHERE 
-					m.ItemID=d.ItemID AND d.DivisionIDPs=v.DivisionID AND m.ItemID='$id' AND m.GolID='03'";
-		
+					m.ItemID=d.ItemID AND m.KatID=k.KatID AND m.GolID=k.GolID 
+					AND d.JenisID=j.ID AND m.ItemID='$id' AND m.GolID='03'";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= $result[0];
@@ -473,7 +472,7 @@ class Asetlengalat extends Authcontroller
         $config['white']        = array(70,130,180);
         $this->ciqrcode->initialize($config);
 
-		$image_name			= 'bc.png';
+		$image_name			= 'lenglat.png';
         $params['data']		= $datas['AssetNo'];
         $params['level']	= 'H';
         $params['size']		= 4;
@@ -488,12 +487,12 @@ class Asetlengalat extends Authcontroller
 		$pdf->SetFont('Arial', '', 8);
 		$pdf->Text(21, 9,  $datas['AssetNo']);
 		$pdf->Text(21, 13,  $datas['KatName']);
-		$pdf->Text(21, 17, $datas['JenisElkmesinKatName']);
+		$pdf->Text(21, 17, $datas['JenisPerlengPeralatKatName']);
 		$pdf->Text(21, 21, $keterangan1);
 		$pdf->Text(21, 25, $keterangan2);
-		$logo = base_url()."publicfolder/image/sjlogo.png";
+		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 49, 6, 26, 12);
-		$pdf->Output('test.pdf', 'I');
+		$pdf->Output('lenglat.pdf', 'I');
 	}
 
 	function testqrcode()
@@ -551,7 +550,7 @@ class Asetlengalat extends Authcontroller
 	function testzpl()
 	{
 		$port = "9100";
-		$host = "192.168.1.5";
+		$host = "localhost";
 		$label = "^XA
 					^FX =================================QRcode
 					^FO10,10^BQN,2,10^FDQA,0123982019001^FS

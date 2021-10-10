@@ -39,7 +39,7 @@ class AsetJenisKendMaster extends Authcontroller
 		$sql = "SELECT  j.JenisKendaraanKatID, j.JenisKendaraanKatName, k.KatName
 		FROM  itemjeniskendaraankatmaster j, itemkatmaster k
 		WHERE k.KatID=j.KatID AND k.GolID='05'
-		ORDER BY j.JenisKendaraanKatID";
+		ORDER BY k.KatName, j.JenisKendaraanKatID";
 
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

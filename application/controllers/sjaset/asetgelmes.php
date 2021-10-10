@@ -473,7 +473,7 @@ class AsetGElMes extends Authcontroller
         $config['white']        = array(70,130,180);
         $this->ciqrcode->initialize($config);
 
-		$image_name			= 'bc.png';
+		$image_name			= 'elms.png';
         $params['data']		= $datas['AssetNo'];
         $params['level']	= 'H';
         $params['size']		= 4;
@@ -491,9 +491,9 @@ class AsetGElMes extends Authcontroller
 		$pdf->Text(21, 17, $datas['JenisElkmesinKatName']);
 		$pdf->Text(21, 21, $keterangan1);
 		$pdf->Text(21, 25, $keterangan2);
-		$logo = base_url()."publicfolder/image/sjlogo.png";
+		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 49, 6, 26, 12);
-		$pdf->Output('test.pdf', 'I');
+		$pdf->Output('elms.pdf', 'I');
 
 	}
 

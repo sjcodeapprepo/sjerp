@@ -34,7 +34,7 @@ class AsetKategoriGdBangMaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  KatID, KatName FROM  itemkatmaster WHERE GolID='02' ORDER BY KatID DESC";
+		$sql = "SELECT  KatID, KatName FROM  itemkatmaster WHERE GolID='02' ORDER BY KatID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

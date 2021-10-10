@@ -33,7 +33,7 @@ class AsetJenisDokTanahMaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  JenisDokumenTanahID, JenisDokumenTanahName FROM  itemjenisdokumentanahmaster ORDER BY JenisDokumenTanahID DESC";
+		$sql = "SELECT  JenisDokumenTanahID, JenisDokumenTanahName FROM  itemjenisdokumentanahmaster ORDER BY JenisDokumenTanahID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

@@ -35,7 +35,7 @@ class AsetDivisimaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  DivisionID, DivisionName, DivisionAbbr FROM  itemdivisionmaster ORDER BY DivisionID DESC";
+		$sql = "SELECT  DivisionID, DivisionName, DivisionAbbr FROM  itemdivisionmaster ORDER BY DivisionID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();

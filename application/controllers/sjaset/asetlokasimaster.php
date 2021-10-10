@@ -33,7 +33,7 @@ class AsetLokasimaster extends Authcontroller
 
 	function _getData() 
 	{
-		$sql = "SELECT  LokasiID, LokasiName FROM  itemlokasimaster ORDER BY LokasiID DESC";
+		$sql = "SELECT  LokasiID, LokasiName FROM  itemlokasimaster ORDER BY LokasiID";
 		
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
