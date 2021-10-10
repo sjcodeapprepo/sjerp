@@ -365,7 +365,7 @@ class Asetkendaraan extends Authcontroller
 	function _editproc($itemid)
 	{
 		$submit						= $this->input->post('submit');
-		// $assetorder					= $this->input->post('assetorder');
+		$AssetNo			= $this->input->post('AssetNo');
 		$katid						= $this->input->post('katid');
 		$jenisidj					= $this->input->post('jenisidj');
 		$tglpr						= $this->input->post('tglpr');
@@ -400,7 +400,10 @@ class Asetkendaraan extends Authcontroller
 		$jeniskendaraankatid		= $jenises[1];
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno					= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+
+			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			$assetno	= ($is_berubah)?$assetno:$AssetNo;
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
@@ -472,6 +475,20 @@ class Asetkendaraan extends Authcontroller
 			$i++;
 		}
 		redirect('sjaset/asetkendaraan' . $url, 'refresh');
+	}
+
+	function isBerubah($old, $new)
+	{
+		// 031402 002 20210103
+		$ofirst	= substr($old, 0, 6);
+		$olast	= substr($old, -8, 8);
+		$ofull	= $ofirst.$olast;
+		
+		$nfirst	= substr($new, 0, 6);
+		$nlast	= substr($new, -8, 8);
+		$nfull	= $nfirst.$nlast;
+
+		return ($ofull==$nfull)?true:false;
 	}
 
 	function _getBarQrCodeData($id) 

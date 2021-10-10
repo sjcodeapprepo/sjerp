@@ -353,7 +353,7 @@ class AsetGdBang extends Authcontroller
 	function _editproc($itemid)
 	{
 		$submit					= $this->input->post('submit');
-		// $assetorder				= $this->input->post('assetorder');
+		$AssetNo			= $this->input->post('AssetNo');
 		$katid					= $this->input->post('katid');
 		$tglpr					= $this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
@@ -387,6 +387,9 @@ class AsetGdBang extends Authcontroller
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 			
+			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			$assetno	= ($is_berubah)?$assetno:$AssetNo;
+
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -417,8 +420,7 @@ class AsetGdBang extends Authcontroller
 				'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
 				'JenisID'				=> $jenisid,
 				'NilaiSi'				=> $nilaisi,
-				'KeteranganSi'			=> $keterangansi,
-				'PicLocationSi'			=> $piclocationsi
+				'KeteranganSi'			=> $keterangansi
 			);
 
 			//========================================FILE GAMBAR=====================
@@ -460,6 +462,21 @@ class AsetGdBang extends Authcontroller
 			$i++;
 		}
 		redirect('sjaset/asetgdbang' . $url, 'refresh');
+	}
+
+	function isBerubah($old, $new)
+	{
+		// -- 0201 002 2021010101 
+		$ofirst	= substr($old, 0, 4);
+		$olast	= substr($old, -10, 10);
+		$ofull	= $ofirst.$olast;
+		
+		$nfirst	= substr($new, 0, 4);
+		$nlast	= substr($new, -10, 10);
+		$nfull	= $nfirst.$nlast;
+
+		// return ($ofull==$nfull)?true:false;
+		echo ($ofull==$nfull)?'sama':'beda';
 	}
 
 	function testqrcode()

@@ -356,7 +356,7 @@ class AsetGElMes extends Authcontroller
 
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		// $assetorder			= $this->input->post('assetorder');
+		$AssetNo			= $this->input->post('AssetNo');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -376,6 +376,9 @@ class AsetGElMes extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
+
+			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -437,6 +440,20 @@ class AsetGElMes extends Authcontroller
 			$i++;
 		}
 		redirect('sjaset/asetgelmes' . $url, 'refresh');
+	}
+
+	function isBerubah($old, $new)
+	{
+		// 031402 002 20210103
+		$ofirst	= substr($old, 0, 6);
+		$olast	= substr($old, -8, 8);
+		$ofull	= $ofirst.$olast;
+		
+		$nfirst	= substr($new, 0, 6);
+		$nlast	= substr($new, -8, 8);
+		$nfull	= $nfirst.$nlast;
+
+		return ($ofull==$nfull)?true:false;
 	}
 
 	function _getBarQrCodeData($id) 

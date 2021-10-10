@@ -448,7 +448,15 @@ class Asetlengalat extends Authcontroller
 	function isBerubah($old, $new)
 	{
 		// 031402 002 20210103
-		return true;
+		$ofirst	= substr($old, 0, 6);
+		$olast	= substr($old, -8, 8);
+		$ofull	= $ofirst.$olast;
+		
+		$nfirst	= substr($new, 0, 6);
+		$nlast	= substr($new, -8, 8);
+		$nfull	= $nfirst.$nlast;
+
+		return ($ofull==$nfull)?true:false;
 	}
 
 	function _getBarQrCodeData($id) 
