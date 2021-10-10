@@ -68,7 +68,20 @@
                     $(this).val(0);
                 }
             });
+
+            $( "#asetpic" ).dialog({
+                autoOpen: false,
+                height: 600,
+                width: 800,
+                modal: true
+            });
+            $( "#opener" ).on( "click", function() {
+                $( "#asetpic" ).dialog( "open" );
+            });
+            
         });
+
+        
 
         function getJenis(katid) {
             if(katid != '') {
@@ -216,7 +229,7 @@
                             </td>
                             <td>
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
-                                <input type='hidden' name='oldpic' id='oldpic' value="<?= $data['PicLocationSi'] ?>" />
+                                <a id="opener">Lihat Gambar</a>
                             </td>
                         </tr>
 						<tr>
@@ -238,6 +251,9 @@
             </tr>
         </table>
     </form>
+    <div id="asetpic" title="Gambar Aset">
+        <img src="<?=base_url()?>publicfolder/asetpic/elmes/<?=$data['PicLocationSi']?>" />
+    </div>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
