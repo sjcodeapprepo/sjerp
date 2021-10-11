@@ -78,6 +78,17 @@
                 $(this).val(0);
             }
         });
+
+        $( "#asetpic" ).dialog({
+            autoOpen: false,
+            height: 600,
+            width: 800,
+            modal: true
+        });
+        $( "#opener" ).on( "click", function() {
+            $( "#asetpic" ).dialog( "open" );
+        });
+
     });
     
     function getJenis(katid) {
@@ -302,6 +313,7 @@
                             </td>
                             <td colspan="3">
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
+                                <a id="opener">Lihat Gambar</a>
                             </td>
                         </tr>
                     </table>
@@ -315,6 +327,9 @@
             </tr>
         </table>
     </form>
+    <div id="asetpic" title="Gambar Aset">
+        <img src="<?=base_url()?>publicfolder/asetpic/gedbang/<?=$data['PicLocationSi']?>" />
+    </div>
     <script>
         new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
