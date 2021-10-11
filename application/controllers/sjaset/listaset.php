@@ -53,11 +53,14 @@ class ListAset extends Authcontroller {
 	function _getDataPerlengkapanperalatan() 
 	{
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, d.PenanggungJawabSi
+					m.ItemID, m.AssetNo, m.TglPr ,mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, 
+					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPs, l.LokasiName, d.DivisionIDPs,
+					d.PenanggungJawabSi, d.KondisiKodeSi, d.HargaSi, d.KeteranganSi
 				FROM 
-					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj 
+					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj,
+					itemlokasimaster l
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisPerlengPeralatKatID=mj.JenisPerlengPeralatKatID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID AND d.LokasiIDPs=l.LokasiID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'
 				ORDER BY m.ItemID DESC, m.AssetNo DESC";		
 
@@ -118,8 +121,8 @@ class ListAset extends Authcontroller {
 		$laporan->getActiveSheet()->mergeCells('O5:O6');
 		$laporan->getActiveSheet()->setCellValue('O5','Ket');
 
-		$laporan->getActiveSheet()->mergeCells('P4:P6');
-		$laporan->getActiveSheet()->setCellValue('P4','Label');
+		// $laporan->getActiveSheet()->mergeCells('P4:P6');
+		// $laporan->getActiveSheet()->setCellValue('P4','Label');
 
 		$laporan->getActiveSheet()->freezePane('I7');
 
@@ -135,25 +138,31 @@ class ListAset extends Authcontroller {
 			$jns		= $data[$a]['JenisPerlengPeralatKatName'];
 			$pejwbsi	= $data[$a]['PenanggungJawabSi'];
 			$divps		= $data[$a]['DivisionAbbr'];
+			$tglpr		= $data[$a]['TglPr'];
 			$asetno		= $data[$a]['AssetNo'];
-			// $no			= $data[$a][''];
-			// $no			= $data[$a][''];
-			// $no			= $data[$a][''];
-			// $no			= $data[$a][''];
-			// $no			= $data[$a][''];
-			// $no			= $data[$a][''];
+			$nodokpr	= $data[$a]['NoDokumenPr'];
+			$nilaipr	= $data[$a]['NilaiPr'];
+			$penyusutanps	= $data[$a]['PenyusutanPs'];
+			$lokasi		= $data[$a]['LokasiName'];
+			$kondisi	= $data[$a]['KondisiKodeSi'];
+			$hargasi	= $data[$a]['HargaSi'];
+			$ket		= $data[$a]['KeteranganSi'];
 			
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $no);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $jns);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(4, $row, $asetno);
-
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(5, $row, $tglpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(6, $row, $nodokpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(7, $row, $nilaipr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(8, $row, $penyusutanps);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(9, $row, $lokasi);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $divps);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(11, $row, $pejwbsi);
-
-			// $laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);
-			
-				
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $kondisi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $hargasi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $ket);
+			// $laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);				
 			// $this->cellColor($laporan, $row, $colpg, $wpg);
 			$row++;
 		}
@@ -170,7 +179,7 @@ class ListAset extends Authcontroller {
 		$laporan->getActiveSheet()->getColumnDimension('A')->setWidth(6);;
 		$laporan->getActiveSheet()->getColumnDimension('B')->setWidth(34);
 		$stcol	= 1;
-		for ($i = 0; $i < 16; $i++) {			
+		for ($i = 0; $i < 15; $i++) {			
 			$stcollt	= $letterarr[$stcol];
 			$laporan->getActiveSheet()->getColumnDimension($stcollt)->setWidth(12);
 			$stcol++;
