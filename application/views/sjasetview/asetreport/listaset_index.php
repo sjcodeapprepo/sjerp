@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Aset Tanah - list</title>
+	<title>Listing Aset</title>
 <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csstable/tablegrid.css" media="screen" rel="stylesheet" />
 <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csstable/tablegrid2.css" media="screen" rel="stylesheet" />
 <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csspaging/paging.css" media="screen" rel="stylesheet" />
@@ -53,7 +53,7 @@
 			<!-- <option value='02'>Gedung dan Bangunan</option> -->
 			<option value='03'>Perlengkapan dan Peralatan</option>
 			<option value='04'>Elektronika dan Mesin</option>
-			<!-- <option value='05'>Kendaraan</option> -->
+			<option value='05'>Kendaraan</option>
 		</select>
             &nbsp;&nbsp;<input type=submit value='.XLS' name='submit' />
 		</td>
