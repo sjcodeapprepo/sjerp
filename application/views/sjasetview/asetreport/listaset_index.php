@@ -49,11 +49,11 @@
         <td noWrap align=center>
             Golongan &nbsp;&nbsp;
 		<select name="golaset">
-			<option value='01'>Tanah</option>
-			<option value='02'>Gedung dan Bangunan</option>
+			<!-- <option value='01'>Tanah</option>
+			<option value='02'>Gedung dan Bangunan</option> -->
 			<option value='03'>Perlengkapan dan Peralatan</option>
-			<option value='04'>Elektronika dan Mesin</option>
-			<option value='05'>Kendaraan</option>
+			<!-- <option value='04'>Elektronika dan Mesin</option>
+			<option value='05'>Kendaraan</option> -->
 		</select>
             &nbsp;&nbsp;<input type=submit value='.XLS' name='submit' />
 		</td>
