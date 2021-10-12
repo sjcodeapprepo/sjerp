@@ -6,6 +6,9 @@
 <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csstable/tablegrid2.css" media="screen" rel="stylesheet" />
 <link type="text/css" href="<?=base_url()?>publicfolder/cssdir/csspaging/paging.css" media="screen" rel="stylesheet" />
 <?php $this->load->view('js/jqueryui')?>
+<?php
+        $this->load->view('js/SelectValidation');
+    ?>
 <style>
 .ui-dialog-title, .ui-dialog-titlebar, .ui-dialog-titlebar-close{
 	font-size:small;
@@ -48,7 +51,7 @@
       <tr>
         <td noWrap align=center>
             Golongan &nbsp;&nbsp;
-		<select name="golaset">
+		<select name="golaset" id="golaset">
 			<option value=''>--Pilih Golongan Aset--</option>
 			<option value='01'>Tanah</option>
 			<option value='02'>Gedung dan Bangunan</option>
@@ -64,5 +67,8 @@
 <br />
 <br />
 </form>
+<script>
+        new Spry.Widget.ValidationSelect("golaset");
+    </script>
 </body>
 </html>
