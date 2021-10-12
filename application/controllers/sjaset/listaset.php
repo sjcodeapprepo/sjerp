@@ -50,6 +50,188 @@ class ListAset extends Authcontroller {
 		}
 	}
 	//-------------------------------------------------------------------
+	function _getDataGedbang() 
+	{
+		$sql = "SELECT 
+					m.ItemID, m.AssetNo, m.TglPr, mk.KatName, d.LuasBangunanPr, d.NilaiPerolehanPr, 
+					(SELECT mp2.JenisPerolehanName FROM itemjenisperolehanmaster mp2 WHERE mp2.JenisPerolehanID=d.JenisPerolehanIDPr) AS JenisPerolehanPr, 
+					d.MitraKerjasamaPr, d.NoDokumenPr, d.TglDokumenPr, d.PenyusutanPs, d.LokasiPs, d.LatPs, d.LongPs, 
+					d.BerdiriAtasTanahPs, d.PenanggungJawabSi, mp.JenisPerolehanName AS JenisPerolehanSi,
+					d.MitraKerjasamaSi, d.NoDokumenSi, d.TglDokumenSi,					
+					mj.JenisGdgBangunanName,
+					d.NilaiSi, d.KeteranganSi
+				FROM 
+					itemmaster m, itemgdgbangdetail d, itemjenisbangunanmaster mj, itemkatmaster mk, itemjenisperolehanmaster mp
+				WHERE 
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.JenisPerolehanIDSi=mp.JenisPerolehanID
+					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='02'
+				ORDER BY m.ItemID DESC, m.AssetNo";
+
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function _gedbang($laporan)
+	{
+		$myWorkSheet	= new PHPExcel_Worksheet($laporan, 'Gedung dan Bangunan');
+		$laporan->addSheet($myWorkSheet, 0);
+		$laporan->setActiveSheetIndex(0);
+		
+		$data= $this->_getDataGedbang();
+		
+		//-------JUDUL
+		$laporan->getActiveSheet()->setCellValue('A1','Perumda Sarana Jaya');
+		$laporan->getActiveSheet()->setCellValue('A2','List Aset Gedung Bangunan');
+		//-------------TABEL HEADER
+		$laporan->getActiveSheet()->mergeCells('A4:A6');
+		$laporan->getActiveSheet()->setCellValue('A4','No');
+		$laporan->getActiveSheet()->mergeCells('B4:D4');
+		$laporan->getActiveSheet()->setCellValue('B4','Identitas Barang');
+		$laporan->getActiveSheet()->mergeCells('B5:B6');
+		$laporan->getActiveSheet()->setCellValue('B5','Golongan');
+		$laporan->getActiveSheet()->mergeCells('C5:C6');
+		$laporan->getActiveSheet()->setCellValue('C5','Kategori');
+		$laporan->getActiveSheet()->mergeCells('D5:D6');
+		$laporan->getActiveSheet()->setCellValue('D5','Tgl Perolehan');
+		$laporan->getActiveSheet()->mergeCells('E5:E6');
+		$laporan->getActiveSheet()->setCellValue('E5','Luas Bangunan');
+		$laporan->getActiveSheet()->mergeCells('E4:K4');
+		$laporan->getActiveSheet()->setCellValue('F4','Perolehan');
+		$laporan->getActiveSheet()->mergeCells('F5:F6');
+		$laporan->getActiveSheet()->setCellValue('F5','Luas Bangunan');
+		$laporan->getActiveSheet()->mergeCells('G5:G6');
+		$laporan->getActiveSheet()->setCellValue('G5','Nilai Perolehan');
+		$laporan->getActiveSheet()->mergeCells('H5:H6');
+		$laporan->getActiveSheet()->setCellValue('H5','Jenis Perolehan');
+		$laporan->getActiveSheet()->mergeCells('I5:I6');
+		$laporan->getActiveSheet()->setCellValue('I5','Mitra Kerjasama');
+		$laporan->getActiveSheet()->mergeCells('J5:J6');
+		$laporan->getActiveSheet()->setCellValue('J5','No Dokumen');
+		$laporan->getActiveSheet()->mergeCells('K5:K6');
+		$laporan->getActiveSheet()->setCellValue('K5','Tgl Dokumen');
+		$laporan->getActiveSheet()->mergeCells('L5:L6');
+		$laporan->getActiveSheet()->setCellValue('L5','Penyusutan');
+		$laporan->getActiveSheet()->mergeCells('M5:M6');
+		$laporan->getActiveSheet()->setCellValue('M5','Lokasi');
+		$laporan->getActiveSheet()->mergeCells('N5:O5');
+		$laporan->getActiveSheet()->setCellValue('N5','Koordinat');
+		$laporan->getActiveSheet()->setCellValue('N6','Latitude');
+		$laporan->getActiveSheet()->setCellValue('O6','Latitude');
+		$laporan->getActiveSheet()->mergeCells('P5:P6');
+		$laporan->getActiveSheet()->setCellValue('P5','Berdiri diatas tanah');
+		$laporan->getActiveSheet()->mergeCells('Q5:Q6');
+		$laporan->getActiveSheet()->setCellValue('Q5','Penanggug Jawab');
+		$laporan->getActiveSheet()->mergeCells('R5:R6');
+		$laporan->getActiveSheet()->setCellValue('R5','Jenis Perolehan Saat Ini');
+		$laporan->getActiveSheet()->mergeCells('S5:S6');
+		$laporan->getActiveSheet()->setCellValue('S5','Mitra Kerjasama');
+		$laporan->getActiveSheet()->mergeCells('T5:T6');
+		$laporan->getActiveSheet()->setCellValue('T5','No Dokumen');
+		$laporan->getActiveSheet()->mergeCells('U5:U6');
+		$laporan->getActiveSheet()->setCellValue('U5','Tgl Dokumen');
+		$laporan->getActiveSheet()->mergeCells('V5:V6');
+		$laporan->getActiveSheet()->setCellValue('V5','Jenis Gedung/Bangunan');
+		$laporan->getActiveSheet()->mergeCells('W5:W6');
+		$laporan->getActiveSheet()->setCellValue('W5','Nilai Saat Ini');
+		$laporan->getActiveSheet()->mergeCells('X5:X6');
+		$laporan->getActiveSheet()->setCellValue('X5','Keterangan');
+
+		$laporan->getActiveSheet()->mergeCells('E4:K4');
+		$laporan->getActiveSheet()->setCellValue('E4','Perolehan');
+		$laporan->getActiveSheet()->mergeCells('L4:P4');
+		$laporan->getActiveSheet()->setCellValue('L4','Posisi');
+		$laporan->getActiveSheet()->mergeCells('Q4:X4');
+		$laporan->getActiveSheet()->setCellValue('Q4','Kondisi Saat Ini');
+
+		$laporan->getActiveSheet()->freezePane('E7');
+
+		$laporan->getActiveSheet()->setCellValue('B7','Gedung dan Bangunan');
+		//--------------eo TABLE HEADER		
+		
+		//--------TABEL DATA
+		$startrow	= 7;
+		$row		= $startrow;
+		for ($a = 0; $a < count($data); $a++) {
+			$no			= $a+1;
+			$tglpr		= $data[$a]['TglPr'];
+			$asetno		= $data[$a]['AssetNo'];
+			$katname	= $data[$a]['KatName'];
+			$luasbgpr	= $data[$a]['LuasBangunanPr'];
+			$nilaipr	= $data[$a]['NilaiPerolehanPr'];
+			$jnsperolpr	= $data[$a]['JenisPerolehanPr'];
+			$mitrapr	= $data[$a]['MitraKerjasamaPr'];
+
+			$nodokpr	= $data[$a]['NoDokumenPr'];
+			$tgldokpr	= $data[$a]['TglDokumenPr'];
+			$penyustps	= $data[$a]['PenyusutanPs'];
+			$lokasips	= $data[$a]['LokasiPs'];
+			$latps		= $data[$a]['LatPs'];
+			$longps		= $data[$a]['LongPs'];
+			$berdirips	= $data[$a]['BerdiriAtasTanahPs'];
+			$penangjwb	= $data[$a]['PenanggungJawabSi'];
+			$jnsperolsi	= $data[$a]['JenisPerolehanSi'];
+			$mitrasi	= $data[$a]['MitraKerjasamaSi'];
+			$nodoksi	= $data[$a]['NoDokumenSi'];
+			$tgldoksi	= $data[$a]['TglDokumenSi'];
+			$jenisgd	= $data[$a]['JenisGdgBangunanName'];					
+			$nilaisi	= $data[$a]['NilaiSi'];
+			$ket		= $data[$a]['KeteranganSi'];
+			
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $no);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $tglpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(4, $row, $asetno);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(5, $row, $luasbgpr);			
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(6, $row, $nilaipr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(7, $row, $jnsperolpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(8, $row, $mitrapr);
+
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(9, $row, $nodokpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $tgldokpr);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(11, $row, $penyustps);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $lokasips);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $latps);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $longps);
+
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(15, $row, $berdirips);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $penangjwb);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(17, $row, $jnsperolsi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $mitrasi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(19, $row, $nodoksi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(20, $row, $tgldoksi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(21, $row, $jenisgd);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(22, $row, $nilaisi);
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(23, $row, $ket);
+
+			$row++;
+		}
+		
+		$this->formatSheetGB($laporan);
+	}
+
+	function formatSheetGB($laporan)
+	{
+		$letterarr	= array('','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+			'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ',
+			'BA','BB','BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BV','BW','BX','BY','BZ');
+		$lastrow = $laporan->getActiveSheet()->getHighestRow();
+		$laporan->getActiveSheet()->getColumnDimension('A')->setWidth(6);
+		$stcol	= 1;
+		for ($i = 0; $i < 24; $i++) {			
+			$stcollt	= $letterarr[$stcol];
+			$laporan->getActiveSheet()->getColumnDimension($stcollt)->setWidth(12);
+			$stcol++;
+		}
+		$laporan->getActiveSheet()->getStyle('A1:'.$stcollt.'6')->getFont()->setBold(true);
+		$laporan->getActiveSheet()->getStyle('A4:'.$stcollt.'6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$laporan->getActiveSheet()->getStyle('A4:'.$stcollt.'6')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_MEDIUM);
+		$laporan->getActiveSheet()->getStyle('A4:'.$stcollt.'6')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	    // $laporan->getActiveSheet()->getStyle('C8:'.$stcollt.$lastrow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$laporan->getActiveSheet()->getStyle('A7:'.$stcollt.$lastrow)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	}
+
+	//-------------------------------------------------------------------
 	function _getDataKendaraan() 
 	{
 		$sql = "SELECT 
