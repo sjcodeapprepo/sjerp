@@ -22,9 +22,10 @@
 	<br />
 	<br />
 	<br />
+
 <table align=center border="0" cellpadding="0" cellspacing="3" width="300px" class="gridtable">
 	<thead>
-	<tr><th colspan='2'>Login</th></tr>
+	<tr><th colspan='2'>LOGIN</th></tr>
 	</thead>
       <tr>
         <td align='right'>Username</td>
@@ -39,6 +40,10 @@
 		<input type='submit' value='LOGIN'>
 		</td>
 	  </tr>
+</table>
+<br />
+<table align=center border="0" cellpadding="0" width="300px" >
+	<tr><td colspan='2' align='center' >Versi Beta</td></tr>
 </table>
 </form>
 <center>

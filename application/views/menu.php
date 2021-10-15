@@ -78,6 +78,9 @@
 		position:float;
 		height:70px;
 	}
+	.hurufkecil{
+		font-size:8pt;
+	}
 	</style>
 <script type="text/javascript">
 function goToUrl(urladdress){	
