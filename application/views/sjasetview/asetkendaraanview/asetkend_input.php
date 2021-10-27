@@ -342,30 +342,30 @@
         </table>
     </form>
     <script>
-        new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", {minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("nodokumenpr", "none");
+        // new Spry.Widget.ValidationTextField("nilaipr", "integer", {minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("nilaisi", "integer", {minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true});
         
-        new Spry.Widget.ValidationSelect("katid");
-        new Spry.Widget.ValidationSelect("kondisikodesi");
+        // new Spry.Widget.ValidationSelect("katid");
+        // new Spry.Widget.ValidationSelect("kondisikodesi");
 
-        new Spry.Widget.ValidationTextField("nodokumenbpkbpr", "none"); 
-        new Spry.Widget.ValidationTextField("nostnkpr", "none");
-        new Spry.Widget.ValidationTextField("merkpr", "none");
-        new Spry.Widget.ValidationTextField("norangkapr", "none");
-        new Spry.Widget.ValidationTextField("nopolpr", "none");
-        new Spry.Widget.ValidationTextField("nomesinpr", "none");
-        new Spry.Widget.ValidationTextField("warnapr", "none");
-        new Spry.Widget.ValidationTextField("bahanbakarpr", "none");
-        new Spry.Widget.ValidationTextField("penanggungjawabps", "none");
+        // new Spry.Widget.ValidationTextField("nodokumenbpkbpr", "none"); 
+        // new Spry.Widget.ValidationTextField("nostnkpr", "none");
+        // new Spry.Widget.ValidationTextField("merkpr", "none");
+        // new Spry.Widget.ValidationTextField("norangkapr", "none");
+        // new Spry.Widget.ValidationTextField("nopolpr", "none");
+        // new Spry.Widget.ValidationTextField("nomesinpr", "none");
+        // new Spry.Widget.ValidationTextField("warnapr", "none");
+        // new Spry.Widget.ValidationTextField("bahanbakarpr", "none");
+        // new Spry.Widget.ValidationTextField("penanggungjawabps", "none");
 
-        new Spry.Widget.ValidationTextField("tahundibuatpr", "integer", {useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("isisilinderpr", "integer", {useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("tahundibuatpr", "integer", {useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("isisilinderpr", "integer", {useCharacterMasking:true});
         
-        new Spry.Widget.ValidationSelect("lokasiidps");
-        new Spry.Widget.ValidationSelect("divisionidps");
-        new Spry.Widget.ValidationSelect("jenisidj");
+        // new Spry.Widget.ValidationSelect("lokasiidps");
+        // new Spry.Widget.ValidationSelect("divisionidps");
+        // new Spry.Widget.ValidationSelect("jenisidj");
     </script>
 </body>
 
