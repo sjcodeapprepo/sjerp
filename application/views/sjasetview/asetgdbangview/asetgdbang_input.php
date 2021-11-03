@@ -331,10 +331,10 @@
         new Spry.Widget.ValidationTextField("latps", "integer", {useCharacterMasking:true});
         new Spry.Widget.ValidationTextField("longps", "integer", {useCharacterMasking:true});
 
-        // new Spry.Widget.ValidationSelect("katid");
-        // new Spry.Widget.ValidationSelect("jenisperolehanidpr");
-        // new Spry.Widget.ValidationSelect("jenisperolehanidsi");
-        // new Spry.Widget.ValidationSelect("jenisidj");
+        new Spry.Widget.ValidationSelect("katid");
+        new Spry.Widget.ValidationSelect("jenisperolehanidpr");
+        new Spry.Widget.ValidationSelect("jenisperolehanidsi");
+        new Spry.Widget.ValidationSelect("jenisidj");
     </script>
 </body>
 
