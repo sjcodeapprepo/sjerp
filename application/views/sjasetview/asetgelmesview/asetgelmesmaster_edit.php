@@ -256,9 +256,9 @@
     </div>
     <script>
         // new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        // new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
-        // new Spry.Widget.ValidationTextField("hargasi", "integer", {minValue: "0",useCharacterMasking:true});
-        // new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("hargasi", "integer", {minValue: "0",useCharacterMasking:true});
+        new Spry.Widget.ValidationTextField("penyusutanpr", "integer", {minValue: "0",maxValue: "100",useCharacterMasking:true });
         // new Spry.Widget.ValidationSelect("katid");
         // new Spry.Widget.ValidationSelect("jenisidj");
         // new Spry.Widget.ValidationSelect("lokasiidpr");
