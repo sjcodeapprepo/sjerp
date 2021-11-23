@@ -276,7 +276,7 @@ class AsetGdBang extends Authcontroller
 				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/gedbang/';
 				$config['file_name']		= 'gdb' . $assetno;
 				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
+				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 				$config['max_size']			= 5000;
 				$config['max_width']		= 1500;
 				$config['max_height']		= 1500;
