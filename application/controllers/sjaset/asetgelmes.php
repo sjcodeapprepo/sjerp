@@ -257,6 +257,7 @@ class AsetGElMes extends Authcontroller
 		$hargasi			= $this->input->post('hargasi');
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
+		$userid = $this->session->userdata('UserID');
 
 		$jenises			= explode("|", $jenisidj);
 		$jenisid			= $jenises[0];
@@ -291,6 +292,7 @@ class AsetGElMes extends Authcontroller
 							'GolID'			=> '04',
 							'KatID'			=> $katid,
 							'AssetNo'		=> $assetno,
+							'UserID'		=> $userid,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->insert('itemmaster', $datamaster);

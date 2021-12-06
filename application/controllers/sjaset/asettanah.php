@@ -240,6 +240,7 @@ class AsetTanah extends Authcontroller
 		$nilaisi					= $this->input->post('nilaisi');
 		$keterangansi				= $this->input->post('keterangansi');
 		$piclocationsi				= $this->input->post('piclocationsi');
+		$userid = $this->session->userdata('UserID');
 
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
@@ -271,6 +272,7 @@ class AsetTanah extends Authcontroller
 							'GolID'			=> '01',
 							'KatID'			=> $katid,
 							'AssetNo'		=> $assetno,
+							'UserID'		=> $userid,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->insert('itemmaster', $datamaster);

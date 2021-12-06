@@ -283,6 +283,9 @@ class Asetkendaraan extends Authcontroller
 		$nilaisi					= $this->input->post('nilaisi');
 		$keterangansi				= $this->input->post('keterangansi');
 		$piclocationsi				= $this->input->post('piclocationsi');
+		$userid = $this->session->userdata('UserID');
+		
+		
 
 		$jenises			= explode("|", $jenisidj);
 		$jenisid			= $jenises[0];
@@ -319,6 +322,7 @@ class Asetkendaraan extends Authcontroller
 							'GolID'			=> '05',
 							'KatID'			=> $katid,
 							'AssetNo'		=> $assetno,
+							'UserID'		=> $userid,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->insert('itemmaster', $datamaster);
