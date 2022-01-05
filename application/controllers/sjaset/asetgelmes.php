@@ -268,7 +268,7 @@ class AsetGElMes extends Authcontroller
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 
 			// if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/elmes/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
 				$config['file_name']		= 'elm' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
@@ -406,7 +406,7 @@ class AsetGElMes extends Authcontroller
 						);
 			//============================FILE GAmbar==================
 			// if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/elmes/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
 				$config['file_name']		= 'elm' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
@@ -572,4 +572,17 @@ class AsetGElMes extends Authcontroller
 	{
 		print_array('asdf');
 	}
+
+	function getfolder() 
+    {
+        $str = FCPATH;
+        $base_arr   = explode('/', $str, -2);
+        $folderimg  = '';
+        for($i=0;$i<count($base_arr);$i++){            
+            $folderimg  .= $base_arr[$i];
+            $folderimg  .= '/';
+        }
+        $folderimg  .= 'sensusapi/';
+        return $folderimg;
+    }
 }

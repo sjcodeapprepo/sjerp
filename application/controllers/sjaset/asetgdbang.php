@@ -274,7 +274,7 @@ class AsetGdBang extends Authcontroller
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 
 			// if($piclocationsi != '') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/gedbang/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
 				$config['file_name']		= 'gdb' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
@@ -427,7 +427,7 @@ class AsetGdBang extends Authcontroller
 
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/gedbang/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
 				$config['file_name']		= 'gdb' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
@@ -537,5 +537,18 @@ class AsetGdBang extends Authcontroller
 	{
 		print_array('asdf');
 	}
+
+	function getfolder() 
+    {
+        $str = FCPATH;
+        $base_arr   = explode('/', $str, -2);
+        $folderimg  = '';
+        for($i=0;$i<count($base_arr);$i++){            
+            $folderimg  .= $base_arr[$i];
+            $folderimg  .= '/';
+        }
+        $folderimg  .= 'sensusapi/';
+        return $folderimg;
+    }
 
 }

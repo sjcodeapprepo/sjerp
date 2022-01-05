@@ -248,7 +248,7 @@ class AsetTanah extends Authcontroller
 
 			// if($piclocationsi!='') {
 			
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/tanah/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
 				$config['file_name']		= 'tnh' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
@@ -389,7 +389,7 @@ class AsetTanah extends Authcontroller
 			);
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
-				$config['upload_path']		= FCPATH . 'publicfolder/asetpic/tanah/';
+				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
 				$config['file_name']		= 'tnh' . $assetno;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
@@ -476,6 +476,19 @@ class AsetTanah extends Authcontroller
 		// echo "<img src='".site_url()."/sjaset/asetgelmes/barcode'  alt='not show' /></div>";
 		echo "<img src='".base_url()."/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
 	}
+
+	function getfolder() 
+    {
+        $str = FCPATH;
+        $base_arr   = explode('/', $str, -2);
+        $folderimg  = '';
+        for($i=0;$i<count($base_arr);$i++){            
+            $folderimg  .= $base_arr[$i];
+            $folderimg  .= '/';
+        }
+        $folderimg  .= 'sensusapi/';
+        return $folderimg;
+    }
 
 	function test()
 	{
