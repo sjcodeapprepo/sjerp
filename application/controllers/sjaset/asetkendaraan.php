@@ -611,7 +611,7 @@ class Asetkendaraan extends Authcontroller
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
-		// $data['imgsrc']						= base_url().$url[5];
+		$data['pic_url']					= 'http://36.94.184.77/sensusapi/';
 		$data['data']								= $this->_getData($id);
 		$data['itemjeniskendaraankatmaster']				= $this->_getItemJenisKendmstData($id);
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();

@@ -331,7 +331,7 @@ class Asetlengalat extends Authcontroller
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
-		// $data['imgsrc']						= base_url().$url[5];
+		$data['pic_url']					= 'http://36.94.184.77/sensusapi/';
 		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData($id);
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();

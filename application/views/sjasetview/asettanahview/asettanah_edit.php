@@ -311,7 +311,7 @@
         </table>
     </form>
     <div id="asetpic" title="Gambar Aset">
-        <img src="<?=base_url()?>publicfolder/asetpic/tanah/<?=$data['PicLocationSi']?>" />
+        <img src="<?=$pic_url?>publicfolder/asetpic/tanah/<?=$data['PicLocationSi']?>" />
     </div>
     <script>
         new Spry.Widget.ValidationTextField("nomordokumenpr", "none");
