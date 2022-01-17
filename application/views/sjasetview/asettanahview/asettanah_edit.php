@@ -320,8 +320,8 @@
         // new Spry.Widget.ValidationTextField("apresiasipr", "integer", { minValue: "0",useCharacterMasking:true});
         
         // new Spry.Widget.ValidationTextField("lokasips", "none");
-        // new Spry.Widget.ValidationTextField("latps", "integer", { minValue: "0",useCharacterMasking:true});
-        // new Spry.Widget.ValidationTextField("longps", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("latps", "decimal", { useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("longps", "decimal", { useCharacterMasking:true});
         
         // new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
         // new Spry.Widget.ValidationSelect("statusidsi");
