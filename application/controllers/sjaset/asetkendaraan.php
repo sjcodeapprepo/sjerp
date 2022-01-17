@@ -529,7 +529,8 @@ class Asetkendaraan extends Authcontroller
         $config['white']        = array(70,130,180);
         $this->ciqrcode->initialize($config);
 
-		$image_name			= 'bc.png';
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'bc'.$userid.'.png';
         $params['data']		= $datas['AssetNo'];
         $params['level']	= 'H';
         $params['size']		= 4;
@@ -610,8 +611,9 @@ class Asetkendaraan extends Authcontroller
 		$this->load->helper('text');
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
-		$url	= explode('/',$datas['PicLocationSi'],6);
-		$data['pic_url']					= 'http://36.94.184.77/sensusapi/';
+		$base		= base_url();
+		$basearr	= explode('/',$base);
+		$data['pic_url'] = 'http://'.$basearr[2].'/sensusapi/';
 		$data['data']								= $this->_getData($id);
 		$data['itemjeniskendaraankatmaster']				= $this->_getItemJenisKendmstData($id);
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
