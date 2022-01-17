@@ -344,7 +344,9 @@ class AsetGdBang extends Authcontroller
 		$data['data']						= $datas;
 		$url	= explode('/',$datas['PicLocationSi'],6);
 		$data['imgsrc']						= '';//base_url().$url[5];
-		$data['pic_url']					= 'http://36.94.184.77/sensusapi/';
+		$base		= base_url();
+		$basearr	= explode('/',$base);
+		$data['pic_url'] = 'http://'.$basearr[2].'/sensusapi/';
 		$data['data']						= $this->_getData($id);
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
 		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster($id);
