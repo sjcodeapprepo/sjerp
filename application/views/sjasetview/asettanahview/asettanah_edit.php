@@ -100,7 +100,7 @@
     ?>
     <form action="<?= site_url() ?>/sjaset/asettanah/inputeditproc/<?=$data['ItemID']?>" method='post' id='formin' enctype="multipart/form-data">
         <input type='hidden' name='urlsegment' id='urlsegment' value='<?= $urlsegment ?>' />
-        <input type='hidden' name='assetorder' id='assetorder' value='<<?=$data['AssetOrder']?>' />
+        <input type='hidden' name='assetorder' id='assetorder' value='<?=$data['AssetOrder']?>' />
         <br />
         <br />
         <br />
@@ -314,24 +314,24 @@
         <img src="<?=$pic_url?>publicfolder/asetpic/tanah/<?=$data['PicLocationSi']?>" />
     </div>
     <script>
-        new Spry.Widget.ValidationTextField("nomordokumenpr", "none");
-        new Spry.Widget.ValidationTextField("luaspr", "integer", { minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("apresiasipr", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("nomordokumenpr", "none");
+        // new Spry.Widget.ValidationTextField("luaspr", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("apresiasipr", "integer", { minValue: "0",useCharacterMasking:true});
         
-        new Spry.Widget.ValidationTextField("lokasips", "none");
-        new Spry.Widget.ValidationTextField("latps", "integer", { minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("longps", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("lokasips", "none");
+        // new Spry.Widget.ValidationTextField("latps", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("longps", "integer", { minValue: "0",useCharacterMasking:true});
         
-        new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
-        new Spry.Widget.ValidationSelect("statusidsi");
-        new Spry.Widget.ValidationSelect("jenisdokumentanahidsi");
-        new Spry.Widget.ValidationSelect("peruntukanidsi");
+        // new Spry.Widget.ValidationTextField("penanggungjawabsi", "none");
+        // new Spry.Widget.ValidationSelect("statusidsi");
+        // new Spry.Widget.ValidationSelect("jenisdokumentanahidsi");
+        // new Spry.Widget.ValidationSelect("peruntukanidsi");
 
-        new Spry.Widget.ValidationTextField("luassi", "integer", { minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("nilaisi", "integer", { minValue: "0",useCharacterMasking:true});
-        new Spry.Widget.ValidationTextField("keterangansi", "none");
-        new Spry.Widget.ValidationTextField("nodokumensi", "none");
+        // new Spry.Widget.ValidationTextField("luassi", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("nilaisi", "integer", { minValue: "0",useCharacterMasking:true});
+        // new Spry.Widget.ValidationTextField("keterangansi", "none");
+        // new Spry.Widget.ValidationTextField("nodokumensi", "none");
     </script>
 </body>
 
