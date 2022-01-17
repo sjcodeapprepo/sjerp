@@ -229,6 +229,13 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
+                            <!-- <select name='penanggungjawabsi' id='penanggungjawabsi'>
+    <option value="">--Pilih Penanggung Jawab--</option>
+    <option value="Divisi Umum dan SDM">Divisi Umum dan SDM</option>
+    <option value="Divisi Pertanahan dan Hukum">Divisi Pertanahan dan Hukum</option>
+    <option value="Divisi Usaha">Divisi Usaha</option>
+    <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option>
+</select> -->
 								<input type='text' name='penanggungjawabsi' size='20' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
                             </td>
                             <td align="right">
