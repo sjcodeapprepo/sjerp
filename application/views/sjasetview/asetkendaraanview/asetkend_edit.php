@@ -302,7 +302,14 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
+                                <!-- <select name='penanggungjawabps' id='penanggungjawabps'>
+                                    <option value="">--Pilih Penanggung Jawab--</option>
+                                    <option value="Divisi Umum dan SDM">Divisi Umum dan SDM</option>
+                                    <option value="Divisi Pertanahan dan Hukum">Divisi Pertanahan dan Hukum</option>
+                                    <option value="Divisi Usaha">Divisi Usaha</option>
+                                    <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option>
+                                </select> -->
+                                <input type='text' name='penanggungjawabps' size='30' id='penanggungjawabps' value="<?= $data['PenanggungJawabPs'] ?>" />
                             </td>
                         </tr>
 						<tr>
