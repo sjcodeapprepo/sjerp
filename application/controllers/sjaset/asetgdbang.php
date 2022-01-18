@@ -238,7 +238,7 @@ class AsetGdBang extends Authcontroller
 	{
 		$submit					= $this->input->post('submit');
 		$katid					= $this->input->post('katid');
-		$tglpr					= $this->input->post('tglpr');
+		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
 
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
@@ -246,7 +246,7 @@ class AsetGdBang extends Authcontroller
 		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr');
 		$mitrakerjasamapr		= $this->input->post('mitrakerjasamapr');
 		$nodokumenpr			= $this->input->post('nodokumenpr');
-		$tgldokumenpr			= $this->input->post('tgldokumenpr');
+		$tgldokumenpr			= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
 		$penyusutanps			= $this->input->post('penyusutanps');
 		$lokasips				= $this->input->post('lokasips');
 		$berdiriatastanahps		= $this->input->post('berdiriatastanahps');
