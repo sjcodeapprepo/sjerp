@@ -261,6 +261,9 @@
     <div id="asetpic" title="Gambar Aset">
         <img src="<?=$pic_url?>publicfolder/asetpic/elmes/<?=$data['PicLocationSi']?>" />
     </div>
+    <br />
+<br />
+<br />
     <script>
         // new Spry.Widget.ValidationTextField("nodokumenpr", "none");
         // new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });

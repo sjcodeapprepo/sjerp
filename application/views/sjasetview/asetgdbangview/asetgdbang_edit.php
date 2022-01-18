@@ -359,6 +359,9 @@
         // new Spry.Widget.ValidationSelect("jenisperolehanidsi");
         // new Spry.Widget.ValidationSelect("jenisidj");
     </script>
+<br />
+<br />
+<br />
 </body>
 
 </html>

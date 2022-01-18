@@ -187,7 +187,7 @@
                                 Apresiasi&nbsp;
                             </td>
                             <td colspan="3">
-								<input type='text' name='apresiasipr' size='3' id='apresiasipr' value="<?= $data['ApresiasiPr'] ?>" class='ratakanan' />
+								<input type='text' name='apresiasipr' size='3' id='apresiasipr' value="<?= $data['ApresiasiPr'] ?>" class='ratakanan' />%
 							</td>
                         </tr>
                         <tr>
@@ -341,5 +341,7 @@
         // new Spry.Widget.ValidationTextField("nodokumensi", "none");
     </script>
 </body>
-
+<br />
+<br />
+<br />
 </html>
