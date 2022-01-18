@@ -245,7 +245,7 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$tglpr				= $this->input->post('tglpr');
+		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
 		$nilaipr			= $this->input->post('nilaipr');

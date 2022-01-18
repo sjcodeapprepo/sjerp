@@ -218,11 +218,11 @@ class AsetTanah extends Authcontroller
 	{
 		$submit						= $this->input->post('submit');
 		$katid						= $this->input->post('katid');
-		$tglpr						= $this->input->post('tglpr');
+		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 
 		$jenisdokumentanahidpr		= $this->input->post('jenisdokumentanahidpr');
-		$tgldokumenpr				= $this->input->post('tgldokumenpr');
+		$tgldokumenpr					= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
 		$nomordokumenpr				= $this->input->post('nomordokumenpr');
 		$luaspr						= $this->input->post('luaspr');
 		$nilaipr					= $this->input->post('nilaipr');
@@ -234,7 +234,7 @@ class AsetTanah extends Authcontroller
 		$statusidsi					= $this->input->post('statusidsi');
 		$jenisdokumentanahidsi		= $this->input->post('jenisdokumentanahidsi');
 		$peruntukanidsi				= $this->input->post('peruntukanidsi');
-		$tgldokumensi				= $this->input->post('tgldokumensi');
+		$tgldokumensi					= ($this->input->post('tgldokumensi')=='')?'0000-00-00':$this->input->post('tgldokumensi');		
 		$nodokumensi				= $this->input->post('nodokumensi');
 		$luassi						= $this->input->post('luassi');
 		$nilaisi					= $this->input->post('nilaisi');

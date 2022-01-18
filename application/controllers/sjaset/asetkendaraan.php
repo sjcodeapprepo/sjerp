@@ -258,15 +258,15 @@ class Asetkendaraan extends Authcontroller
 		$submit						= $this->input->post('submit');
 		$katid						= $this->input->post('katid');
 		$jenisidj		= $this->input->post('jenisidj');
-		$tglpr						= $this->input->post('tglpr');
+		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 		$nodokumenpr				= $this->input->post('nodokumenpr');
 		$nilaipr					= $this->input->post('nilaipr');
 		$penyusutanpr				= $this->input->post('penyusutanpr');
 		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
-		$tgldokumenpr = $this->input->post('tgldokumenpr');
+		$tgldokumenpr					= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
 		$nostnkpr					= $this->input->post('nostnkpr');
-		$tglstnkpr					= $this->input->post('tglstnkpr');
+		$tglstnkpr					= ($this->input->post('tglstnkpr')=='')?'0000-00-00':$this->input->post('tglstnkpr');
 		$nopolpr					= $this->input->post('nopolpr');
 		$norangkapr					= $this->input->post('norangkapr');
 		$nomesinpr					= $this->input->post('nomesinpr');
