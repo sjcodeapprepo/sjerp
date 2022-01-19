@@ -493,6 +493,67 @@ class AsetTanah extends Authcontroller
         return $folderimg;
     }
 
+	function pdf($id)
+	{
+		$datas	= $this->_getBarQrCodeData($id);
+		$keterangan_arr	= explode("\n",$datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0])?$keterangan_arr[0]:'';
+		$keterangan2	= isset($keterangan_arr[1])?$keterangan_arr[1]:'';
+
+		$this->load->library('ciqrcode');
+
+        $config['cacheable']    = true;
+        $config['cachedir']     = './publicfolder/qrcode/';
+        $config['errorlog']     = './publicfolder/qrcode/';
+        $config['imagedir']     = './publicfolder/qrcode/images/';
+        $config['quality']      = true;
+        $config['size']         = '1024';
+        $config['black']        = array(224,255,255);
+        $config['white']        = array(70,130,180);
+        $this->ciqrcode->initialize($config);
+
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'tnh'.$userid.'.png';
+        $params['data']		= $datas['AssetNo'];
+        $params['level']	= 'H';
+        $params['size']		= 4;
+        $params['savename']	= FCPATH.$config['imagedir'].$image_name;
+        $this->ciqrcode->generate($params);
+		
+		$imageurl = base_url()."publicfolder/qrcode/images/".$image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'printerbarcode');
+		$pdf->AddPage();		
+		$pdf->Image($imageurl, 1, 6, 20, 20);
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->Text(21, 9,  $datas['AssetNo']);
+		$pdf->Text(21, 13,  $datas['NoDokumenSi']);
+		$pdf->Text(21, 17, $datas['JenisDokumenTanahName']);
+		$pdf->Text(21, 21, $keterangan1);
+		$pdf->Text(21, 25, $keterangan2);
+		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
+		$pdf->Image($logo, 49, 6, 26, 12);
+		$pdf->Output('test.pdf', 'I');
+
+	}
+
+	function _getBarQrCodeData($id) 
+	{
+		$sql = "SELECT 
+					m.AssetNo, d.LokasiPs, d.NoDokumenSi, d.TglDokumenSi, 
+					v.JenisDokumenTanahName, d.PenanggungJawabSi, d.KeteranganSi
+				FROM 
+					itemmaster m, itemtanahdetail d, itemjenisdokumentanahmaster v
+				WHERE 
+					m.ItemID=d.ItemID AND d.JenisDokumenTanahIDSi=v.JenisDokumenTanahID 
+					AND m.ItemID='$id' AND m.GolID='01'";
+		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= $result[0];
+		return $retval;
+	}
+
 	function test()
 	{
 		$base	= base_url();

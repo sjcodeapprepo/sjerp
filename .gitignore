@@ -10,6 +10,7 @@
 # Learn more about Git LFS for large files:
 #     https://www.atlassian.com/git/tutorials/git-lfs
 /nbproject/
+application/cache/
 application/config/database.php
 application/config/config.php
 jtarjuna_ws.code-workspace
