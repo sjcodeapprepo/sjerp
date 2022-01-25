@@ -99,6 +99,29 @@ class AsetTanah extends Authcontroller
 		$this->load->view('sjasetview/asettanahview/asettanah_input', $data);
 	}
 
+	function _getDataNotes($id)
+	{
+		$datakosong	= array(
+			'Notes'		=> '',
+			'RefNo'		=> '',
+			'TanahID'	=> ''
+		);
+
+		$sql = "SELECT 
+					Notes, 	RefNo, TanahID
+				FROM
+					tanahnotes
+				WHERE
+					TanahID='$id'";
+		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]) ? $result[0] : $datakosong;
+
+		return $retval;
+
+	}
+
 	function _getData($id)
 	{
 		$datakosong	= array(
@@ -304,6 +327,16 @@ class AsetTanah extends Authcontroller
 						);
 			$this->db->insert('itemtanahdetail', $datadetail);
 
+			$addnotes	= $this->input->post('addnotesinput');
+			if($addnotes !== "") {
+				$datatanahnotes	= array(
+					'TanahID'	=> $itemid,
+					'Notes'		=> $addnotes,
+					'AssetNo'	=> '000'
+				);
+				$this->db->insert('tanahnotes', $datatanahnotes);
+			}
+
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
 			
 			redirect('sjaset/asettanah', 'refresh');
@@ -321,6 +354,7 @@ class AsetTanah extends Authcontroller
 		$basearr	= explode('/',$base);
 		$data['pic_url']					= 'http://'.$basearr[2].'/sensusapi/';
 		$data['data']						= $this->_getData($id);
+		$data['datanotes']					= $this->_getDataNotes($id);
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemjenisdokumentanahmaster']= $this->_getItemJenisDoktanahmasterData();
 		$data['itemstatuspenguasaanmaster']= $this->_getStatusPenguasaanmaster();

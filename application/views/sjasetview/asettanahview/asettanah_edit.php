@@ -90,6 +90,24 @@
             $( "#asetpic" ).dialog( "open" );
         });
 
+        $( "#catatantambahan" ).dialog({
+            autoOpen: false,
+            height: 600,
+            width: 800,
+            modal: true,
+            buttons: {
+                SIMPAN: function() {
+                    var addnotes    = $("#addnotes").val();
+                    $("#addnotesinput").val(addnotes);
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    
+        $( "#opennotes" ).on( "click", function() {
+            $( "#catatantambahan" ).dialog( "open" );
+        });
+
     });
 </script>
 </head>
@@ -295,6 +313,20 @@
                             </td>
                             <td colspan="3">
 								<textarea name="keterangansi" id="keterangansi" rows="4" cols="50"><?= $data['KeteranganSi'] ?></textarea>
+							</td>
+                        </tr>
+                        <tr>
+                            <td align="right" valign="top">
+                                Catatan Tambahan&nbsp;
+                            </td>
+                            <td colspan="3">
+                                <a id="opennotes">Lihat Catatan Tambahan</a>
+                                <br />
+                                <input type='hidden' id="addnotesinput" name='addnotesinput' value="<?= $datanotes['Notes'] ?>" />
+                                <br />
+                                <div id="catatantambahan" title="Basic dialog">
+                                    <textarea id="addnotes" name="addnotes" rows="20" cols="70"><?= $datanotes['Notes'] ?></textarea>
+                                </div>
 							</td>
                         </tr>
                         <tr>

@@ -75,7 +75,29 @@
                 $(this).val(0);
             }
         });
+
+        $( "#catatantambahan" ).dialog({
+            autoOpen: false,
+            height: 600,
+            width: 800,
+            modal: true,
+            buttons: {
+                SIMPAN: function() {
+                    var addnotes    = $("#addnotes").val();
+                    $("#addnotesinput").val(addnotes);
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    
+        $( "#opennotes" ).on( "click", function() {
+            $( "#catatantambahan" ).dialog( "open" );
+        });
+
     });
+    function addUser() {
+
+    }
 </script>
 </head>
 
@@ -213,12 +235,12 @@
                             </td>
                             <td>
                             <select name='penanggungjawabsi' id='penanggungjawabsi'>
-    <option value="">--Pilih Penanggung Jawab--</option>
-    <option value="Divisi Umum dan SDM">Divisi Umum dan SDM</option>
-    <option value="Divisi Pertanahan dan Hukum">Divisi Pertanahan dan Hukum</option>
-    <option value="Divisi Usaha">Divisi Usaha</option>
-    <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option>
-</select>
+                                <option value="">--Pilih Penanggung Jawab--</option>
+                                <option value="Divisi Umum dan SDM">Divisi Umum dan SDM</option>
+                                <option value="Divisi Pertanahan dan Hukum">Divisi Pertanahan dan Hukum</option>
+                                <option value="Divisi Usaha">Divisi Usaha</option>
+                                <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option>
+                            </select>
 								<!-- <input type='text' name='penanggungjawabsi' size='20' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" /> -->
                             </td>
                             <td align="right">
@@ -281,6 +303,20 @@
 							</td>
                         </tr>
                         <tr>
+                            <td align="right" valign="top">
+                                Catatan Tambahan&nbsp;
+                            </td>
+                            <td colspan="3">
+                                <a id="opennotes">Buat Catatan Tambahan</a>
+                                <br />
+                                <input type='hidden' id="addnotesinput" name='addnotesinput' value="" />
+                                <br />
+                                <div id="catatantambahan" title="Basic dialog">
+                                    <textarea id="addnotes" name="addnotes" rows="20" cols="70"></textarea>
+                                </div>
+							</td>
+                        </tr>
+                        <tr>
                             <td align="right">
                                 File Foto&nbsp;
                             </td>
@@ -320,6 +356,9 @@
         // new Spry.Widget.ValidationTextField("nodokumensi", "none");
 
     </script>
+    <br />
+    <br />
+    <br />
 </body>
 
 </html>
