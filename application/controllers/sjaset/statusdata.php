@@ -5,7 +5,7 @@ class StatusData extends Authcontroller {
 	function __construct() 
 	{
 		parent::__construct();
-		define("MENU_ID", "100");
+		define("MENU_ID", "123");
 		$userid = $this->session->userdata('UserID');
 		$this->redirectNoAuthRead($userid,MENU_ID);
 	}
