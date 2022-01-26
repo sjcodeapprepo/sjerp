@@ -62,14 +62,22 @@ class AsetTanah extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.AssetNo, mk.KatName, mj.JenisDokumenTanahName, d.LokasiPs, d.LuasSi, 
-					d.PenanggungJawabSi, mp.PeruntukanName
+					d.PenanggungJawabSi, mp.PeruntukanName, (SELECT n.Notes FROM tanahnotes n WHERE m.ItemID=n.TanahID) AS Notes
 				FROM 
 					itemmaster m, itemtanahdetail d, itemkatmaster mk, itemjenisdokumentanahmaster mj, itemperuntukanmaster mp
 				WHERE 
 					m.ItemID=d.ItemID AND d.JenisDokumenTanahIDSi=mj.JenisDokumenTanahID AND d.PeruntukanIDSi=mp.PeruntukanID
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='01'";
 		if ($key !== '')
-			$sql .= " AND $category LIKE '%$key%'";
+		{
+			if($category=='Notes') {
+				$sql .= " HAVING Notes LIKE '%$key%'";
+			}
+			else {
+				$sql .= " AND $category LIKE '%$key%'";
+			}
+
+		}
 		if($isviewdata) {
 			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
 		}

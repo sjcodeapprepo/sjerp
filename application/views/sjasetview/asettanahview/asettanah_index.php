@@ -53,6 +53,7 @@
 			<option value='d.LokasiPs'>Lokasi</option>
 			<option value='mp.PeruntukanName'>Peruntukan</option>
 			<option value='d.PenanggungJawabSi'>Penanggung Jawab</option>
+			<option value='Notes'>Catatan Tambahan</option>
 		</select>
 		&nbsp;&nbsp;<input type=text size='40' name='optionValue' />&nbsp;&nbsp;<input type=submit value='Cari' name='submit' />
 		</td>
