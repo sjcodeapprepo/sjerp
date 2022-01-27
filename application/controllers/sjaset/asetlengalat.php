@@ -513,7 +513,7 @@ class Asetlengalat extends Authcontroller
 		$pdf->Text(21, 13,  $datas['KatName']);
 		$pdf->Text(21, 17, $datas['JenisPerlengPeralatKatName']);
 		$pdf->Text(21, 21, $keterangan1);
-		$pdf->Text(21, 25, $keterangan2);
+		// $pdf->Text(21, 25, $keterangan2);
 		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('lenglat.pdf', 'I');
