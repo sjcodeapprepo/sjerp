@@ -220,7 +220,7 @@ class Asetlengalat extends Authcontroller
 
 	function _getLastAsetOrderPlusOneV2($katid, $jenisid) 
 	{
-		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 4, 0) AS AO 
 					FROM itemperlengperalatdetail d, itemmaster i 
 					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID='$jenisid'
 					ORDER BY d.AssetOrder DESC
