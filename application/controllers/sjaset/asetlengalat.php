@@ -380,7 +380,7 @@ class Asetlengalat extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-
+			$debugfld	= '>'.$katid.'<>'.$jenisperlengperalatkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidps.'<>'.$divisionidps.'<';
 			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
 			
@@ -406,6 +406,7 @@ class Asetlengalat extends Authcontroller
 								'KondisiKodeSi'			=> $kondisikodesi,
 								'HargaSi'				=> $hargasi,
 								'KeteranganSi'			=> $keterangansi
+								,'DebugFld'				=> $debugfld
 						);
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
