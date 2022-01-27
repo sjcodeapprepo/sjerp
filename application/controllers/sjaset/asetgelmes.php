@@ -379,7 +379,7 @@ class AsetGElMes extends Authcontroller
 		if ($submit == 'SIMPAN') {
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
-
+			$debugfld	= '>'.$katid.'<>'.$jeniselkmesinkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidpr.'<>'.$divisionidps.'<';
 			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
 
@@ -404,6 +404,7 @@ class AsetGElMes extends Authcontroller
 							'KondisiKodeSi'			=> $kondisikodesi,
 							'HargaSi'				=> $hargasi,
 							'KeteranganSi'			=> $keterangansi
+							,'DebugFld'				=> $debugfld
 						);
 			//============================FILE GAmbar==================
 			// if($piclocationsi!='') {
