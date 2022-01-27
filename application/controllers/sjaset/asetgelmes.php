@@ -220,14 +220,14 @@ class AsetGElMes extends Authcontroller
 
 	function _getLastAsetOrderPlusOneV2($katid, $jenisid) 
 	{
-		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 4, 0) AS AO 
 					FROM itemelkmesindetail d, itemmaster i 
 					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND d.JenisID='$jenisid'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'0001';
 		return $retval;
 	}
 
