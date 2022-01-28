@@ -269,7 +269,7 @@ class AsetGElMes extends Authcontroller
 
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
-				$config['file_name']		= 'elm' . $assetno;
+				$config['file_name']		= 'elm' . $assetno.'_'.$userid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 				$config['max_size']			= 5000;
@@ -381,13 +381,14 @@ class AsetGElMes extends Authcontroller
 			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
 			$debugfld	= '>'.$katid.'<>'.$jeniselkmesinkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidpr.'<>'.$divisionidps.'<';
 			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
-			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
+			// $assetno	= ($is_berubah)?$assetno:$AssetNo; 
+			$assetno	= $AssetNo;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
+							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));				
@@ -409,7 +410,7 @@ class AsetGElMes extends Authcontroller
 			//============================FILE GAmbar==================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
-				$config['file_name']		= 'elm' . $assetno;
+				$config['file_name']		= 'elm' . $assetno.'ID'.$itemid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;

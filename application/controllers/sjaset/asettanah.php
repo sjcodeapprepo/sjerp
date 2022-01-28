@@ -406,7 +406,7 @@ class AsetTanah extends Authcontroller
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
+							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
@@ -435,7 +435,7 @@ class AsetTanah extends Authcontroller
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
-				$config['file_name']		= 'tnh' . $assetno;
+				$config['file_name']		= 'tnh' . $assetno.'ID'.$itemid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;

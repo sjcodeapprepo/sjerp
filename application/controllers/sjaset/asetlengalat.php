@@ -268,7 +268,7 @@ class Asetlengalat extends Authcontroller
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-				$config['file_name']		= 'lat' . $assetno;
+				$config['file_name']		= 'lat' . $assetno.'_'.$userid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 				$config['max_size']			= 5000;
@@ -382,14 +382,15 @@ class Asetlengalat extends Authcontroller
 			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			$debugfld	= '>'.$katid.'<>'.$jenisperlengperalatkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidps.'<>'.$divisionidps.'<';
 			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
-			$assetno	= ($is_berubah)?$assetno:$AssetNo; 
+			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
+			$assetno	= $AssetNo;
 			
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
+							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
@@ -411,7 +412,7 @@ class Asetlengalat extends Authcontroller
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-				$config['file_name']		= 'lat' . $assetno;
+				$config['file_name']		= 'lat' . $assetno.'ID'.$itemid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;

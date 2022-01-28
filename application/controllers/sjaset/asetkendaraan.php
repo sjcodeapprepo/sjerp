@@ -406,12 +406,13 @@ class Asetkendaraan extends Authcontroller
 			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 
-			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
-			$assetno	= ($is_berubah)?$assetno:$AssetNo;
+			// $is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
+			$assetno	= $AssetNo;
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
+							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
@@ -445,7 +446,7 @@ class Asetkendaraan extends Authcontroller
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder().'publicfolder/asetpic/kendr/';
-				$config['file_name']		= 'kdr' . $assetno;
+				$config['file_name']		= 'kdr' . $assetno.'ID'.$itemid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 				$config['max_size']			= 5000;

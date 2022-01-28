@@ -275,7 +275,7 @@ class AsetGdBang extends Authcontroller
 
 			// if($piclocationsi != '') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-				$config['file_name']		= 'gdb' . $assetno;
+				$config['file_name']		= 'gdb' . $assetno.'_'.$userid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 				$config['max_size']			= 5000;
@@ -393,13 +393,14 @@ class AsetGdBang extends Authcontroller
 			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 			
 			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
-			$assetno	= ($is_berubah)?$assetno:$AssetNo;
+			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
+			$assetno	= $AssetNo;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
+							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
 			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
@@ -431,7 +432,7 @@ class AsetGdBang extends Authcontroller
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
 				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-				$config['file_name']		= 'gdb' . $assetno;
+				$config['file_name']		= 'gdb' . $assetno.'ID'.$itemid;
 				$config['overwrite']		= TRUE;
 				$config['allowed_types']	= 'jpg|png|jpeg';
 				$config['max_size']			= 5000;
