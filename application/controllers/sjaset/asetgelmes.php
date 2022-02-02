@@ -405,7 +405,7 @@ class AsetGElMes extends Authcontroller
 							'KondisiKodeSi'			=> $kondisikodesi,
 							'HargaSi'				=> $hargasi,
 							'KeteranganSi'			=> $keterangansi
-							,'DebugFld'				=> $debugfld
+							// ,'DebugTest'				=> $debugfld
 						);
 			//============================FILE GAmbar==================
 			// if($piclocationsi!='') {

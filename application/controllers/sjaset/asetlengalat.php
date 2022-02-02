@@ -407,7 +407,7 @@ class Asetlengalat extends Authcontroller
 								'KondisiKodeSi'			=> $kondisikodesi,
 								'HargaSi'				=> $hargasi,
 								'KeteranganSi'			=> $keterangansi
-								,'DebugFld'				=> $debugfld
+								// ,'DebugTest'			=> $debugfld
 						);
 			//========================================FILE GAMBAR=====================
 			// if($piclocationsi!='') {
