@@ -324,7 +324,7 @@
                                 <br />
                                 <input type='hidden' id="addnotesinput" name='addnotesinput' value="<?= $datanotes['Notes'] ?>" />
                                 <br />
-                                <div id="catatantambahan" title="Basic dialog">
+                                <div id="catatantambahan" title="Catatan Tambahan">
                                     <textarea id="addnotes" name="addnotes" rows="20" cols="70"><?= $datanotes['Notes'] ?></textarea>
                                 </div>
 							</td>

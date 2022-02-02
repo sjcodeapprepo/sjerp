@@ -18,7 +18,7 @@ class GenAsetNo extends Authcontroller { //testpurpose
         //DebugTest
 
         //-- Tanah
-        $dataTanah      = $this->_getDataTanah();
+        $dataTanah          = $this->_getDataTanah();
         foreach ($dataTanah as $tanah) 
         {
             $itemid     = $tanah[''];
@@ -26,8 +26,8 @@ class GenAsetNo extends Authcontroller { //testpurpose
             $thnpr      = $tanah[''];
 
             // $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-            $assetorder	= $this->_getLastAsetOrderPlusOne($katid);
-			$assetno	= '01'.$katid.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
+            $assetorder	= $this->_getLastAsetOrderPlusOneV3($katid, $thnpr);
+			$assetno	= '01'.$katid.$thnpr.$assetorder;
 
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemtanahdetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
