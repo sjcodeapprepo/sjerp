@@ -94,7 +94,7 @@ for($a=0; $a<count($view_data); $a++) {
 	$pngjwb 	= $view_data[$a]['PenanggungJawabPs'];
 ?>
 	  <tr>
-	  	<td align='center'><?=$asno?></td>
+	  	<td align='center' noWrap><?=$asno?></td>
 		<td align='center'><?=$katname?></td>
 	  	<td align='center'><?=$jkat?></td>
           <td align='center'><?=$divname?></td>

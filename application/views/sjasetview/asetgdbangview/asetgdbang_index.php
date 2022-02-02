@@ -98,7 +98,7 @@ for($a=0; $a<count($view_data); $a++) {
 	$mtrkj		= $view_data[$a]['MitraKerjasamaSi'];
 ?>
 	  <tr>
-	  	<td align='center'><?=$asno?></td>
+	  	<td align='center' noWrap><?=$asno?></td>
 		<td align='center'><?=$katname?></td>
 	  	<td align='center'><?=$jgdb?></td>
 		<td align='center'><?=$nodok?></td>
