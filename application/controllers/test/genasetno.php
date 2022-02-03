@@ -34,7 +34,8 @@ class GenAsetNo extends Authcontroller { //testpurpose
             $thnpr      = substr($kend['TglPr'], 0, 4);;
 
             $assetorder	= $this->_getLastAsetOrderPlusOneV3_kend($katid, $thnpr);
-			$assetno	= '05'.$katid.$thnpr.$assetorder;
+            $assetno	= '05.'.$katid.'.'.$thnpr.'-'.$assetorder;
+
             
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemkendaraandetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
@@ -84,7 +85,8 @@ class GenAsetNo extends Authcontroller { //testpurpose
             $thnpr      = substr($elmes['TglPr'], 0, 4);;
 
             $assetorder	= $this->_getLastAsetOrderPlusOneV3_elmes($katid, $thnpr);
-			$assetno	= '04'.$katid.$thnpr.$assetorder;
+            $assetno	= '04.'.$katid.'.'.$thnpr.'-'.$assetorder;
+
             
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemelkmesindetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
@@ -134,7 +136,8 @@ class GenAsetNo extends Authcontroller { //testpurpose
             $thnpr      = substr($perlengLat['TglPr'], 0, 4);;
 
             $assetorder	= $this->_getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr);
-			$assetno	= '03'.$katid.$thnpr.$assetorder;
+            $assetno	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder;
+
 
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemperlengperalatdetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
@@ -184,7 +187,8 @@ class GenAsetNo extends Authcontroller { //testpurpose
             $thnpr      = substr($gdBang['TglPr'], 0, 4);;
 
             $assetorder	= $this->_getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr);
-			$assetno	= '02'.$katid.$thnpr.$assetorder;
+            $assetno	= '02.'.$katid.'.'.$thnpr.'-'.$assetorder;
+
 
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemgdgbangdetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
@@ -235,7 +239,7 @@ class GenAsetNo extends Authcontroller { //testpurpose
 
             // $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
             $assetorder	= $this->_getLastAsetOrderPlusOneV3_tanah($katid, $thnpr);
-			$assetno	= '01'.$katid.$thnpr.$assetorder;
+			$assetno	= '01.'.$katid.'.'.$thnpr.'-'.$assetorder;
 
             $this->db->update('itemmaster', array('AssetNo'=> $assetno), array('ItemID'	=> $itemid));
             $this->db->update('itemtanahdetail', array('AssetOrder'=> $assetorder), array('ItemID'	=> $itemid));
