@@ -249,11 +249,11 @@ class AsetTanah extends Authcontroller
 	{
 		$submit						= $this->input->post('submit');
 		$katid						= $this->input->post('katid');
-		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$tglpr						= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 
 		$jenisdokumentanahidpr		= $this->input->post('jenisdokumentanahidpr');
-		$tgldokumenpr					= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
+		$tgldokumenpr				= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
 		$nomordokumenpr				= $this->input->post('nomordokumenpr');
 		$luaspr						= $this->input->post('luaspr');
 		$nilaipr					= $this->input->post('nilaipr');
@@ -265,7 +265,7 @@ class AsetTanah extends Authcontroller
 		$statusidsi					= $this->input->post('statusidsi');
 		$jenisdokumentanahidsi		= $this->input->post('jenisdokumentanahidsi');
 		$peruntukanidsi				= $this->input->post('peruntukanidsi');
-		$tgldokumensi					= ($this->input->post('tgldokumensi')=='')?'0000-00-00':$this->input->post('tgldokumensi');		
+		$tgldokumensi				= ($this->input->post('tgldokumensi')=='')?'0000-00-00':$this->input->post('tgldokumensi');		
 		$nodokumensi				= $this->input->post('nodokumensi');
 		$luassi						= $this->input->post('luassi');
 		$nilaisi					= $this->input->post('nilaisi');
@@ -274,29 +274,11 @@ class AsetTanah extends Authcontroller
 		$userid = $this->session->userdata('UserID');
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOne($katid);
-			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
-
-			// if($piclocationsi!='') {
+			// $assetorder	= $this->_getLastAsetOrderPlusOne($katid);
+			// $assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV3_tanah($katid, $thnpr);
+			$assetno	= '01.'.$katid.'.'.$thnpr.'-'.$assetorder;
 			
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
-				$config['file_name']		= 'tnh' . $assetno;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data			= $this->upload->data();				
-					$piclocationsi	= $data['file_name'];
-				}
-			// }
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -330,8 +312,7 @@ class AsetTanah extends Authcontroller
 							'NoDokumenSi'			=> $nodokumensi,
 							'LuasSi'				=> $luassi,
 							'NilaiSi'				=> $nilaisi,
-							'KeteranganSi'			=> $keterangansi,
-							'PicLocationSi'			=> $piclocationsi
+							'KeteranganSi'			=> $keterangansi
 						);
 			$this->db->insert('itemtanahdetail', $datadetail);
 
@@ -339,14 +320,33 @@ class AsetTanah extends Authcontroller
 			if($addnotes !== "") {
 				$datatanahnotes	= array(
 					'TanahID'	=> $itemid,
-					'Notes'		=> $addnotes,
-					'AssetNo'	=> '000'
+					'Notes'		=> $addnotes
 				);
 				$this->db->insert('tanahnotes', $datatanahnotes);
 			}
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
-			
+
+			//========================================FILE GAMBAR=====================
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
+			$config['file_name']		= 'tnh' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();				
+				$datapic['PicLocationSi']	= $data['file_name'];
+				$this->db->update('itemtanahdetail', $datapic, array('ItemID'	=> $itemid));
+			}
+			//========================================eofFILE GAMBAR=====================
 			redirect('sjaset/asettanah', 'refresh');
 		}
 	}
@@ -375,7 +375,7 @@ class AsetTanah extends Authcontroller
 	{
 		$submit						= $this->input->post('submit');
 		$katid						= $this->input->post('katid');
-		$assetorder					= $this->input->post('assetorder');
+		$assetno_old				= $this->input->post('AssetNo');
 		$tglpr						= $this->input->post('tglpr');
 		$thnpr						= substr($tglpr, 0, 4);
 		$jenisdokumentanahidpr		= $this->input->post('jenisdokumentanahidpr');
@@ -400,16 +400,18 @@ class AsetTanah extends Authcontroller
 
 		if ($submit == 'SIMPAN') {
 			// $assetorder	= $this->_getLastAsetOrderPlusOne($katid);
-			$assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
+			// $assetno	= '01'.$katid.$assetorder.$thnpr.$jenisdokumentanahidpr.$statusidsi.$jenisdokumentanahidsi.$peruntukanidsi;
+			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_tanah($katid, $thnpr);
+			$assetno_new	= '01.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
+
+			$is_berubah	= $this->isBerubah($assetno_old, $assetno_new);
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
-						);
-			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
+						);			
 
 			$datadetail	= array(
 				'JenisDokumenTanahIDPr'	=> $jenisdokumentanahidpr,
@@ -433,28 +435,32 @@ class AsetTanah extends Authcontroller
 
 			);
 			//========================================FILE GAMBAR=====================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
-				$config['file_name']		= 'tnh' . $assetno.'ID'.$itemid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/tanah/';
+			$config['file_name']		= 'tnh' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
+			$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data						= $this->upload->data();
-					$piclocationsi				= $data['file_name'];
-					$datadetail['PicLocationSi']= $piclocationsi;					
-				}
-			// }
-			//==============================================================================
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();
+				$piclocationsi				= $data['file_name'];
+				$datadetail['PicLocationSi']= $piclocationsi;					
+			}
+			//========================================eofFILE GAMBAR=====================
+			if($is_berubah) {
+				$datadetail['AssetOrder']	= $assetorder_new;
+				$datamaster['AssetNo']		= $assetno_new;
+			}			
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 			$this->db->update('itemtanahdetail', $datadetail, array('ItemID'	=> $itemid));
+
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
 		}
 		// back to page asal
@@ -593,6 +599,41 @@ class AsetTanah extends Authcontroller
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= $result[0];
+		return $retval;
+	}
+
+	function _getLastAsetOrderPlusOneV3_tanah($katid, $thnpr)
+    {
+        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+					FROM itemtanahdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		return $retval;
+    }
+
+	function isBerubah($assetno_old, $assetno_new)
+	{
+		$retval		= false;
+
+		$asr_new	= explode(".",$assetno_new);
+		$asr_old	= explode(".",$assetno_old);
+
+		if(isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
+			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		} else {
+			$katthn_old = $assetno_old;
+			$katthn_new = $assetno_new;
+		}		
+
+		if($katthn_new !== $katthn_old) {
+			$retval	= true;
+		}
+		
 		return $retval;
 	}
 

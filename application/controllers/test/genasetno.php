@@ -275,7 +275,7 @@ class GenAsetNo extends Authcontroller { //testpurpose
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
 		return $retval;
     }
 }
