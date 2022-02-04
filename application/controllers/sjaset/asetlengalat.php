@@ -231,6 +231,19 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
+	function _getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr)
+    {
+        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+					FROM itemperlengperalatdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		return $retval;
+    }
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -245,7 +258,7 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$tglpr				= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
 		$nilaipr			= $this->input->post('nilaipr');
@@ -257,37 +270,16 @@ class Asetlengalat extends Authcontroller
 		$hargasi			= $this->input->post('hargasi');
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
-		$userid = $this->session->userdata('UserID');
+		$userid				= $this->session->userdata('UserID');
 
 		$jenises					= explode("|", $jenisidj);
 		$jenisid					= $jenises[0];
 		$jenisperlengperalatkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-			//========================================FILE GAMBAR=====================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-				$config['file_name']		= 'lat' . $assetno.'_'.$userid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					$piclocationsi			= "";
-					// print_array($error);
-				} else {
-					$data						= $this->upload->data();				
-					// $piclocationsi				= $data['full_path'];
-					$piclocationsi				= $data['file_name'];
-				}
-			// }
-			//========================================================================
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr);
+			$assetno	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -315,12 +307,32 @@ class Asetlengalat extends Authcontroller
 							'PenanggungJawabSi'		=> $penanggungjawabps,
 							'KondisiKodeSi'			=> $kondisikodesi,
 							'HargaSi'				=> $hargasi,
-							'KeteranganSi'			=> $keterangansi,
-							'PicLocationSi'			=> $piclocationsi						
+							'KeteranganSi'			=> $keterangansi					
 						);
 			$this->db->insert('itemperlengperalatdetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			
+			//========================================FILE GAMBAR=====================
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
+			$config['file_name']		= 'lat' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();	
+				$datapic['PicLocationSi']	= $data['file_name'];
+				$this->db->update('itemperlengperalatdetail', $datapic, array('ItemID'	=> $itemid));			
+			}
+			//========================================================================
 		}
 		redirect('sjaset/asetlengalat', 'refresh');
 	}
@@ -360,7 +372,7 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$AssetNo			= $this->input->post('AssetNo');
+		$assetno_old		= $this->input->post('AssetNo');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -378,22 +390,23 @@ class Asetlengalat extends Authcontroller
 		$jenisid					= $jenises[0];
 		$jenisperlengperalatkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-			$debugfld	= '>'.$katid.'<>'.$jenisperlengperalatkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidps.'<>'.$divisionidps.'<';
-			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+			// $debugfld	= '>'.$katid.'<>'.$jenisperlengperalatkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidps.'<>'.$divisionidps.'<';
+			// $is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
-			$assetno	= $AssetNo;
-			
+			// $assetno	= $AssetNo;
+			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr);
+			$assetno_new	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
+
+			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
 			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
-			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 
 			$datadetail	= array(
 								'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
@@ -410,29 +423,31 @@ class Asetlengalat extends Authcontroller
 								// ,'DebugTest'			=> $debugfld
 						);
 			//========================================FILE GAMBAR=====================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-				$config['file_name']		= 'lat' . $assetno.'ID'.$itemid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
+			$config['file_name']		= 'lat' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
+			$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data						= $this->upload->data();				
-					$piclocationsi				= $data['file_name'];
-					$datadetail['PicLocationSi']= $piclocationsi;
-					
-				}
-			// }
-			//========================================F=======================================
-			
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();				
+				$piclocationsi				= $data['file_name'];
+				$datadetail['PicLocationSi']= $piclocationsi;
+				
+			}
+			//========================================eofFILE GAMBAR=====================
+			if($is_berubah) {
+				$datadetail['AssetOrder']	= $assetorder_new;
+				$datamaster['AssetNo']		= $assetno_new;
+			}
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 			$this->db->update('itemperlengperalatdetail', $datadetail, array('ItemID'	=> $itemid));
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
@@ -450,9 +465,9 @@ class Asetlengalat extends Authcontroller
 		redirect('sjaset/asetlengalat' . $url, 'refresh');
 	}
 
-	function isBerubah($old, $new)
+	function isBerubah($assetno_old, $assetno_new)
 	{
-		// 031402 002 20210103
+		/*
 		$ofirst	= substr($old, 0, 6);
 		$olast	= substr($old, -8, 8);
 		$ofull	= $ofirst.$olast;
@@ -462,6 +477,25 @@ class Asetlengalat extends Authcontroller
 		$nfull	= $nfirst.$nlast;
 
 		return ($ofull==$nfull)?true:false;
+		 */
+		$retval		= false;
+
+		$asr_new	= explode(".",$assetno_new);
+		$asr_old	= explode(".",$assetno_old);
+
+		if(isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
+			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		} else {
+			$katthn_old = $assetno_old;
+			$katthn_new = $assetno_new;
+		}		
+
+		if($katthn_new !== $katthn_old) {
+			$retval	= true;
+		}
+		
+		return $retval;
 	}
 
 	function _getBarQrCodeData($id) 
