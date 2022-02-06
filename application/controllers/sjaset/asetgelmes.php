@@ -231,6 +231,19 @@ class AsetGElMes extends Authcontroller
 		return $retval;
 	}
 
+	function _getLastAsetOrderPlusOneV3_elmes($katid, $thnpr)
+    {
+        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+					FROM itemelkmesindetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		return $retval;
+    }
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -245,7 +258,7 @@ class AsetGElMes extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$tglpr				= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
 		$lokasiidpr			= $this->input->post('lokasiidpr');
@@ -257,35 +270,18 @@ class AsetGElMes extends Authcontroller
 		$hargasi			= $this->input->post('hargasi');
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
-		$userid = $this->session->userdata('UserID');
+		$userid				= $this->session->userdata('UserID');
 
 		$jenises			= explode("|", $jenisidj);
 		$jenisid			= $jenises[0];
 		$jeniselkmesinkatid	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
-
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
-				$config['file_name']		= 'elm' . $assetno.'_'.$userid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data			= $this->upload->data();				
-					$piclocationsi	= $data['file_name'];
-				}
-			// }
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV3_elmes($katid, $thnpr);
+			$assetno	= '04.'.$katid.'.'.$thnpr.'-'.$assetorder;
+			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -318,7 +314,27 @@ class AsetGElMes extends Authcontroller
 			$this->db->insert('itemelkmesindetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
+			
+			//========================================FILE GAMBAR=====================
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
+			$config['file_name']		= 'elm' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data			= $this->upload->data();				
+				$datapic['PicLocationSi']	= $data['file_name'];
+				$this->db->update('itemelkmesindetail', $datapic, array('ItemID'	=> $itemid));
+			}
+			//========================================eof FILE GAMBAR=====================
 		}
 		redirect('sjaset/asetgelmes', 'refresh');
 	}
@@ -359,7 +375,7 @@ class AsetGElMes extends Authcontroller
 
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$AssetNo			= $this->input->post('AssetNo');
+		$assetno_old		= $this->input->post('AssetNo');
 		$tglpr				= $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
@@ -377,21 +393,23 @@ class AsetGElMes extends Authcontroller
 		$jenisid			= $jenises[0];
 		$jeniselkmesinkatid	= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
-			$debugfld	= '>'.$katid.'<>'.$jeniselkmesinkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidpr.'<>'.$divisionidps.'<';
-			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '04'.$katid.$jeniselkmesinkatid.$assetorder.$thnpr.$lokasiidpr.$divisionidps;
+			// $debugfld	= '>'.$katid.'<>'.$jeniselkmesinkatid.'<>'.$assetorder.'<>'.$thnpr.'<>'.$lokasiidpr.'<>'.$divisionidps.'<';
+			// $is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo; 
-			$assetno	= $AssetNo;
+			// $assetno	= $AssetNo;
+			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_elmes($katid, $thnpr);
+			$assetno_new	= '04.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
 
+			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
+			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
-						);
-			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));				
+						);				
 
 			$datadetail	= array(
 							'JenisElkmesinKatID'	=> $jeniselkmesinkatid,
@@ -408,27 +426,30 @@ class AsetGElMes extends Authcontroller
 							// ,'DebugTest'				=> $debugfld
 						);
 			//============================FILE GAmbar==================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
-				$config['file_name']		= 'elm' . $assetno.'ID'.$itemid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/elmes/';
+			$config['file_name']		= 'elm' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
+			$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data			= $this->upload->data();				
-					$piclocationsi	= $data['file_name'];
-					$datadetail['PicLocationSi'] = $piclocationsi;
-				}
-			// }
-			//============================================================
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data							= $this->upload->data();				
+				$piclocationsi					= $data['file_name'];
+				$datadetail['PicLocationSi']	= $piclocationsi;
+			}
+			//==========================eof FILE GAmbar===============
+			if($is_berubah) {
+				$datadetail['AssetOrder']	= $assetorder_new;
+				$datamaster['AssetNo']		= $assetno_new;
+			}
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 			$this->db->update('itemelkmesindetail', $datadetail, array('ItemID'	=> $itemid));
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
@@ -447,9 +468,9 @@ class AsetGElMes extends Authcontroller
 		redirect('sjaset/asetgelmes' . $url, 'refresh');
 	}
 
-	function isBerubah($old, $new)
+	function isBerubah($assetno_old, $assetno_new)
 	{
-		// 031402 002 20210103
+		/*
 		$ofirst	= substr($old, 0, 6);
 		$olast	= substr($old, -8, 8);
 		$ofull	= $ofirst.$olast;
@@ -459,6 +480,25 @@ class AsetGElMes extends Authcontroller
 		$nfull	= $nfirst.$nlast;
 
 		return ($ofull==$nfull)?true:false;
+		 */
+		$retval		= false;
+
+		$asr_new	= explode(".",$assetno_new);
+		$asr_old	= explode(".",$assetno_old);
+
+		if(isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
+			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		} else {
+			$katthn_old = $assetno_old;
+			$katthn_new = $assetno_new;
+		}		
+
+		if($katthn_new !== $katthn_old) {
+			$retval	= true;
+		}
+		
+		return $retval;
 	}
 
 	function _getBarQrCodeData($id) 
