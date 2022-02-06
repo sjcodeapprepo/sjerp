@@ -439,8 +439,7 @@ class Asetlengalat extends Authcontroller
 			} else {
 				$data						= $this->upload->data();				
 				$piclocationsi				= $data['file_name'];
-				$datadetail['PicLocationSi']= $piclocationsi;
-				
+				$datadetail['PicLocationSi']= $piclocationsi;				
 			}
 			//========================================eofFILE GAMBAR=====================
 			if($is_berubah) {
