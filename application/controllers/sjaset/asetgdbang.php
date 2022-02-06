@@ -225,6 +225,19 @@ class AsetGdBang extends Authcontroller
 		return $retval;		
 	}
 
+	function _getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr)
+    {
+        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+					FROM itemgdgbangdetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		return $retval;
+    }
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -258,40 +271,23 @@ class AsetGdBang extends Authcontroller
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
 		
-		$jenisidj			= $this->input->post('jenisidj');
+		$jenisidj				= $this->input->post('jenisidj');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
-		$userid = $this->session->userdata('UserID');
+		$userid					= $this->session->userdata('UserID');
 
-		$jenises					= explode("|", $jenisidj);
-		$jenisid					= $jenises[0];
+		$jenises				= explode("|", $jenisidj);
+		$jenisid				= $jenises[0];
 		$jenisgdgbangunanidsi	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr);
+			$assetno	= '02.'.$katid.'.'.$thnpr.'-'.$assetorder;
 
-			// if($piclocationsi != '') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-				$config['file_name']		= 'gdb' . $assetno.'_'.$userid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data			= $this->upload->data();				
-					$piclocationsi	= $data['file_name'];
-				}
-			// }
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
@@ -333,6 +329,27 @@ class AsetGdBang extends Authcontroller
 			$this->db->insert('itemgdgbangdetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
+			
+			//========================================FILE GAMBAR=====================
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
+			$config['file_name']		= 'gdb' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data			= $this->upload->data();				
+				$datapic['PicLocationSi']	= $data['file_name'];
+				$this->db->update('itemgdgbangdetail', $datapic, array('ItemID'	=> $itemid));			
+			}
+			//===================================eol=FILE GAMBAR=====================
 		}
 		redirect('sjaset/asetgdbang', 'refresh');
 	}
@@ -358,7 +375,7 @@ class AsetGdBang extends Authcontroller
 	function _editproc($itemid)
 	{
 		$submit					= $this->input->post('submit');
-		$AssetNo			= $this->input->post('AssetNo');
+		$assetno_old			= $this->input->post('AssetNo');
 		$katid					= $this->input->post('katid');
 		$tglpr					= $this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
@@ -378,7 +395,7 @@ class AsetGdBang extends Authcontroller
 		$mitrakerjasamasi		= $this->input->post('mitrakerjasamasi');
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
-		$jenisidj			= $this->input->post('jenisidj');
+		$jenisidj				= $this->input->post('jenisidj');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
@@ -389,24 +406,24 @@ class AsetGdBang extends Authcontroller
 		$jenisgdgbangunanidsi	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
-			
-			$is_berubah	= $this->isBerubah($AssetNo, $assetno);			
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
+			// $is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
-			$assetno	= $AssetNo;
+			// $assetno	= $AssetNo;
+			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr);
+			$assetno_new	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
 
+			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
+			
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
-			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
-
+			
 			$datadetail	= array(
-				'AssetOrder'			=> $assetorder,
 				'LuasBangunanPr'		=> $luasbangunanpr ,
 				'NilaiPerolehanPr'		=> $nilaiperolehanpr ,
 				'JenisPerolehanIDPr'	=> $jenisperolehanidpr ,
@@ -429,30 +446,32 @@ class AsetGdBang extends Authcontroller
 				'KeteranganSi'			=> $keterangansi
 			);
 
-			//========================================FILE GAMBAR=====================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-				$config['file_name']		= 'gdb' . $assetno.'ID'.$itemid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
+			//========================================FILE GAMBAR=====================			// if($piclocationsi!='') {
+			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
+			$config['file_name']		= 'gdb' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
+			$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data						= $this->upload->data();				
-					$piclocationsi				= $data['file_name'];
-					$datadetail['PicLocationSi']= $piclocationsi;
-					
-				}
-			// }
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();				
+				$piclocationsi				= $data['file_name'];
+				$datadetail['PicLocationSi']= $piclocationsi;
+				
+			}
 			//==============================================================================
-
+			if($is_berubah) {
+				$datadetail['AssetOrder']	= $assetorder_new;
+				$datamaster['AssetNo']		= $assetno_new;
+			}
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 			$this->db->update('itemgdgbangdetail', $datadetail, array('ItemID'	=> $itemid));
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
@@ -470,19 +489,37 @@ class AsetGdBang extends Authcontroller
 		redirect('sjaset/asetgdbang' . $url, 'refresh');
 	}
 
-	function isBerubah($old, $new)
+	function isBerubah($assetno_old, $assetno_new)
 	{
-		// -- 0201 002 2021010101 
-		$ofirst	= substr($old, 0, 4);
-		$olast	= substr($old, -10, 10);
+		/*
+		$ofirst	= substr($old, 0, 6);
+		$olast	= substr($old, -8, 8);
 		$ofull	= $ofirst.$olast;
 		
-		$nfirst	= substr($new, 0, 4);
-		$nlast	= substr($new, -10, 10);
+		$nfirst	= substr($new, 0, 6);
+		$nlast	= substr($new, -8, 8);
 		$nfull	= $nfirst.$nlast;
 
-		// return ($ofull==$nfull)?true:false;
-		echo ($ofull==$nfull)?'sama':'beda';
+		return ($ofull==$nfull)?true:false;
+		 */
+		$retval		= false;
+
+		$asr_new	= explode(".",$assetno_new);
+		$asr_old	= explode(".",$assetno_old);
+
+		if(isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
+			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		} else {
+			$katthn_old = $assetno_old;
+			$katthn_new = $assetno_new;
+		}		
+
+		if($katthn_new !== $katthn_old) {
+			$retval	= true;
+		}
+		
+		return $retval;
 	}
 
 	function testqrcode()
