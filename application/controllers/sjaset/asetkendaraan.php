@@ -244,6 +244,19 @@ class Asetkendaraan extends Authcontroller
 		return $retval;
 	}
 
+	function _getLastAsetOrderPlusOneV3_kend($katid, $thnpr)
+    {
+        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+					FROM itemkendaraandetail d, itemmaster i 
+					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
+					ORDER BY d.AssetOrder DESC
+					LIMIT 1";
+		$query	= $this->db->query($sql);
+		$result = $query->result_array();
+		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		return $retval;
+    }
+
 	function inputeditproc($id = null)
 	{
 		if (is_null($id)) {
@@ -255,66 +268,45 @@ class Asetkendaraan extends Authcontroller
 
 	function _inputproc()
 	{
-		$submit						= $this->input->post('submit');
-		$katid						= $this->input->post('katid');
-		$jenisidj		= $this->input->post('jenisidj');
-		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
-		$thnpr						= substr($tglpr, 0, 4);
-		$nodokumenpr				= $this->input->post('nodokumenpr');
-		$nilaipr					= $this->input->post('nilaipr');
-		$penyusutanpr				= $this->input->post('penyusutanpr');
-		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
-		$tgldokumenpr					= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
-		$nostnkpr					= $this->input->post('nostnkpr');
-		$tglstnkpr					= ($this->input->post('tglstnkpr')=='')?'0000-00-00':$this->input->post('tglstnkpr');
-		$nopolpr					= $this->input->post('nopolpr');
-		$norangkapr					= $this->input->post('norangkapr');
-		$nomesinpr					= $this->input->post('nomesinpr');
-		$warnapr					= $this->input->post('warnapr');
-		$tahundibuatpr				= $this->input->post('tahundibuatpr');
-		$merkpr						= $this->input->post('merkpr');
-		$typepr						= $this->input->post('typepr');
-		$isisilinderpr				= $this->input->post('isisilinderpr');
-		$bahanbakarpr				= $this->input->post('bahanbakarpr');
-		$lokasiidps					= $this->input->post('lokasiidps');
-		$divisionidps				= $this->input->post('divisionidps');
-		$penanggungjawabps			= $this->input->post('penanggungjawabps');
-		$kondisikodesi				= $this->input->post('kondisikodesi');
-		$nilaisi					= $this->input->post('nilaisi');
-		$keterangansi				= $this->input->post('keterangansi');
-		$piclocationsi				= $this->input->post('piclocationsi');
-		$userid = $this->session->userdata('UserID');
-		
-		
+		$submit				= $this->input->post('submit');
+		$katid				= $this->input->post('katid');
+		$jenisidj			= $this->input->post('jenisidj');
+		$tglpr				= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$thnpr				= substr($tglpr, 0, 4);
+		$nodokumenpr		= $this->input->post('nodokumenpr');
+		$nilaipr			= $this->input->post('nilaipr');
+		$penyusutanpr		= $this->input->post('penyusutanpr');
+		$nodokumenbpkbpr	= $this->input->post('nodokumenbpkbpr');
+		$tgldokumenpr		= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
+		$nostnkpr			= $this->input->post('nostnkpr');
+		$tglstnkpr			= ($this->input->post('tglstnkpr')=='')?'0000-00-00':$this->input->post('tglstnkpr');
+		$nopolpr			= $this->input->post('nopolpr');
+		$norangkapr			= $this->input->post('norangkapr');
+		$nomesinpr			= $this->input->post('nomesinpr');
+		$warnapr			= $this->input->post('warnapr');
+		$tahundibuatpr		= $this->input->post('tahundibuatpr');
+		$merkpr				= $this->input->post('merkpr');
+		$typepr				= $this->input->post('typepr');
+		$isisilinderpr		= $this->input->post('isisilinderpr');
+		$bahanbakarpr		= $this->input->post('bahanbakarpr');
+		$lokasiidps			= $this->input->post('lokasiidps');
+		$divisionidps		= $this->input->post('divisionidps');
+		$penanggungjawabps	= $this->input->post('penanggungjawabps');
+		$kondisikodesi		= $this->input->post('kondisikodesi');
+		$nilaisi			= $this->input->post('nilaisi');
+		$keterangansi		= $this->input->post('keterangansi');
+		$piclocationsi		= $this->input->post('piclocationsi');
+		$userid 			= $this->session->userdata('UserID');
 
-		$jenises			= explode("|", $jenisidj);
-		$jenisid			= $jenises[0];
+		$jenises				= explode("|", $jenisidj);
+		$jenisid				= $jenises[0];
 		$jeniskendaraankatid	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-
-			// if($piclocationsi!='') {
-			
-				$config['upload_path']		= $this->getfolder().'publicfolder/asetpic/kendr/';
-				$config['file_name']		= 'kdr' . $assetno;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data			= $this->upload->data();				
-					$piclocationsi	= $data['file_name'];
-				}
-			// }
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
+			$assetorder	= $this->_getLastAsetOrderPlusOneV3_kend($katid, $thnpr);
+			$assetno	= '05.'.$katid.'.'.$thnpr.'-'.$assetorder;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
@@ -361,15 +353,34 @@ class Asetkendaraan extends Authcontroller
 			$this->db->insert('itemkendaraandetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI		
-			
-			redirect('sjaset/asetkendaraan', 'refresh');
+			//========================================FILE GAMBAR=====================
+			$config['upload_path']		= $this->getfolder().'publicfolder/asetpic/kendr/';
+			$config['file_name']		= 'kdr' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();				
+				$datapic['PicLocationSi']	= $data['file_name'];
+				$this->db->update('itemkendaraandetail', $datapic, array('ItemID'	=> $itemid));
+			}
+			//========================================eofFILE GAMBAR=====================			
 		}
+		redirect('sjaset/asetkendaraan', 'refresh');
 	}
 
 	function _editproc($itemid)
 	{
 		$submit						= $this->input->post('submit');
-		$AssetNo			= $this->input->post('AssetNo');
+		$assetno_old				= $this->input->post('AssetNo');
 		$katid						= $this->input->post('katid');
 		$jenisidj					= $this->input->post('jenisidj');
 		$tglpr						= $this->input->post('tglpr');
@@ -377,9 +388,8 @@ class Asetkendaraan extends Authcontroller
 		$nodokumenpr				= $this->input->post('nodokumenpr');
 		$nilaipr					= $this->input->post('nilaipr');
 		$penyusutanpr				= $this->input->post('penyusutanpr');
-
 		$nodokumenbpkbpr			= $this->input->post('nodokumenbpkbpr');
-		$tgldokumenpr					= $this->input->post('tgldokumenpr');
+		$tgldokumenpr				= $this->input->post('tgldokumenpr');
 		$nostnkpr					= $this->input->post('nostnkpr');
 		$tglstnkpr					= $this->input->post('tglstnkpr');
 		$nopolpr					= $this->input->post('nopolpr');
@@ -403,19 +413,20 @@ class Asetkendaraan extends Authcontroller
 		$jenisid					= $jenises[0];
 		$jeniskendaraankatid		= $jenises[1];
 		if ($submit == 'SIMPAN') {
-			$assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
-			$assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
-
+			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
+			// $assetno	= '05'.$katid.$jeniskendaraankatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			// $is_berubah	= $this->isBerubah($AssetNo, $assetno);			
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
-			$assetno	= $AssetNo;
+			// $assetno	= $AssetNo;
+			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_kend($katid, $thnpr);
+			$assetno_new	= '05.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
+
+			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
 
 			$datamaster	= array(
 							'KatID'			=> $katid,
-							// 'AssetNo'		=> $assetno,
 							'TglPr'			=> $tglpr
 						);
-			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 
 			$datadetail	= array(
 							'JenisKendaraanKatID'	=> $jeniskendaraankatid,
@@ -444,27 +455,30 @@ class Asetkendaraan extends Authcontroller
 							'KeteranganSi'			=> $keterangansi
 						);
 			//========================================FILE GAMBAR=====================
-			// if($piclocationsi!='') {
-				$config['upload_path']		= $this->getfolder().'publicfolder/asetpic/kendr/';
-				$config['file_name']		= 'kdr' . $assetno.'ID'.$itemid;
-				$config['overwrite']		= TRUE;
-				$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-				$config['max_size']			= 5000;
-				$config['max_width']		= 1500;
-				$config['max_height']		= 1500;
+			$config['upload_path']		= $this->getfolder().'publicfolder/asetpic/kendr/';
+			$config['file_name']		= 'kdr' . '_'.$itemid;
+			$config['overwrite']		= TRUE;
+			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
+			$config['max_size']			= 5000;
+			$config['max_width']		= 1500;
+			$config['max_height']		= 1500;
 
-				$this->load->library('upload', $config);
+			$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('piclocationsi')) {
-					$error					= array('error_info' => $this->upload->display_errors());
-					// print_array($error);
-				} else {
-					$data						= $this->upload->data();				
-					$piclocationsi				= $data['file_name'];
-					$datadetail['PicLocationSi']= $piclocationsi;					
-				}
-			// }
-			//==============================================================================
+			if (!$this->upload->do_upload('piclocationsi')) {
+				$error					= array('error_info' => $this->upload->display_errors());
+				// print_array($error);
+			} else {
+				$data						= $this->upload->data();				
+				$piclocationsi				= $data['file_name'];
+				$datadetail['PicLocationSi']= $piclocationsi;					
+			}
+			//==================================eofFILE GAMBAR=========================
+			if($is_berubah) {
+				$datadetail['AssetOrder']	= $assetorder_new;
+				$datamaster['AssetNo']		= $assetno_new;
+			}
+			$this->db->update('itemmaster', $datamaster, array('ItemID'	=> $itemid));
 			$this->db->update('itemkendaraandetail', $datadetail, array('ItemID'	=> $itemid));
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
@@ -482,9 +496,9 @@ class Asetkendaraan extends Authcontroller
 		redirect('sjaset/asetkendaraan' . $url, 'refresh');
 	}
 
-	function isBerubah($old, $new)
+	function isBerubah($assetno_old, $assetno_new)
 	{
-		// 031402 002 20210103
+		/*
 		$ofirst	= substr($old, 0, 6);
 		$olast	= substr($old, -8, 8);
 		$ofull	= $ofirst.$olast;
@@ -494,6 +508,25 @@ class Asetkendaraan extends Authcontroller
 		$nfull	= $nfirst.$nlast;
 
 		return ($ofull==$nfull)?true:false;
+		 */
+		$retval		= false;
+
+		$asr_new	= explode(".",$assetno_new);
+		$asr_old	= explode(".",$assetno_old);
+
+		if(isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
+			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		} else {
+			$katthn_old = $assetno_old;
+			$katthn_new = $assetno_new;
+		}		
+
+		if($katthn_new !== $katthn_old) {
+			$retval	= true;
+		}
+		
+		return $retval;
 	}
 
 	function _getBarQrCodeData($id) 
