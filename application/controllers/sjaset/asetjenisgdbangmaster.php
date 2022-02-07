@@ -19,35 +19,23 @@ class AsetJenisGdbangMaster extends Authcontroller
 		$submit	= $this->input->post('submit');
 		if ($submit == 'TAMBAH') {
             $jenisgdbangname	= $this->input->post('JenisGdgBangunanName');
-			$id		    = $this->input->post('JenisGdgBangunanID');
-			$katid		    = $this->input->post('katid');
+			$id		   			= $this->input->post('JenisGdgBangunanID');
 
 			$datamaster	= array(
 							'JenisGdgBangunanID'	 => $id,
-                            'JenisGdgBangunanName'	=> $jenisgdbangname,
-							'KatID'	=> $katid
+                            'JenisGdgBangunanName'	=> $jenisgdbangname
 						);
 			$this->db->insert('itemjenisbangunanmaster', $datamaster);
 		}
 		$data['view_data']	= $this->_getData();
-		$data['itemkatmaster']	= $this->_getItemKatMasterData();
 		$this->load->view('sjasetview/asetgdbangview/jenisgdbang_index', $data);
 	}
 
 	function _getData() 
 	{
-		$sql = "SELECT  j.JenisGdgBangunanID, j.JenisGdgBangunanName, k.KatName
-		FROM  itemjenisbangunanmaster j, itemkatmaster k
-		WHERE k.KatID=j.KatID AND k.GolID='02'
-		ORDER BY k.KatName,j.JenisGdgBangunanID";
-		$query = $this->db->query($sql);
-		$result = $query->result_array();
-		return $result;
-	}
-
-	function _getItemKatMasterData()
-	{
-		$sql = "SELECT KatID, KatName FROM itemkatmaster WHERE GolID='02' ORDER BY KatName";
+		$sql = "SELECT  JenisGdgBangunanID, JenisGdgBangunanName
+		FROM  itemjenisbangunanmaster
+		ORDER BY JenisGdgBangunanID";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;

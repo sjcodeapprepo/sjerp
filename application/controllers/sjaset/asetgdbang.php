@@ -93,6 +93,7 @@ class AsetGdBang extends Authcontroller
 
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
+		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster();
 
 		$data['urlsegment']							= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetgdbangview/asetgdbang_input', $data);
@@ -121,9 +122,8 @@ class AsetGdBang extends Authcontroller
 			'MitraKerjasamaSi'		=> '',
 			'NoDokumenSi'			=> '',
 			'TglDokumenSi'			=> '',
-			'JenisGdgBangunanIDSi'	=> '',
 			'JenisID'				=> '',
-			'jenisidj'=> '',
+			// 'jenisidj'=> '',
 			'NilaiSi'				=> '',
 			'KeteranganSi'			=> '',
 			'PicLocationSi'			=> ''
@@ -133,10 +133,8 @@ class AsetGdBang extends Authcontroller
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.LuasBangunanPr, d.NilaiPerolehanPr,
 					d.JenisPerolehanIDPr, d.MitraKerjasamaPr, d.NoDokumenPr, d.TglDokumenPr, d.PenyusutanPs,
 					d.LokasiPs, d.LatPs, d.LongPs, d.BerdiriAtasTanahPs, d.PenanggungJawabSi, d.JenisPerolehanIDSi,
-					d.JenisPerolehanIDSi, d.MitraKerjasamaSi, d.NoDokumenSi, d.TglDokumenSi,
-					d.JenisGdgBangunanIDSi, 
-					d.JenisID,
-					CONCAT(d.JenisID,'|',d.JenisGdgBangunanIDSi) AS jenisidj, 
+					d.JenisPerolehanIDSi, d.MitraKerjasamaSi, d.NoDokumenSi, d.TglDokumenSi,d.JenisID,
+					-- CONCAT(d.JenisID,'|',d.JenisGdgBangunanIDSi) AS jenisidj, 
 					d.NilaiSi,d.KeteranganSi, d.PicLocationSi
 				FROM
 					itemmaster m, itemgdgbangdetail d
@@ -158,11 +156,10 @@ class AsetGdBang extends Authcontroller
 		return $result;
 	}
 
-	function _getItemJenisGdBangMaster($id) 
+	function _getItemJenisGdBangMaster() 
 	{
-		$sql = "SELECT j.JenisGdgBangunanID , j.JenisGdgBangunanName, CONCAT(j.ID,'|', j.JenisGdgBangunanID) AS IDJ
-		FROM itemjenisbangunanmaster j, itemmaster i
-		WHERE i.KatID=j.KatID AND i.ItemID='$id' ORDER BY j.JenisGdgBangunanName";
+		$sql = "SELECT j.ID, j.JenisGdgBangunanID , j.JenisGdgBangunanName
+		FROM itemjenisbangunanmaster j ORDER BY j.JenisGdgBangunanName";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		return $result;
@@ -271,16 +268,12 @@ class AsetGdBang extends Authcontroller
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
 		
-		$jenisidj				= $this->input->post('jenisidj');
+		$jenisid				= $this->input->post('jenisid');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
 		$userid					= $this->session->userdata('UserID');
-
-		$jenises				= explode("|", $jenisidj);
-		$jenisid				= $jenises[0];
-		$jenisgdgbangunanidsi	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
 			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
@@ -320,7 +313,7 @@ class AsetGdBang extends Authcontroller
 							'MitraKerjasamaSi'		=> $mitrakerjasamasi ,
 							'NoDokumenSi'			=> $nodokumensi ,
 							'TglDokumenSi'			=> $tgldokumensi ,
-							'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
+							// 'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
 							'JenisID'				=> $jenisid,
 							'NilaiSi'				=> $nilaisi,
 							'KeteranganSi'			=> $keterangansi,
@@ -366,7 +359,7 @@ class AsetGdBang extends Authcontroller
 		$data['pic_url'] = 'http://'.$basearr[2].'/sensusapi/';
 		$data['data']						= $this->_getData($id);
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
-		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster($id);
+		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster();
 		$data['itemkatmaster']						= $this->_getItemKatMasterData();
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetgdbangview/asetgdbang_edit', $data);
@@ -395,15 +388,15 @@ class AsetGdBang extends Authcontroller
 		$mitrakerjasamasi		= $this->input->post('mitrakerjasamasi');
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
-		$jenisidj				= $this->input->post('jenisidj');
+		$jenisid				= $this->input->post('jenisid');
 	
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
 
-		$jenises					= explode("|", $jenisidj);
-		$jenisid					= $jenises[0];
-		$jenisgdgbangunanidsi	= $jenises[1];
+		// $jenises					= explode("|", $jenisidj);
+		// $jenisid					= $jenises[0];
+		// $jenisgdgbangunanidsi	= $jenises[1];
 
 		if ($submit == 'SIMPAN') {
 			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
@@ -440,7 +433,7 @@ class AsetGdBang extends Authcontroller
 				'MitraKerjasamaSi'		=> $mitrakerjasamasi ,
 				'NoDokumenSi'			=> $nodokumensi ,
 				'TglDokumenSi'			=> $tgldokumensi ,
-				'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
+				// 'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
 				'JenisID'				=> $jenisid,
 				'NilaiSi'				=> $nilaisi,
 				'KeteranganSi'			=> $keterangansi

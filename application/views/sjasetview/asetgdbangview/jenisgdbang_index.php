@@ -62,19 +62,18 @@
     <form action="<?= site_url() ?>/sjaset/asetjenisgdbangmaster/index" method='post' id='formin' enctype="multipart/form-data">
     <table align="center">
     <tr><td>
-    <table class='gridtable' width='400'>
+    <table class='gridtable' width='300'>
     <thead>
         <tr>
             <th>JENIS GEDUNG DAN BANGUNAN</th>
 	  </tr>
     </thead>
     </table>
-    <table border="0" cellpadding="0" cellspacing="3" width="400" class='gridua'>
+    <table border="0" cellpadding="0" cellspacing="3" width="300" class='gridua'>
 	<thead>
 	  <tr>
 		<th>NO KODE</th>
 		<th>JENIS GEDUNG DAN BANGUNAN</th>
-        <th>KATEGORI</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -82,12 +81,10 @@
 for($a=0; $a<count($view_data); $a++) {	
 	$id			= $view_data[$a]['JenisGdgBangunanID'];
 	$jenis		= $view_data[$a]['JenisGdgBangunanName'];
-    $kat		= $view_data[$a]['KatName'];
 ?>
 	  <tr>
 	  	<td align='center'><?=$id?></td>
 		<td align='left'><?=$jenis?></td>
-        <td align='left'><?=$kat?></td>
 	  </tr>
 <?php } ?>
         <tr>
@@ -96,9 +93,6 @@ for($a=0; $a<count($view_data); $a++) {
             </td>
             <td align='left'>
                 <input type='text' name='JenisGdgBangunanName' size='16' id='JenisGdgBangunanName' />
-            </td>
-            <td align='left'>
-                <?=form_dropdownDB_init('katid', $itemkatmaster, 'KatID', 'KatName', '', '', '-Pilih Kategori-', "id='katid'");?>
             </td>
         </tr>
         <tr>

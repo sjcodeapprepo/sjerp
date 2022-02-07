@@ -48,10 +48,10 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#katid").change(function() {
-            var katid   = $(this).val();            
-            getJenis(katid);
-        });
+        // $("#katid").change(function() {
+        //     var katid   = $(this).val();            
+        //     getJenis(katid);
+        // });
 
         $("#tglpr").datepicker({              
             changeMonth: true,
@@ -79,17 +79,17 @@
         });
     });
 
-    function getJenis(katid) {
-        if(katid != '') {
-            $.post('<?=site_url()?>/sjaset/asetgdbang/getJenis/'+katid, function(data){
-                $('#jenisidj').empty();
-                $('#jenisidj').append(data);
-            });
-        } else {
-                $('#jenisidj').empty();
-                $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
-            }
-    }
+    // function getJenis(katid) {
+    //     if(katid != '') {
+    //         $.post('<?=site_url()?>/sjaset/asetgdbang/getJenis/'+katid, function(data){
+    //             $('#jenisidj').empty();
+    //             $('#jenisidj').append(data);
+    //         });
+    //     } else {
+    //             $('#jenisidj').empty();
+    //             $('#jenisidj').append('<option value="-1">--Pilih Kategori dahulu--</option>');
+    //         }
+    // }
 </script>
 </head>
 
@@ -281,9 +281,7 @@
                                 Jenis Gedung / Bangunan&nbsp;
                             </td>
                             <td>
-                                <select name="jenisidj" id="jenisidj">
-                                    <option value="-1">--Pilih Kategori dahulu--</option>
-                                </select>
+                                <?=form_dropdownDB_init('jenisid', $itemjenisbangunanmaster, 'ID', 'JenisGdgBangunanName', $data['JenisID'], '', '-Pilih Jenis Gedung/Bangunan-', "id='jenisid'");?> 
                             </td>                            
                         </tr>
 						<tr>
