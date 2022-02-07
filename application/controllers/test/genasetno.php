@@ -15,10 +15,10 @@ class GenAsetNo extends Authcontroller { //testpurpose
 	function goex() 
     {
         $this->_tanah();
-        $this->_gdBang();
-        $this->_perlengLat();
-        $this->_elmes();
-        $this->_kendaraan();
+        // $this->_gdBang();
+        // $this->_perlengLat();
+        // $this->_elmes();
+        // $this->_kendaraan();
     }
     //------------------------------05. Kendaraan----
     function _kendaraan()
