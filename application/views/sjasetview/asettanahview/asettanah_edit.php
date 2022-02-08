@@ -40,6 +40,7 @@
             vertical-align: top;
             font-style: italic;
         }
+        .tanganpointer{cursor:pointer}
 
         td {
             white-space: nowrap;
@@ -335,7 +336,7 @@
                             </td>
                             <td colspan="3">
                                 <input name="piclocationsi" type="file" id="piclocationsi" />
-                                <a id="opener">Lihat Gambar</a>
+                                <a id="opener" class="tanganpointer">Lihat Gambar</a>
                             </td>
                         </tr>
                     </table>
