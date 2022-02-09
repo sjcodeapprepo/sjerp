@@ -676,6 +676,8 @@ class ListAset extends Authcontroller {
 		$laporan->getActiveSheet()->mergeCells('O5:O6');
 		$laporan->getActiveSheet()->setCellValue('O5','Ket');
 
+		$laporan->getActiveSheet()->setCellValue('Q5','ID');
+		
 		$laporan->getActiveSheet()->freezePane('I7');
 
 		$laporan->getActiveSheet()->setCellValue('B7','Elektronika dan Mesin');
@@ -699,6 +701,8 @@ class ListAset extends Authcontroller {
 			$asetno		= $data[$a]['AssetNo'];			
 			$hargasi	= $data[$a]['HargaSi'];
 			$ket		= $data[$a]['KeteranganSi'];
+
+			$itemid	= $data[$a]['ItemID'];
 			
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $no);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);
@@ -714,6 +718,8 @@ class ListAset extends Authcontroller {
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $kondisi);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $hargasi);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $ket);
+
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $itemid);
 
 			$row++;
 		}
@@ -817,6 +823,8 @@ class ListAset extends Authcontroller {
 		// $laporan->getActiveSheet()->mergeCells('P4:P6');
 		// $laporan->getActiveSheet()->setCellValue('P4','Label');
 
+		$laporan->getActiveSheet()->setCellValue('Q5','ID');
+
 		$laporan->getActiveSheet()->freezePane('I7');
 
 		$laporan->getActiveSheet()->setCellValue('B7','Perlengkapan & Peralatan');
@@ -840,6 +848,8 @@ class ListAset extends Authcontroller {
 			$kondisi	= $data[$a]['KondisiKodeSi'];
 			$hargasi	= $data[$a]['HargaSi'];
 			$ket		= $data[$a]['KeteranganSi'];
+
+			$itemid		= $data[$a]['ItemID'];
 			
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $no);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);
@@ -855,6 +865,9 @@ class ListAset extends Authcontroller {
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $kondisi);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $hargasi);
 			$laporan->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $ket);
+
+			$laporan->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $itemid);
+
 			// $laporan->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $katname);				
 			// $this->cellColor($laporan, $row, $colpg, $wpg);
 			$row++;
