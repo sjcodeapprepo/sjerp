@@ -43,6 +43,12 @@
 .lebardata{
 	width:100px;
 }
+.fontkecil {
+    font-size: 80%;
+}
+.miring {
+    font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -51,29 +57,74 @@
 <br />
 <br />
 <br />
-
-<table align="center" border="0" cellpadding="0" cellspacing="3" class='gridtable'>
-    <thead>
-        <tr><th colspan='6'>STATUS PENGINPUTAN DATA</th></tr>
-    </thead>
-    <tbody>
+<table align="center" width="720">
     <tr>
-        <th width="120">TANAH</th>
-        <th width="120">GEDUNG DAN BANGUNAN</th>
-        <th width="120">PERLENGKAPAN DAN PERALATAN</th>
-        <th width="120">ELEKTRONIKA DAN MESIN</th>
-        <th width="120">KENDARAAN</th>
-        <th width="120">TOTAL</th>
-    </tr>
-    <tr class="tinggitd fontbesar">
-        <th align="center"><br /><?=$astdata['Tanah']?><br />&nbsp;</th>
-        <th align="center"><br /><?=$astdata['Gdbang']?><br />&nbsp;</th>
-        <th align="center"><br /><?=$astdata['Lenglat']?><br />&nbsp;</th>
-        <th align="center"><br /><?=$astdata['Elmes']?><br />&nbsp;</th>
-        <th align="center"><br /><?=$astdata['Kendaraan']?><br />&nbsp;</th>
-        <th align="center"><br /><?=$astdata['Total']?><br />&nbsp;</th>
-    </tr>
-    </tbody>
+        <td>
+
+            <table border="0" cellpadding="0" cellspacing="3" class='gridtable'>
+                <thead>
+                    <tr><th colspan='6'>STATUS PENGINPUTAN DATA</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th colspan="6" align="left" class="miring">Yang Terinput Saat Ini</th>
+                </tr>
+                <tr>
+                    <th width="120">TANAH</th>
+                    <th width="120">GEDUNG DAN BANGUNAN</th>
+                    <th width="120">PERLENGKAPAN DAN PERALATAN</th>
+                    <th width="120">ELEKTRONIKA DAN MESIN</th>
+                    <th width="120">KENDARAAN</th>
+                    <th width="120">TOTAL</th>
+                </tr>
+                <tr class="tinggitd fontbesar">
+                    <th align="center"><br /><?=$astdata['Tanah']?><br />&nbsp;</th>
+                    <th align="center"><br /><?=$astdata['Gdbang']?><br />&nbsp;</th>
+                    <th align="center"><br /><?=$astdata['Lenglat']?><br />&nbsp;</th>
+                    <th align="center"><br /><?=$astdata['Elmes']?><br />&nbsp;</th>
+                    <th align="center"><br /><?=$astdata['Kendaraan']?><br />&nbsp;</th>
+                    <th align="center"><br /><?=$astdata['Total']?><br />&nbsp;</th>
+                </tr>
+            <?php
+            $d6 = 6000; // total asusmsi
+            $c6 = 2280; // 59%
+            $b6 = 3540; // 38%
+
+            $a6 = 180; // 3%
+            $a1  = 120; //tanah
+            $a2 = 30; //gdbang
+            $a3 = 30; //kendaraan
+
+            $elmes  = ($astdata['Elmes']/$b6) * 100;
+            $lenglat  = ($astdata['Lenglat']/$c6) * 100;
+            $tanah  = ($astdata['Tanah']/$a1) * 100;
+            $gdbang  = ($astdata['Gdbang']/$a2) * 100;
+            $kendaraan  = ($astdata['Kendaraan']/$a3) * 100;
+            $total  = ($astdata['Total']/$d6) * 100;
+            ?>
+                <tr>
+                    <th colspan="6" align="left" class="miring">Progress pencapaian target saat ini*</th>
+                </tr>
+                <tr class="tinggitd fontbesar">
+                    <th align="center"><br /><?=number_format($tanah, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center"><br /><?=number_format($gdbang, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center"><br /><?=number_format($lenglat, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center"><br /><?=number_format($elmes, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center"><br /><?=number_format($kendaraan, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center"><br /><?=number_format($total, 1, ',','')?> %<br />&nbsp;</th>
+                </tr>
+                </tbody>
+            </table>
+    </td>
+</tr>
+<tr>
+    <td class="fontkecil miring">
+*Catatan :
+Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 6000. 
+Dengan komposisi data Tanah (120), Gedung dan Bangunan(30) dan Kendaraan(30) 3%, 
+Elektronika dan Mesin 59% dan Perlengkapan dan Perlatan 51%.
+    </td>
+</tr>
 </table>
 
 <br />
