@@ -122,7 +122,7 @@
 *Catatan :
 Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 6000. 
 Dengan komposisi data Tanah (120), Gedung dan Bangunan(30) dan Kendaraan(30) 3%, 
-Elektronika dan Mesin 59% dan Perlengkapan dan Perlatan 51%.
+Elektronika dan Mesin 59% dan Perlengkapan dan Peralatan 38%.
     </td>
 </tr>
 </table>
