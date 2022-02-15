@@ -57,19 +57,17 @@
 <br />
 <br />
 <br />
-<table align="center" width="720">
+<table align="center" width="850">
     <tr>
         <td>
 
             <table border="0" cellpadding="0" cellspacing="3" class='gridtable'>
                 <thead>
-                    <tr><th colspan='6'>STATUS PENGINPUTAN DATA</th></tr>
+                    <tr><th>&nbsp;</th><th colspan='6'>STATUS PENGINPUTAN DATA</th></tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <th colspan="6" align="left" class="miring">Yang Terinput Saat Ini</th>
-                </tr>
-                <tr>
+                    <th width="120">&nbsp;</th>
                     <th width="120">TANAH</th>
                     <th width="120">GEDUNG DAN BANGUNAN</th>
                     <th width="120">PERLENGKAPAN DAN PERALATAN</th>
@@ -77,18 +75,28 @@
                     <th width="120">KENDARAAN</th>
                     <th width="120">TOTAL</th>
                 </tr>
-                <tr class="tinggitd fontbesar">
-                    <th align="center"><br /><?=$astdata['Tanah']?><br />&nbsp;</th>
-                    <th align="center"><br /><?=$astdata['Gdbang']?><br />&nbsp;</th>
-                    <th align="center"><br /><?=$astdata['Lenglat']?><br />&nbsp;</th>
-                    <th align="center"><br /><?=$astdata['Elmes']?><br />&nbsp;</th>
-                    <th align="center"><br /><?=$astdata['Kendaraan']?><br />&nbsp;</th>
-                    <th align="center"><br /><?=$astdata['Total']?><br />&nbsp;</th>
+                <tr>
+                    <th align="center">Target*</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(120, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(2280, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(3540, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(6000, 0, ',','.')?><br />&nbsp;</th>
+                </tr>
+                <tr>
+                    <th align="center">Terinput</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Tanah'], 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Gdbang'], 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Lenglat'], 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Elmes'], 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Kendaraan'], 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Total'], 0, ',','.')?><br />&nbsp;</th>
                 </tr>
             <?php
             $d6 = 6000; // total asusmsi
-            $c6 = 2280; // 59%
-            $b6 = 3540; // 38%
+            $c6 = 2280; // 59% elmes
+            $b6 = 3540; // 38% perlengkapan dan peralatan
 
             $a6 = 180; // 3%
             $a1  = 120; //tanah
@@ -103,15 +111,13 @@
             $total  = ($astdata['Total']/$d6) * 100;
             ?>
                 <tr>
-                    <th colspan="6" align="left" class="miring">Progress pencapaian target saat ini*</th>
-                </tr>
-                <tr class="tinggitd fontbesar">
-                    <th align="center"><br /><?=number_format($tanah, 1, ',','')?> %<br />&nbsp;</th>
-                    <th align="center"><br /><?=number_format($gdbang, 1, ',','')?> %<br />&nbsp;</th>
-                    <th align="center"><br /><?=number_format($lenglat, 1, ',','')?> %<br />&nbsp;</th>
-                    <th align="center"><br /><?=number_format($elmes, 1, ',','')?> %<br />&nbsp;</th>
-                    <th align="center"><br /><?=number_format($kendaraan, 1, ',','')?> %<br />&nbsp;</th>
-                    <th align="center"><br /><?=number_format($total, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center">Progress</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($tanah, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($gdbang, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($lenglat, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($elmes, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($kendaraan, 1, ',','')?> %<br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($total, 1, ',','')?> %<br />&nbsp;</th>
                 </tr>
                 </tbody>
             </table>
@@ -121,7 +127,7 @@
     <td class="fontkecil miring">
 *Catatan :
 Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 6000. 
-Dengan komposisi data Tanah (120), Gedung dan Bangunan(30) dan Kendaraan(30) 3%, 
+Dengan komposisi data Tanah , Gedung dan Bangunan dan Kendaraan 3%, 
 Elektronika dan Mesin 59% dan Perlengkapan dan Peralatan 38%.
     </td>
 </tr>
