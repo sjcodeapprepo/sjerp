@@ -318,9 +318,9 @@ class Asetlengalat extends Authcontroller
 			$config['file_name']		= 'lat' . '_'.$itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
-			$config['max_size']			= 5000;
-			$config['max_width']		= 1500;
-			$config['max_height']		= 1500;
+			$config['max_size']			= 10000;
+			$config['max_width']		= 3000;
+			$config['max_height']		= 3000;
 
 			$this->load->library('upload', $config);
 
@@ -427,9 +427,9 @@ class Asetlengalat extends Authcontroller
 			$config['file_name']		= 'lat' . '_'.$itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg';
-			$config['max_size']			= 5000;
-			$config['max_width']		= 1500;
-			$config['max_height']		= 1500;
+			$config['max_size']			= 10000;
+			$config['max_width']		= 3000;
+			$config['max_height']		= 3000;
 
 			$this->load->library('upload', $config);
 
