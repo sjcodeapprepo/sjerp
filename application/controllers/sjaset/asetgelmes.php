@@ -263,11 +263,14 @@ class AsetGElMes extends Authcontroller
 		$nodokumenpr		= $this->input->post('nodokumenpr');
 		$lokasiidpr			= $this->input->post('lokasiidpr');
 		$nilaipr			= $this->input->post('nilaipr');
+		$nilaipr			= ($nilaipr=="")?0:$nilaipr;
 		$penyusutanpr		= $this->input->post('penyusutanpr');
+		$penyusutanpr		= ($penyusutanpr=="")?0:$penyusutanpr;
 		$divisionidps		= $this->input->post('divisionidps');
 		$penanggungjawabps	= $this->input->post('penanggungjawabps');
 		$kondisikodesi		= $this->input->post('kondisikodesi');
 		$hargasi			= $this->input->post('hargasi');
+		$hargasi			= ($hargasi=="")?0:$hargasi;
 		$keterangansi		= $this->input->post('keterangansi');
 		$piclocationsi		= $this->input->post('piclocationsi');
 		$userid				= $this->session->userdata('UserID');
