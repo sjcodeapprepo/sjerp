@@ -79,9 +79,9 @@
                     <th align="center">Target*</th>
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format(120, 0, ',','.')?><br />&nbsp;</th>
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(2280, 0, ',','.')?><br />&nbsp;</th>
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format(3540, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(2280, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format(6000, 0, ',','.')?><br />&nbsp;</th>
                 </tr>
                 <tr>
