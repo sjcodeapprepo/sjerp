@@ -61,11 +61,13 @@ class AsetGElMes extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisElkmesinKatName, md.DivisionAbbr, d.PenanggungJawabPs
+					m.ItemID, m.AssetNo, mk.KatName, mj.JenisElkmesinKatName, md.DivisionAbbr, 
+					d.PenanggungJawabPs, l.LokasiName 
 				FROM 
-					itemmaster m, itemelkmesindetail d, itemkatmaster mk, itemdivisionmaster md, itemjeniselkmesinmaster mj 
+					itemmaster m, itemelkmesindetail d, itemkatmaster mk, itemdivisionmaster md, 
+					itemjeniselkmesinmaster mj, itemlokasimaster l 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID AND l.LokasiID=d.LokasiIDPr
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='04'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
