@@ -75,14 +75,23 @@
                     <th width="120">KENDARAAN</th>
                     <th width="120">TOTAL</th>
                 </tr>
+                <?php
+            $d6 = 4720; // total asusmsi
+            $c6 = 2674; // 59% elmes
+            $b6 = 1918; // 38% perlengkapan dan peralatan
+
+            $a1  = 109; //tanah
+            $a2 = 9; //gdbang
+            $a3 = 10; //kendaraan
+                ?>
                 <tr>
                     <th align="center">Target*</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(120, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(3540, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(2280, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(30, 0, ',','.')?><br />&nbsp;</th>
-                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format(6000, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($a1, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($a2, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($b6, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($c6, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($a3, 0, ',','.')?><br />&nbsp;</th>
+                    <th align="center" class="tinggitd fontbesar"><br /><?=number_format($d6, 0, ',','.')?><br />&nbsp;</th>
                 </tr>
                 <tr>
                     <th align="center">Terinput</th>
@@ -94,14 +103,6 @@
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Total'], 0, ',','.')?><br />&nbsp;</th>
                 </tr>
             <?php
-            $d6 = 4720; // total asusmsi
-            $c6 = 2674; // 59% elmes
-            $b6 = 1918; // 38% perlengkapan dan peralatan
-
-            $a1  = 109; //tanah
-            $a2 = 9; //gdbang
-            $a3 = 10; //kendaraan
-
             $elmes  = ($astdata['Elmes']/$b6) * 100;
             $lenglat  = ($astdata['Lenglat']/$c6) * 100;
             $tanah  = ($astdata['Tanah']/$a1) * 100;
