@@ -57,7 +57,7 @@
 <br />
 <br />
 <br />
-<table align="center" width="850">
+<table align="center" width="860">
     <tr>
         <td>
 
