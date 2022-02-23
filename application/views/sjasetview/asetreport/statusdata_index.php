@@ -94,14 +94,13 @@
                     <th align="center" class="tinggitd fontbesar"><br /><?=number_format($astdata['Total'], 0, ',','.')?><br />&nbsp;</th>
                 </tr>
             <?php
-            $d6 = 6000; // total asusmsi
-            $c6 = 2280; // 59% elmes
-            $b6 = 3540; // 38% perlengkapan dan peralatan
+            $d6 = 4720; // total asusmsi
+            $c6 = 2674; // 59% elmes
+            $b6 = 1918; // 38% perlengkapan dan peralatan
 
-            $a6 = 180; // 3%
-            $a1  = 120; //tanah
-            $a2 = 30; //gdbang
-            $a3 = 30; //kendaraan
+            $a1  = 109; //tanah
+            $a2 = 9; //gdbang
+            $a3 = 10; //kendaraan
 
             $elmes  = ($astdata['Elmes']/$b6) * 100;
             $lenglat  = ($astdata['Lenglat']/$c6) * 100;
@@ -126,9 +125,12 @@
 <tr>
     <td class="fontkecil miring">
 *Catatan :
-Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 6000. 
-Dengan komposisi data Tanah , Gedung dan Bangunan dan Kendaraan 3%, 
-Elektronika dan Mesin 59% dan Perlengkapan dan Peralatan 38%.
+Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 4720. 
+Dengan komposisi data Tanah (109), Gedung dan Bangunan (9) dan Kendaraan (10), 
+Elektronika dan Mesin (2676) dan Perlengkapan dan Peralatan (1918).
+Jumlah Data Asumsi Gedung Bangunan, Perlengkapan dan Peralatan, dan Elektronika dan Mesin 
+berdasarkan BAST Laporan hasil sensus aset tahun 2019. Untuk Golongan Tanah, jumlah asumsi data 
+berdasarkan soft copy inventarisasi aset tanah yg dibuat tahun 2021. 
     </td>
 </tr>
 </table>
