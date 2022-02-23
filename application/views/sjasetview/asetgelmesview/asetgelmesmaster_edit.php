@@ -260,7 +260,7 @@
         </table>
     </form>
     <div id="asetpic" title="Gambar Aset">
-        <img src="<?=$pic_url?>publicfolder/asetpic/elmes/<?=$data['PicLocationSi']?>" />
+        <img src="<?=$pic_url?>publicfolder/asetpic/elmes/<?=$data['PicLocationSi']?>" width="740" />
     </div>
     <br />
 <br />

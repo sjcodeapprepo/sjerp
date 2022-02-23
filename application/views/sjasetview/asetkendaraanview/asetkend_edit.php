@@ -362,7 +362,7 @@
         </table>
     </form>
     <div id="asetpic" title="Gambar Aset">
-        <img src="<?=$pic_url?>publicfolder/asetpic/kendr/<?=$data['PicLocationSi']?>" />
+        <img src="<?=$pic_url?>publicfolder/asetpic/kendr/<?=$data['PicLocationSi']?>" width="740" />
     </div>
     <script>
         // new Spry.Widget.ValidationTextField("nodokumenpr", "none");
