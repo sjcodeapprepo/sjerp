@@ -41,31 +41,33 @@
 <br />
 
 <form action=<?=site_url().'/sjaset/asetlengalat/index'?> method='post'>
-<table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridtable'>
+<table align=center border="0" cellpadding="0" cellspacing="3" width="800" class='gridtable'>
 	<thead>
 	  <tr><th colspan='2'>Aset Perlengkapan dan Peralatan</th></tr>
   	</thead>
       <tr>
         <td noWrap align=center>
 		<select name="option">
+			<option value='l.LokasiName'>Lokasi</option>
 			<option value='mk.KatName'>Kategori</option>
 			<option value='mj.JenisPerlengPeralatKatName'>Jenis</option>
 			<option value='d.PenanggungJawabSi'>Penanggung Jawab</option>
 		</select>
-		&nbsp;&nbsp;<input type=text size='40' name='optionValue' />&nbsp;&nbsp;<input type=submit value='Cari' name='submit' />
+		&nbsp;&nbsp;<input type=text size='50' name='optionValue' />&nbsp;&nbsp;<input type=submit value='Cari' name='submit' />
 		</td>
 	  </tr>
 </table>
 
 <br><br>
 
-<table align=center border="0" cellpadding="0" cellspacing="3" width="600" class='gridua'>
+<table align=center border="0" cellpadding="0" cellspacing="3" width="800" class='gridua'>
 	<thead>
 	  <tr>
 		<th>NO ASET</th>
 	  	<th>KATEGORI</th>
 		<th>JENIS</th>
         <th>DIVISI</th>
+		<th>LOKASI</th>
         <th>PENANGGUNG JAWAB</th>	  	
         <th colspan='6'>
 			<table align="center">
@@ -91,6 +93,7 @@ for($a=0; $a<count($view_data); $a++) {
     $katname	= $view_data[$a]['KatName'];
     $jkat		= $view_data[$a]['JenisPerlengPeralatKatName'];
 	$divname	= $view_data[$a]['DivisionAbbr'];
+	$lokasi		= $view_data[$a]['LokasiName'];
 	$pngjwb 	= $view_data[$a]['PenanggungJawabSi'];
 ?>
 	  <tr>
@@ -98,6 +101,7 @@ for($a=0; $a<count($view_data); $a++) {
 		<td align='center'><?=$katname?></td>
 	  	<td align='center'><?=$jkat?></td>
 		<td align='center'><?=$divname?></td>
+		<td align='center'><?=$lokasi?></td>
 		<td align='center'><?=$pngjwb?></td>
 		<td width=40 align='center'>
 			<?php 

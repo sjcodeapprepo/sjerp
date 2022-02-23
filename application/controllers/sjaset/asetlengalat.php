@@ -61,11 +61,13 @@ class Asetlengalat extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, d.PenanggungJawabSi
+					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, 
+					d.PenanggungJawabSi, l.LokasiName 
 				FROM 
-					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, itemjenisperlengperalatkatmaster mj 
+					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, 
+					itemjenisperlengperalatkatmaster mj, itemlokasimaster l 
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID
+					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID AND l.LokasiID=d.LokasiIDPs
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
