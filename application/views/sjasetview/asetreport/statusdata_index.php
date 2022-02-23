@@ -57,7 +57,7 @@
 <br />
 <br />
 <br />
-<table align="center" width="860">
+<table align="center" width="880">
     <tr>
         <td>
 
@@ -67,13 +67,13 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <th width="120">&nbsp;</th>
-                    <th width="120">TANAH</th>
-                    <th width="120">GEDUNG DAN BANGUNAN</th>
-                    <th width="120">PERLENGKAPAN DAN PERALATAN</th>
-                    <th width="120">ELEKTRONIKA DAN MESIN</th>
-                    <th width="120">KENDARAAN</th>
-                    <th width="120">TOTAL</th>
+                    <th width="122">&nbsp;</th>
+                    <th width="122">TANAH</th>
+                    <th width="122">GEDUNG DAN BANGUNAN</th>
+                    <th width="122">PERLENGKAPAN DAN PERALATAN</th>
+                    <th width="122">ELEKTRONIKA DAN MESIN</th>
+                    <th width="122">KENDARAAN</th>
+                    <th width="122">TOTAL</th>
                 </tr>
                 <?php
             $d6 = 4720; // total asusmsi
