@@ -227,14 +227,21 @@
                                 Penanggung Jawab&nbsp;
                             </td>
                             <td>
-                            <!-- <select name='penanggungjawabsi' id='penanggungjawabsi'>
+<?php
+if($data['PenanggungJawabSi']=='') {
+?>
+
+<select name='penanggungjawabsi' id='penanggungjawabsi'>
     <option value="">--Pilih Penanggung Jawab--</option>
     <option value="Divisi Umum dan SDM">Divisi Umum dan SDM</option>
     <option value="Divisi Pertanahan dan Hukum">Divisi Pertanahan dan Hukum</option>
     <option value="Divisi Usaha">Divisi Usaha</option>
-    <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option> -->
+    <option value="Unit Pemasaran dan Pengelolaan Aset">Unit Pemasaran dan Pengelolaan Aset</option>
 </select>
-								<input type='text' name='penanggungjawabsi' size='30' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
+<?php
+} else { ?>
+<input type='text' name='penanggungjawabsi' size='30' id='penanggungjawabsi' value="<?= $data['PenanggungJawabSi'] ?>" />
+<?php } ?>
                             </td>
                             <td align="right">
                                 Kondisi&nbsp;
@@ -282,8 +289,8 @@
     </div>
     <script>
         // new Spry.Widget.ValidationTextField("nodokumenpr", "none");
-        // new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
-        // new Spry.Widget.ValidationTextField("hargasi", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("nilaipr", "integer", { minValue: "0",useCharacterMasking:true });
+        new Spry.Widget.ValidationTextField("hargasi", "integer", { minValue: "0",useCharacterMasking:true });
         // new Spry.Widget.ValidationTextField("penyusutanps", "integer", {  minValue: "0",maxValue: "100",useCharacterMasking:true });
         // new Spry.Widget.ValidationSelect("katid");
         // new Spry.Widget.ValidationSelect("jenisidj");

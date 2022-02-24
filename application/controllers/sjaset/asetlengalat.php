@@ -122,13 +122,13 @@ class Asetlengalat extends Authcontroller
 			'JenisID'				=> '',
 			'jenisidj'=> '',
 			'NoDokumenPr'			=> '',
-			'NilaiPr'				=> '',
-			'PenyusutanPs'			=> '',
+			'NilaiPr'				=> '0',
+			'PenyusutanPs'			=> '0',
 			'LokasiIDPs'			=> '',
 			'DivisionIDPs'			=> '',
 			'PenanggungJawabSi'		=> '',
 			'KondisiKodeSi'			=> '',
-			'HargaSi'				=> '',
+			'HargaSi'				=> '0',
 			'KeteranganSi'			=> '',
 			'PicLocationSi'			=> ''
 		);
@@ -263,7 +263,7 @@ class Asetlengalat extends Authcontroller
 		$tglpr				= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
-		$nilaipr			= $this->input->post('nilaipr');
+		$nilaipr			= ($this->input->post('nilaipr')=='')?'0':$this->input->post('nilaipr');		
 		$penyusutanps		= $this->input->post('penyusutanps');
 		$lokasiidps			= $this->input->post('lokasiidps');
 		$divisionidps		= $this->input->post('divisionidps');
