@@ -71,18 +71,18 @@ class Asetlengalat extends Authcontroller
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
-		if($isviewdata) {
+		if ($isviewdata) {
 			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
 		}
 		//---------------------------------------------------
 		$query = $this->db->query($sql);
 
-		if($isviewdata) {
+		if ($isviewdata) {
 			$result = $query->result_array();
 		} else {
 			$result = $query->num_rows();
 		}
-		
+
 		return $result;
 	}
 
@@ -95,17 +95,19 @@ class Asetlengalat extends Authcontroller
 		$data['itemlokasimaster']					= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']					= $this->_getItemDivisionMasterData();
 		$data['kondisikodesi']						= array(
-														array(
-															'KondisiKodeSi'	=> 'B',
-															'KondisiKodeSiName'	=> 'Baik'
-														),
-														array(
-															'KondisiKodeSi'	=> 'RR',
-															'KondisiKodeSiName'	=> 'Rusak Ringan'),
-														array(
-															'KondisiKodeSi'	=> 'RB',
-															'KondisiKodeSiName'	=> 'Rusak Berat')
-													);
+			array(
+				'KondisiKodeSi'	=> 'B',
+				'KondisiKodeSiName'	=> 'Baik'
+			),
+			array(
+				'KondisiKodeSi'	=> 'RR',
+				'KondisiKodeSiName'	=> 'Rusak Ringan'
+			),
+			array(
+				'KondisiKodeSi'	=> 'RB',
+				'KondisiKodeSiName'	=> 'Rusak Berat'
+			)
+		);
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetlengalatview/asetlengalat_input', $data);
 	}
@@ -120,7 +122,7 @@ class Asetlengalat extends Authcontroller
 			'AssetOrder'			=> '',
 			'JenisPerlengPeralatKatID'	=> '',
 			'JenisID'				=> '',
-			'jenisidj'=> '',
+			'jenisidj' => '',
 			'NoDokumenPr'			=> '',
 			'NilaiPr'				=> '0',
 			'PenyusutanPs'			=> '0',
@@ -142,7 +144,7 @@ class Asetlengalat extends Authcontroller
 					itemmaster m, itemperlengperalatdetail d
 				WHERE 
 					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='03'";
-		
+
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]) ? $result[0] : $datakosong;
@@ -170,7 +172,7 @@ class Asetlengalat extends Authcontroller
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisPerlengPeralatKatName']."</option>\n";
+			$jenisid	.= "<option value='" . $result['IDJ'] . "'>" . $result['JenisPerlengPeralatKatName'] . "</option>\n";
 		}
 		echo $jenisid;
 	}
@@ -199,7 +201,7 @@ class Asetlengalat extends Authcontroller
 		return $result;
 	}
 
-	function _getLastInsertID() 
+	function _getLastInsertID()
 	{
 		$sql	= "SELECT LAST_INSERT_ID() AS lii";
 		$query = $this->db->query($sql);
@@ -207,7 +209,7 @@ class Asetlengalat extends Authcontroller
 		return $result[0]['lii'];
 	}
 
-	function _getLastAsetOrderPlusOne($katid) 
+	function _getLastAsetOrderPlusOne($katid)
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 3, 0) AS AO 
 					FROM itemperlengperalatdetail d, itemmaster i 
@@ -216,11 +218,11 @@ class Asetlengalat extends Authcontroller
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '001';
 		return $retval;
 	}
 
-	function _getLastAsetOrderPlusOneV2($katid, $jenisid) 
+	function _getLastAsetOrderPlusOneV2($katid, $jenisid)
 	{
 		$sql	= "SELECT LPAD(d.AssetOrder+1, 4, 0) AS AO 
 					FROM itemperlengperalatdetail d, itemmaster i 
@@ -229,22 +231,22 @@ class Asetlengalat extends Authcontroller
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '001';
 		return $retval;
 	}
 
 	function _getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr)
-    {
-        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+	{
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
 					FROM itemperlengperalatdetail d, itemmaster i 
 					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '00001';
 		return $retval;
-    }
+	}
 
 	function inputeditproc($id = null)
 	{
@@ -260,10 +262,10 @@ class Asetlengalat extends Authcontroller
 		$submit				= $this->input->post('submit');
 		$katid				= $this->input->post('katid');
 		$jenisidj			= $this->input->post('jenisidj');
-		$tglpr				= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$tglpr				= ($this->input->post('tglpr') == '') ? '0000-00-00' : $this->input->post('tglpr');
 		$thnpr				= substr($tglpr, 0, 4);
 		$nodokumenpr		= $this->input->post('nodokumenpr');
-		$nilaipr			= ($this->input->post('nilaipr')=='')?'0':$this->input->post('nilaipr');		
+		$nilaipr			= ($this->input->post('nilaipr') == '') ? '0' : $this->input->post('nilaipr');
 		$penyusutanps		= $this->input->post('penyusutanps');
 		$lokasiidps			= $this->input->post('lokasiidps');
 		$divisionidps		= $this->input->post('divisionidps');
@@ -281,43 +283,43 @@ class Asetlengalat extends Authcontroller
 			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			// $assetno	= '03'.$katid.$jenisperlengperalatkatid.$assetorder.$thnpr.$lokasiidps.$divisionidps;
 			$assetorder	= $this->_getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr);
-			$assetno	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder;
+			$assetno	= '03.' . $katid . '.' . $thnpr . '-' . $assetorder;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
-							'GolID'			=> '03',
-							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
-							'UserID'		=> $userid,
-							'TglPr'			=> $tglpr
-						);
+				'GolID'			=> '03',
+				'KatID'			=> $katid,
+				'AssetNo'		=> $assetno,
+				'UserID'		=> $userid,
+				'TglPr'			=> $tglpr
+			);
 			$this->db->insert('itemmaster', $datamaster);
 
 			$itemid		= $this->_getLastInsertID();
 
 			$datadetail	= array(
-							'ItemID'				=> $itemid,
-							'AssetOrder'			=> $assetorder,
-							'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
-							'JenisID'				=> $jenisid,
-							'NoDokumenPr'			=> $nodokumenpr,
-							'NilaiPr'				=> $nilaipr,
-							'PenyusutanPs'			=> $penyusutanps,
-							'LokasiIDPs'			=> $lokasiidps,
-							'DivisionIDPs'			=> $divisionidps,
-							'PenanggungJawabSi'		=> $penanggungjawabps,
-							'KondisiKodeSi'			=> $kondisikodesi,
-							'HargaSi'				=> $hargasi,
-							'KeteranganSi'			=> $keterangansi					
-						);
+				'ItemID'				=> $itemid,
+				'AssetOrder'			=> $assetorder,
+				'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
+				'JenisID'				=> $jenisid,
+				'NoDokumenPr'			=> $nodokumenpr,
+				'NilaiPr'				=> $nilaipr,
+				'PenyusutanPs'			=> $penyusutanps,
+				'LokasiIDPs'			=> $lokasiidps,
+				'DivisionIDPs'			=> $divisionidps,
+				'PenanggungJawabSi'		=> $penanggungjawabps,
+				'KondisiKodeSi'			=> $kondisikodesi,
+				'HargaSi'				=> $hargasi,
+				'KeteranganSi'			=> $keterangansi
+			);
 			$this->db->insert('itemperlengperalatdetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI
-			
+
 			//========================================FILE GAMBAR=====================
 			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-			$config['file_name']		= 'lat' . '_'.$itemid;
+			$config['file_name']		= 'lat' . '_' . $itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 			$config['max_size']			= 10000;
@@ -330,9 +332,9 @@ class Asetlengalat extends Authcontroller
 				$error					= array('error_info' => $this->upload->display_errors());
 				// print_array($error);
 			} else {
-				$data						= $this->upload->data();	
+				$data						= $this->upload->data();
 				$datapic['PicLocationSi']	= $data['file_name'];
-				$this->db->update('itemperlengperalatdetail', $datapic, array('ItemID'	=> $itemid));			
+				$this->db->update('itemperlengperalatdetail', $datapic, array('ItemID'	=> $itemid));
 			}
 			//========================================================================
 		}
@@ -345,25 +347,27 @@ class Asetlengalat extends Authcontroller
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
 		$base		= base_url();
-		$basearr	= explode('/',$base);
-		$data['pic_url'] = 'http://'.$basearr[2].'/sensusapi/';
+		$basearr	= explode('/', $base);
+		$data['pic_url'] = 'http://' . $basearr[2] . '/sensusapi/';
 		$data['itemjenisperlengperalatkatmaster']	= $this->_getItemJenisPerlengPeralatkatmasterData($id);
 		$data['itemkatmaster']				= $this->_getItemKatMasterData();
 		$data['itemlokasimaster']			= $this->_getItemLokasiMasterData();
 		$data['itemdivisionmaster']			= $this->_getItemDivisionMasterData();
 
 		$data['kondisikodesi']				= array(
-													array(
-														'KondisiKodeSi'	=> 'B',
-														'KondisiKodeSiName'	=> 'Baik'
-													),
-													array(
-														'KondisiKodeSi'	=> 'RR',
-														'KondisiKodeSiName'	=> 'Rusak Ringan'),
-													array(
-														'KondisiKodeSi'	=> 'RB',
-														'KondisiKodeSiName'	=> 'Rusak Berat')
-												);
+			array(
+				'KondisiKodeSi'	=> 'B',
+				'KondisiKodeSiName'	=> 'Baik'
+			),
+			array(
+				'KondisiKodeSi'	=> 'RR',
+				'KondisiKodeSiName'	=> 'Rusak Ringan'
+			),
+			array(
+				'KondisiKodeSi'	=> 'RB',
+				'KondisiKodeSiName'	=> 'Rusak Berat'
+			)
+		);
 
 		$data['urlsegment']	= $this->uri->uri_string();
 		$this->load->view('sjasetview/asetlengalatview/asetlengalat_edit', $data);
@@ -399,34 +403,34 @@ class Asetlengalat extends Authcontroller
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
 			// $assetno	= $AssetNo;
 			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_perlenglat($katid, $thnpr);
-			$assetno_new	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
+			$assetno_new	= '03.' . $katid . '.' . $thnpr . '-' . $assetorder_new;
 
 			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
-			
+
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
-							'KatID'			=> $katid,
-							'TglPr'			=> $tglpr
-						);
+				'KatID'			=> $katid,
+				'TglPr'			=> $tglpr
+			);
 
 			$datadetail	= array(
-								'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
-								'JenisID'				=> $jenisid,
-								'NoDokumenPr'			=> $nodokumenpr,
-								'NilaiPr'				=> $nilaipr,
-								'PenyusutanPs'			=> $penyusutanps,
-								'LokasiIDPs'			=> $lokasiidps,
-								'DivisionIDPs'			=> $divisionidps,
-								'PenanggungJawabSi'		=> $penanggungjawabps,
-								'KondisiKodeSi'			=> $kondisikodesi,
-								'HargaSi'				=> $hargasi,
-								'KeteranganSi'			=> $keterangansi
-								// ,'DebugTest'			=> $debugfld
-						);
+				'JenisPerlengPeralatKatID'	=> $jenisperlengperalatkatid,
+				'JenisID'				=> $jenisid,
+				'NoDokumenPr'			=> $nodokumenpr,
+				'NilaiPr'				=> $nilaipr,
+				'PenyusutanPs'			=> $penyusutanps,
+				'LokasiIDPs'			=> $lokasiidps,
+				'DivisionIDPs'			=> $divisionidps,
+				'PenanggungJawabSi'		=> $penanggungjawabps,
+				'KondisiKodeSi'			=> $kondisikodesi,
+				'HargaSi'				=> $hargasi,
+				'KeteranganSi'			=> $keterangansi
+				// ,'DebugTest'			=> $debugfld
+			);
 			//========================================FILE GAMBAR=====================
 			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/lenglat/';
-			$config['file_name']		= 'lat' . '_'.$itemid;
+			$config['file_name']		= 'lat' . '_' . $itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg';
 			$config['max_size']			= 10000;
@@ -439,12 +443,12 @@ class Asetlengalat extends Authcontroller
 				$error					= array('error_info' => $this->upload->display_errors());
 				// print_array($error);
 			} else {
-				$data						= $this->upload->data();				
+				$data						= $this->upload->data();
 				$piclocationsi				= $data['file_name'];
-				$datadetail['PicLocationSi']= $piclocationsi;				
+				$datadetail['PicLocationSi'] = $piclocationsi;
 			}
 			//========================================eofFILE GAMBAR=====================
-			if($is_berubah) {
+			if ($is_berubah) {
 				$datadetail['AssetOrder']	= $assetorder_new;
 				$datamaster['AssetNo']		= $assetno_new;
 			}
@@ -481,25 +485,25 @@ class Asetlengalat extends Authcontroller
 		 */
 		$retval		= false;
 
-		$asr_new	= explode(".",$assetno_new);
-		$asr_old	= explode(".",$assetno_old);
+		$asr_new	= explode(".", $assetno_new);
+		$asr_old	= explode(".", $assetno_old);
 
-		if(isset($asr_old[2])) {
-			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
-			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		if (isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1] . substr($asr_old[2], 0, 4);
+			$katthn_new	= $asr_new[1] . substr($asr_new[2], 0, 4);
 		} else {
 			$katthn_old = $assetno_old;
 			$katthn_new = $assetno_new;
-		}		
+		}
 
-		if($katthn_new !== $katthn_old) {
+		if ($katthn_new !== $katthn_old) {
 			$retval	= true;
 		}
-		
+
 		return $retval;
 	}
 
-	function _getBarQrCodeData($id) 
+	function _getBarQrCodeData($id)
 	{
 		$sql = "SELECT 
 					m.AssetNo, k.KatName, d.KeteranganSi ,j.JenisPerlengPeralatKatName  
@@ -516,34 +520,77 @@ class Asetlengalat extends Authcontroller
 	function pdf($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
-		$keterangan_arr	= explode("\n",$datas['KeteranganSi']);
-		$keterangan1	= isset($keterangan_arr[0])?$keterangan_arr[0]:'';
-		$keterangan2	= isset($keterangan_arr[1])?$keterangan_arr[1]:'';
+		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0]) ? $keterangan_arr[0] : '';
+		$keterangan2	= isset($keterangan_arr[1]) ? $keterangan_arr[1] : '';
 
 		$this->load->library('ciqrcode');
 
-        $config['cacheable']    = true;
-        $config['cachedir']     = './publicfolder/qrcode/';
-        $config['errorlog']     = './publicfolder/qrcode/';
-        $config['imagedir']     = './publicfolder/qrcode/images/';
-        $config['quality']      = true;
-        $config['size']         = '1024';
-        $config['black']        = array(224,255,255);
-        $config['white']        = array(70,130,180);
-        $this->ciqrcode->initialize($config);
+		$config['cacheable']    = true;
+		$config['cachedir']     = './publicfolder/qrcode/';
+		$config['errorlog']     = './publicfolder/qrcode/';
+		$config['imagedir']     = './publicfolder/qrcode/images/';
+		$config['quality']      = true;
+		$config['size']         = '1024';
+		$config['black']        = array(224, 255, 255);
+		$config['white']        = array(70, 130, 180);
+		$this->ciqrcode->initialize($config);
 
 		$userid = $this->session->userdata('UserID');
-		$image_name			= 'lenglat'.$userid.'.png';
-        $params['data']		= $datas['AssetNo'];
-        $params['level']	= 'H';
-        $params['size']		= 4;
-        $params['savename']	= FCPATH.$config['imagedir'].$image_name;
-        $this->ciqrcode->generate($params);
-		
-		$imageurl = base_url()."publicfolder/qrcode/images/".$image_name;
+		$image_name			= 'lenglat' . $userid . '.png';
+		$params['data']		= $datas['AssetNo'];
+		$params['level']	= 'H';
+		$params['size']		= 4;
+		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
+		$this->ciqrcode->generate($params);
+
+		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
-		$pdf->AddPage();		
+		$pdf->AddPage();
+		$pdf->Image($imageurl, 1, 6, 15, 15);
+		$pdf->SetFont('Arial', '', 6);
+		$pdf->Text(21, 9,  $datas['AssetNo']);
+		$pdf->Text(21, 13,  $datas['KatName']);
+		$pdf->Text(21, 17, $datas['JenisPerlengPeralatKatName']);
+		$pdf->Text(21, 21, $keterangan1);
+		// $pdf->Text(21, 25, $keterangan2);
+		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
+		$pdf->Image($logo, 49, 6, 19.5, 9);
+		$pdf->Output('lenglat.pdf', 'I');
+	}
+
+	function _pdf($id)
+	{
+		$datas	= $this->_getBarQrCodeData($id);
+		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0]) ? $keterangan_arr[0] : '';
+		$keterangan2	= isset($keterangan_arr[1]) ? $keterangan_arr[1] : '';
+
+		$this->load->library('ciqrcode');
+
+		$config['cacheable']    = true;
+		$config['cachedir']     = './publicfolder/qrcode/';
+		$config['errorlog']     = './publicfolder/qrcode/';
+		$config['imagedir']     = './publicfolder/qrcode/images/';
+		$config['quality']      = true;
+		$config['size']         = '1024';
+		$config['black']        = array(224, 255, 255);
+		$config['white']        = array(70, 130, 180);
+		$this->ciqrcode->initialize($config);
+
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'lenglat' . $userid . '.png';
+		$params['data']		= $datas['AssetNo'];
+		$params['level']	= 'H';
+		$params['size']		= 4;
+		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
+		$this->ciqrcode->generate($params);
+
+		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'printerbarcode');
+		$pdf->AddPage();
 		$pdf->Image($imageurl, 1, 6, 20, 20);
 		$pdf->SetFont('Arial', '', 8);
 		$pdf->Text(21, 9,  $datas['AssetNo']);
@@ -551,61 +598,61 @@ class Asetlengalat extends Authcontroller
 		$pdf->Text(21, 17, $datas['JenisPerlengPeralatKatName']);
 		$pdf->Text(21, 21, $keterangan1);
 		// $pdf->Text(21, 25, $keterangan2);
-		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
+		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('lenglat.pdf', 'I');
 	}
 
 	function testqrcode()
 	{
-        $nim='test_pertama_qrcode';
- 
-        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
- 
-        $config['cacheable']    = true; //boolean, the default is true
-        $config['cachedir']     = './publicfolder/qrcode/'; //string, the default is application/cache/
-        $config['errorlog']     = './publicfolder/qrcode/'; //string, the default is application/logs/
-        $config['imagedir']     = './publicfolder/qrcode/images/'; //direktori penyimpanan qr code
-        $config['quality']      = true; //boolean, the default is true
-        $config['size']         = '1024'; //interger, the default is 1024
-        $config['black']        = array(224,255,255); // array, default is array(255,255,255)
-        $config['white']        = array(70,130,180); // array, default is array(0,0,0)
-        $this->ciqrcode->initialize($config);
- 
-        $image_name='test_pertama_qrcode.png';
-        $params['data'] = $nim; //data yang akan di jadikan QR CODE
-        $params['level'] = 'H'; //H=High
-        $params['size'] = 4;
-        $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder publicfolder/qrcode/images/
-        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
-		echo'ok';
-    }
+		$nim = 'test_pertama_qrcode';
+
+		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+		$config['cacheable']    = true; //boolean, the default is true
+		$config['cachedir']     = './publicfolder/qrcode/'; //string, the default is application/cache/
+		$config['errorlog']     = './publicfolder/qrcode/'; //string, the default is application/logs/
+		$config['imagedir']     = './publicfolder/qrcode/images/'; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+		$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+
+		$image_name = 'test_pertama_qrcode.png';
+		$params['data'] = $nim; //data yang akan di jadikan QR CODE
+		$params['level'] = 'H'; //H=High
+		$params['size'] = 4;
+		$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder publicfolder/qrcode/images/
+		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+		echo 'ok';
+	}
 
 	function barcode()
 	{
 		$this->load->library('zend');
 		$this->zend->load('Zend/Barcode');
 
-		$id='ahmadmirza210173';
+		$id = 'ahmadmirza210173';
 
 		$barcodeOptions = array('text' => $id);
 		$rendererOptions = array(
-								'imageType'          => 'png', 
-								'horizontalPosition' => 'center', 
-								'verticalPosition'   => 'middle'
-							);
-			
+			'imageType'          => 'png',
+			'horizontalPosition' => 'center',
+			'verticalPosition'   => 'middle'
+		);
+
 		// $imageResource=Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->render();
 		// return $imageResource;
 
 		// $imageResource = Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->draw();
 		// imagepng($imageResource, 'publicfolder/qrcode/images/barcode.png');
 	}
-	
-	function viewbarcode() 
+
+	function viewbarcode()
 	{
 		// echo "<img src='".site_url()."/sjaset/asetgelmes/barcode'  alt='not show' /></div>";
-		echo "<img src='".base_url()."/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
+		echo "<img src='" . base_url() . "/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
 	}
 
 	function testzpl()
@@ -623,32 +670,29 @@ class Asetlengalat extends Authcontroller
 					^FX =================================Gambar Logo sara jaya
 					^FO470,80^GFA,1380,1380,20,gI03IF8,gH07JF8,gG07KF8,g03LF8,g0MF8,Y03MF,Y0KFE03,X01JF,X03IF,X0IF8,W01FFC,W03FF,W07FE,W0FF8,V01FF,V03FE00KFC,V03FC007JFC,V07F8043JFC,V0FF00E1JFC,V0FE01F0JF8,U01FE03F8JF8,U01FC07FC007F,U03F81FFE007F,U03F80FFE00FE,U07F807FC00FE,U07FFC3F801FC,U07FFE1F003FC,U0JF1E003F8,U0JF8C007F8,U0JFCI0FF,T01JFE001FE,gH03FC,gH07FC,gG01FF8,gG03FF,gG0FFE,g07FF8,Y03IF,X03IFE,T0301KF8,T07MF,T07LFC,T07KFE,T07KF8,T07JF8,T07IF,,::::::1FC00200FFCK0400EN070043C0782,7FE00600FFE00300600E00CK070041E0703,7FF00700IF00300700E00CK0700E0E0F07,F0600F00E0700780780E01EK0700E0F0E078,EJ0F80E0380F807C0E03EK0701F071C0F8,FI01F80E0380FC07E0E03FK0703F03BC0FC,7F001FC0E0381FC07F8E07FK0703B83F81DC,3FE039C0E0701CE077CE0738J0707B81F81CE,1FF039E0IF03CE073EE0F38J07071C0F03CE,00F078E0FFE0387070FE0E1CJ070F1C0E0387,007870F0FFC07870707E1E1CJ070E1E0E0787,0038IF0E1C07FF8703E1FFEJ071FFE0E07FF87078IF8E0E0IF8701E3FFE0038F1IF0E0IF8IF1C038E0F0E01C700E3807003FE3C070E0E01C3FE1C03CE079E01C70067807003FC38038E1E01C0FC3801CE039C00E7I07003800F838038E1C00E^FS
 				^XZ";
-		try
-		{
-			$fp=pfsockopen($host,$port);
-			fputs($fp,$label);
+		try {
+			$fp = pfsockopen($host, $port);
+			fputs($fp, $label);
 			fclose($fp);
 
 			echo 'Successfully Printed';
-		}
-		catch (Exception $e) 
-		{
+		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
 		}
 	}
 
-	function getfolder() 
-    {
-        $str = FCPATH;
-        $base_arr   = explode('/', $str, -2);
-        $folderimg  = '';
-        for($i=0;$i<count($base_arr);$i++){            
-            $folderimg  .= $base_arr[$i];
-            $folderimg  .= '/';
-        }
-        $folderimg  .= 'sensusapi/';
-        return $folderimg;
-    }
+	function getfolder()
+	{
+		$str = FCPATH;
+		$base_arr   = explode('/', $str, -2);
+		$folderimg  = '';
+		for ($i = 0; $i < count($base_arr); $i++) {
+			$folderimg  .= $base_arr[$i];
+			$folderimg  .= '/';
+		}
+		$folderimg  .= 'sensusapi/';
+		return $folderimg;
+	}
 
 	function test()
 	{
