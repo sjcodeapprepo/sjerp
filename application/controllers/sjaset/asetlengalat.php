@@ -548,15 +548,15 @@ class Asetlengalat extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcodekecil');
 		$pdf->AddPage();
-		$pdf->Image($imageurl, 1, 6, 20, 20);
-		$pdf->SetFont('Arial', '', 8);
-		$pdf->Text(21, 9,  $datas['AssetNo']);
-		$pdf->Text(21, 13,  $datas['KatName']);
-		$pdf->Text(21, 17, $datas['JenisPerlengPeralatKatName']);
-		$pdf->Text(21, 21, $keterangan1);
+		$pdf->Image($imageurl, 1, 6, 15, 15);
+		$pdf->SetFont('Arial', '', 6);
+		$pdf->Text(21, 5,  $datas['AssetNo']);
+		$pdf->Text(21, 8,  $datas['KatName']);
+		$pdf->Text(21, 11, $datas['JenisPerlengPeralatKatName']);
+		$pdf->Text(21, 14, $keterangan1);
 		// $pdf->Text(21, 25, $keterangan2);
 		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
-		$pdf->Image($logo, 49, 6, 19.5, 9);
+		// $pdf->Image($logo, 49, 6, 19.5, 9);
 		$pdf->Output('lenglat.pdf', 'I');
 	}
 
