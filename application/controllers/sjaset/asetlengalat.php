@@ -550,10 +550,10 @@ class Asetlengalat extends Authcontroller
 		$pdf->AddPage();
 		$pdf->Image($imageurl, 1, 2, 18, 18);
 		$pdf->SetFont('Arial', '', 6);
-		$pdf->Text(21, 5,  $datas['AssetNo']);
-		$pdf->Text(21, 8,  $datas['KatName']);
-		$pdf->Text(21, 11, $datas['JenisPerlengPeralatKatName']);
-		$pdf->Text(21, 14, $keterangan1);
+		$pdf->Text(19, 5,  $datas['AssetNo']);
+		$pdf->Text(19, 8,  $datas['KatName']);
+		$pdf->Text(19, 11, $datas['JenisPerlengPeralatKatName']);
+		$pdf->Text(19, 14, $keterangan1);
 		// $pdf->Text(21, 25, $keterangan2);
 		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
 		// $pdf->Image($logo, 49, 6, 19.5, 9);
