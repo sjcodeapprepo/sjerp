@@ -548,7 +548,7 @@ class Asetlengalat extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcodekecil');
 		$pdf->AddPage();
-		$pdf->Image($imageurl, 1, 6, 15, 15);
+		$pdf->Image($imageurl, 1, 5, 18, 18);
 		$pdf->SetFont('Arial', '', 6);
 		$pdf->Text(21, 5,  $datas['AssetNo']);
 		$pdf->Text(21, 8,  $datas['KatName']);
