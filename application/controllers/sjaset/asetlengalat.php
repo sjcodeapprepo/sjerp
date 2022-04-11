@@ -517,7 +517,7 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
-	function pdf($id)
+	function _pdf($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
 		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
@@ -560,7 +560,7 @@ class Asetlengalat extends Authcontroller
 		$pdf->Output('lenglat.pdf', 'I');
 	}
 
-	function _pdf($id)
+	function pdf($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
 		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
