@@ -591,15 +591,15 @@ class Asetlengalat extends Authcontroller
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
 		$pdf->AddPage();
-		$pdf->Image($imageurl, 1, 22, 20, 20); //gambar barcode
+		$pdf->Image($imageurl, 1, 22, 22, 22); //gambar barcode
 		$pdf->SetFont('Arial', '', 8);
-		$pdf->Text(21, 22,  $datas['AssetNo']);
-		$pdf->Text(21, 26,  $datas['KatName']);
-		$pdf->Text(21, 30, $datas['JenisPerlengPeralatKatName']);
-		$pdf->Text(21, 34, $keterangan1);
-		$pdf->Text(21, 38, $keterangan2);
+		$pdf->Text(24, 22,  $datas['AssetNo']);
+		$pdf->Text(24, 26,  $datas['KatName']);
+		$pdf->Text(24, 30, $datas['JenisPerlengPeralatKatName']);
+		$pdf->Text(24, 34, $keterangan1);
+		$pdf->Text(24, 38, $keterangan2);
 		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
-		$pdf->Image($logo, 20, 1, 26, 12); //gambar sarana jaya
+		$pdf->Image($logo, 24, 1, 26, 12); //gambar sarana jaya
 		$pdf->Output('lenglat.pdf', 'I');
 	}
 
