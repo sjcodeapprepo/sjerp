@@ -517,7 +517,7 @@ class Asetlengalat extends Authcontroller
 		return $retval;
 	}
 
-	function _pdf($id)
+	function _pdfkecil($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
 		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
@@ -561,6 +561,49 @@ class Asetlengalat extends Authcontroller
 	}
 
 	function pdf($id)
+	{
+		$datas	= $this->_getBarQrCodeData($id);
+		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0]) ? $keterangan_arr[0] : '';
+		$keterangan2	= isset($keterangan_arr[1]) ? $keterangan_arr[1] : '';
+
+		$this->load->library('ciqrcode');
+
+		$config['cacheable']    = true;
+		$config['cachedir']     = './publicfolder/qrcode/';
+		$config['errorlog']     = './publicfolder/qrcode/';
+		$config['imagedir']     = './publicfolder/qrcode/images/';
+		$config['quality']      = true;
+		$config['size']         = '1024';
+		$config['black']        = array(224, 255, 255);
+		$config['white']        = array(70, 130, 180);
+		$this->ciqrcode->initialize($config);
+
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'lenglat' . $userid . '.png';
+		$params['data']		= $datas['AssetNo'];
+		$params['level']	= 'H';
+		$params['size']		= 4;
+		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
+		$this->ciqrcode->generate($params);
+
+		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'printerbarcode');
+		$pdf->AddPage();
+		$pdf->Image($imageurl, 1, 22, 20, 20); //gambar barcode
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->Text(21, 22,  $datas['AssetNo']);
+		$pdf->Text(21, 26,  $datas['KatName']);
+		$pdf->Text(21, 30, $datas['JenisPerlengPeralatKatName']);
+		$pdf->Text(21, 34, $keterangan1);
+		$pdf->Text(21, 38, $keterangan2);
+		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
+		$pdf->Image($logo, 20, 1, 26, 12); //gambar sarana jaya
+		$pdf->Output('lenglat.pdf', 'I');
+	}
+
+	function _pdfstandar($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
 		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
