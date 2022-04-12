@@ -599,7 +599,7 @@ class Asetlengalat extends Authcontroller
 		$pdf->Text(24, 34, $keterangan1);
 		$pdf->Text(24, 38, $keterangan2);
 		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
-		$pdf->Image($logo, 24, 1, 26, 12); //gambar sarana jaya
+		$pdf->Image($logo, 24, 4, 26, 12); //gambar sarana jaya
 		$pdf->Output('lenglat.pdf', 'I');
 	}
 
