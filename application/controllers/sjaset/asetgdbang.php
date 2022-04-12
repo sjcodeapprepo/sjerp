@@ -70,18 +70,18 @@ class AsetGdBang extends Authcontroller
 					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='02'";
 		if ($key !== '')
 			$sql .= " AND $category LIKE '%$key%'";
-		if($isviewdata) {
+		if ($isviewdata) {
 			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
 		}
 
 		$query = $this->db->query($sql);
 
-		if($isviewdata) {
+		if ($isviewdata) {
 			$result = $query->result_array();
 		} else {
 			$result = $query->num_rows();
 		}
-		
+
 		return $result;
 	}
 
@@ -140,7 +140,7 @@ class AsetGdBang extends Authcontroller
 					itemmaster m, itemgdgbangdetail d
 				WHERE
 					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='02'";
-		
+
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= isset($result[0]) ? $result[0] : $datakosong;
@@ -156,7 +156,7 @@ class AsetGdBang extends Authcontroller
 		return $result;
 	}
 
-	function _getItemJenisGdBangMaster() 
+	function _getItemJenisGdBangMaster()
 	{
 		$sql = "SELECT j.ID, j.JenisGdgBangunanID , j.JenisGdgBangunanName
 		FROM itemjenisbangunanmaster j ORDER BY j.JenisGdgBangunanName";
@@ -175,7 +175,7 @@ class AsetGdBang extends Authcontroller
 
 		$jenisid			= "<option value=''>--Pilih Jenis--</option>";
 		foreach ($results as $result) {
-			$jenisid	.= "<option value='".$result['IDJ']."'>".$result['JenisGdgBangunanName']."</option>\n";
+			$jenisid	.= "<option value='" . $result['IDJ'] . "'>" . $result['JenisGdgBangunanName'] . "</option>\n";
 		}
 		echo $jenisid;
 	}
@@ -188,7 +188,7 @@ class AsetGdBang extends Authcontroller
 		return $result;
 	}
 
-	function _getLastInsertID() 
+	function _getLastInsertID()
 	{
 		$sql	= "SELECT LAST_INSERT_ID() AS lii";
 		$query = $this->db->query($sql);
@@ -205,8 +205,8 @@ class AsetGdBang extends Authcontroller
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
-		return $retval;		
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '001';
+		return $retval;
 	}
 
 	function _getLastAsetOrderPlusOneV2($katid, $jenisid)
@@ -218,22 +218,22 @@ class AsetGdBang extends Authcontroller
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'001';
-		return $retval;		
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '001';
+		return $retval;
 	}
 
 	function _getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr)
-    {
-        $sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
+	{
+		$sql	= "SELECT LPAD(d.AssetOrder+1, 5, 0) AS AO 
 					FROM itemgdgbangdetail d, itemmaster i 
 					WHERE i.ItemID=d.ItemID AND i.KatID='$katid' AND YEAR(i.TglPr)='$thnpr'
 					ORDER BY d.AssetOrder DESC
 					LIMIT 1";
 		$query	= $this->db->query($sql);
 		$result = $query->result_array();
-		$retval	= isset($result[0]['AO'])?$result[0]['AO']:'00001';
+		$retval	= isset($result[0]['AO']) ? $result[0]['AO'] : '00001';
 		return $retval;
-    }
+	}
 
 	function inputeditproc($id = null)
 	{
@@ -248,7 +248,7 @@ class AsetGdBang extends Authcontroller
 	{
 		$submit					= $this->input->post('submit');
 		$katid					= $this->input->post('katid');
-		$tglpr					= ($this->input->post('tglpr')=='')?'0000-00-00':$this->input->post('tglpr');
+		$tglpr					= ($this->input->post('tglpr') == '') ? '0000-00-00' : $this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
 
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
@@ -256,7 +256,7 @@ class AsetGdBang extends Authcontroller
 		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr');
 		$mitrakerjasamapr		= $this->input->post('mitrakerjasamapr');
 		$nodokumenpr			= $this->input->post('nodokumenpr');
-		$tgldokumenpr			= ($this->input->post('tgldokumenpr')=='')?'0000-00-00':$this->input->post('tgldokumenpr');
+		$tgldokumenpr			= ($this->input->post('tgldokumenpr') == '') ? '0000-00-00' : $this->input->post('tgldokumenpr');
 		$penyusutanps			= $this->input->post('penyusutanps');
 		$lokasips				= $this->input->post('lokasips');
 		$berdiriatastanahps		= $this->input->post('berdiriatastanahps');
@@ -267,9 +267,9 @@ class AsetGdBang extends Authcontroller
 		$mitrakerjasamasi		= $this->input->post('mitrakerjasamasi');
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
-		
+
 		$jenisid				= $this->input->post('jenisid');
-	
+
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
@@ -279,53 +279,53 @@ class AsetGdBang extends Authcontroller
 			// $assetorder	= $this->_getLastAsetOrderPlusOneV2($katid, $jenisid);
 			// $assetno	= '02'.$katid.$assetorder.$thnpr.$jenisperolehanidpr.$jenisperolehanidsi.$jenisgdgbangunanidsi;
 			$assetorder	= $this->_getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr);
-			$assetno	= '02.'.$katid.'.'.$thnpr.'-'.$assetorder;
+			$assetno	= '02.' . $katid . '.' . $thnpr . '-' . $assetorder;
 
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
-							'GolID'			=> '02',
-							'KatID'			=> $katid,
-							'AssetNo'		=> $assetno,
-							'UserID'		=> $userid,
-							'TglPr'			=> $tglpr
-						);
+				'GolID'			=> '02',
+				'KatID'			=> $katid,
+				'AssetNo'		=> $assetno,
+				'UserID'		=> $userid,
+				'TglPr'			=> $tglpr
+			);
 			$this->db->insert('itemmaster', $datamaster);
 
 			$itemid		= $this->_getLastInsertID();
 
 			$datadetail	= array(
-							'ItemID'				=> $itemid,
-							'AssetOrder'			=> $assetorder,
-							'LuasBangunanPr'		=> $luasbangunanpr ,
-							'NilaiPerolehanPr'		=> $nilaiperolehanpr ,
-							'JenisPerolehanIDPr'	=> $jenisperolehanidpr ,
-							'MitraKerjasamaPr'		=> $mitrakerjasamapr ,
-							'NoDokumenPr'			=> $nodokumenpr ,
-							'TglDokumenPr'			=> $tgldokumenpr,
-							'PenyusutanPs'			=> $penyusutanps ,
-							'LokasiPs'				=> $lokasips ,
-							'LatPs'					=> $latps ,
-							'LongPs'				=> $longps ,
-							'BerdiriAtasTanahPs'	=> $berdiriatastanahps ,
-							'PenanggungJawabSi'		=> $penanggungjawabsi ,
-							'JenisPerolehanIDSi'	=> $jenisperolehanidsi ,
-							'MitraKerjasamaSi'		=> $mitrakerjasamasi ,
-							'NoDokumenSi'			=> $nodokumensi ,
-							'TglDokumenSi'			=> $tgldokumensi ,
-							// 'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
-							'JenisID'				=> $jenisid,
-							'NilaiSi'				=> $nilaisi,
-							'KeteranganSi'			=> $keterangansi,
-							'PicLocationSi'			=> $piclocationsi
-						);
+				'ItemID'				=> $itemid,
+				'AssetOrder'			=> $assetorder,
+				'LuasBangunanPr'		=> $luasbangunanpr,
+				'NilaiPerolehanPr'		=> $nilaiperolehanpr,
+				'JenisPerolehanIDPr'	=> $jenisperolehanidpr,
+				'MitraKerjasamaPr'		=> $mitrakerjasamapr,
+				'NoDokumenPr'			=> $nodokumenpr,
+				'TglDokumenPr'			=> $tgldokumenpr,
+				'PenyusutanPs'			=> $penyusutanps,
+				'LokasiPs'				=> $lokasips,
+				'LatPs'					=> $latps,
+				'LongPs'				=> $longps,
+				'BerdiriAtasTanahPs'	=> $berdiriatastanahps,
+				'PenanggungJawabSi'		=> $penanggungjawabsi,
+				'JenisPerolehanIDSi'	=> $jenisperolehanidsi,
+				'MitraKerjasamaSi'		=> $mitrakerjasamasi,
+				'NoDokumenSi'			=> $nodokumensi,
+				'TglDokumenSi'			=> $tgldokumensi,
+				// 'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
+				'JenisID'				=> $jenisid,
+				'NilaiSi'				=> $nilaisi,
+				'KeteranganSi'			=> $keterangansi,
+				'PicLocationSi'			=> $piclocationsi
+			);
 			$this->db->insert('itemgdgbangdetail', $datadetail);
 
 			$this->db->trans_complete(); //----------------------------------------------------END TRANSAKSI			
-			
+
 			//========================================FILE GAMBAR=====================
 			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-			$config['file_name']		= 'gdb' . '_'.$itemid;
+			$config['file_name']		= 'gdb' . '_' . $itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg|pdf';
 			$config['max_size']			= 5000;
@@ -338,9 +338,9 @@ class AsetGdBang extends Authcontroller
 				$error					= array('error_info' => $this->upload->display_errors());
 				// print_array($error);
 			} else {
-				$data			= $this->upload->data();				
+				$data			= $this->upload->data();
 				$datapic['PicLocationSi']	= $data['file_name'];
-				$this->db->update('itemgdgbangdetail', $datapic, array('ItemID'	=> $itemid));			
+				$this->db->update('itemgdgbangdetail', $datapic, array('ItemID'	=> $itemid));
 			}
 			//===================================eol=FILE GAMBAR=====================
 		}
@@ -352,11 +352,11 @@ class AsetGdBang extends Authcontroller
 		$this->load->helper('text');
 		$datas								= $this->_getData($id);
 		$data['data']						= $datas;
-		$url	= explode('/',$datas['PicLocationSi'],6);
-		$data['imgsrc']						= '';//base_url().$url[5];
+		$url	= explode('/', $datas['PicLocationSi'], 6);
+		$data['imgsrc']						= ''; //base_url().$url[5];
 		$base		= base_url();
-		$basearr	= explode('/',$base);
-		$data['pic_url'] = 'http://'.$basearr[2].'/sensusapi/';
+		$basearr	= explode('/', $base);
+		$data['pic_url'] = 'http://' . $basearr[2] . '/sensusapi/';
 		$data['data']						= $this->_getData($id);
 		$data['itemjenisperolehanmaster']			= $this->_getItemJenisperolehanmasterData();
 		$data['itemjenisbangunanmaster']			= $this->_getItemJenisGdBangMaster();
@@ -389,7 +389,7 @@ class AsetGdBang extends Authcontroller
 		$nodokumensi			= $this->input->post('nodokumensi');
 		$tgldokumensi			= $this->input->post('tgldokumensi');
 		$jenisid				= $this->input->post('jenisid');
-	
+
 		$nilaisi				= $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
@@ -405,34 +405,34 @@ class AsetGdBang extends Authcontroller
 			// $assetno	= ($is_berubah)?$assetno:$AssetNo;
 			// $assetno	= $AssetNo;
 			$assetorder_new	= $this->_getLastAsetOrderPlusOneV3_gdbang($katid, $thnpr);
-			$assetno_new	= '03.'.$katid.'.'.$thnpr.'-'.$assetorder_new;
+			$assetno_new	= '03.' . $katid . '.' . $thnpr . '-' . $assetorder_new;
 
 			$is_berubah		= $this->isBerubah($assetno_old, $assetno_new);
-			
+
 			$this->db->trans_start(); //-----------------------------------------------------START TRANSAKSI 
 
 			$datamaster	= array(
-							'KatID'			=> $katid,
-							'TglPr'			=> $tglpr
-						);
-			
+				'KatID'			=> $katid,
+				'TglPr'			=> $tglpr
+			);
+
 			$datadetail	= array(
-				'LuasBangunanPr'		=> $luasbangunanpr ,
-				'NilaiPerolehanPr'		=> $nilaiperolehanpr ,
-				'JenisPerolehanIDPr'	=> $jenisperolehanidpr ,
-				'MitraKerjasamaPr'		=> $mitrakerjasamapr ,
-				'NoDokumenPr'			=> $nodokumenpr ,
+				'LuasBangunanPr'		=> $luasbangunanpr,
+				'NilaiPerolehanPr'		=> $nilaiperolehanpr,
+				'JenisPerolehanIDPr'	=> $jenisperolehanidpr,
+				'MitraKerjasamaPr'		=> $mitrakerjasamapr,
+				'NoDokumenPr'			=> $nodokumenpr,
 				'TglDokumenPr'			=> $tgldokumenpr,
-				'PenyusutanPs'			=> $penyusutanps ,
-				'LokasiPs'				=> $lokasips ,
-				'LatPs'					=> $latps ,
-				'LongPs'				=> $longps ,
-				'BerdiriAtasTanahPs'	=> $berdiriatastanahps ,
-				'PenanggungJawabSi'		=> $penanggungjawabsi ,
-				'JenisPerolehanIDSi'	=> $jenisperolehanidsi ,
-				'MitraKerjasamaSi'		=> $mitrakerjasamasi ,
-				'NoDokumenSi'			=> $nodokumensi ,
-				'TglDokumenSi'			=> $tgldokumensi ,
+				'PenyusutanPs'			=> $penyusutanps,
+				'LokasiPs'				=> $lokasips,
+				'LatPs'					=> $latps,
+				'LongPs'				=> $longps,
+				'BerdiriAtasTanahPs'	=> $berdiriatastanahps,
+				'PenanggungJawabSi'		=> $penanggungjawabsi,
+				'JenisPerolehanIDSi'	=> $jenisperolehanidsi,
+				'MitraKerjasamaSi'		=> $mitrakerjasamasi,
+				'NoDokumenSi'			=> $nodokumensi,
+				'TglDokumenSi'			=> $tgldokumensi,
 				// 'JenisGdgBangunanIDSi'	=> $jenisgdgbangunanidsi ,
 				'JenisID'				=> $jenisid,
 				'NilaiSi'				=> $nilaisi,
@@ -441,7 +441,7 @@ class AsetGdBang extends Authcontroller
 
 			//========================================FILE GAMBAR=====================			// if($piclocationsi!='') {
 			$config['upload_path']		= $this->getfolder() . 'publicfolder/asetpic/gedbang/';
-			$config['file_name']		= 'gdb' . '_'.$itemid;
+			$config['file_name']		= 'gdb' . '_' . $itemid;
 			$config['overwrite']		= TRUE;
 			$config['allowed_types']	= 'jpg|png|jpeg';
 			$config['max_size']			= 5000;
@@ -454,13 +454,12 @@ class AsetGdBang extends Authcontroller
 				$error					= array('error_info' => $this->upload->display_errors());
 				// print_array($error);
 			} else {
-				$data						= $this->upload->data();				
+				$data						= $this->upload->data();
 				$piclocationsi				= $data['file_name'];
-				$datadetail['PicLocationSi']= $piclocationsi;
-				
+				$datadetail['PicLocationSi'] = $piclocationsi;
 			}
 			//==============================================================================
-			if($is_berubah) {
+			if ($is_berubah) {
 				$datadetail['AssetOrder']	= $assetorder_new;
 				$datamaster['AssetNo']		= $assetno_new;
 			}
@@ -497,104 +496,104 @@ class AsetGdBang extends Authcontroller
 		 */
 		$retval		= false;
 
-		$asr_new	= explode(".",$assetno_new);
-		$asr_old	= explode(".",$assetno_old);
+		$asr_new	= explode(".", $assetno_new);
+		$asr_old	= explode(".", $assetno_old);
 
-		if(isset($asr_old[2])) {
-			$katthn_old	= $asr_old[1].substr($asr_old[2],0,4);
-			$katthn_new	= $asr_new[1].substr($asr_new[2],0,4);
+		if (isset($asr_old[2])) {
+			$katthn_old	= $asr_old[1] . substr($asr_old[2], 0, 4);
+			$katthn_new	= $asr_new[1] . substr($asr_new[2], 0, 4);
 		} else {
 			$katthn_old = $assetno_old;
 			$katthn_new = $assetno_new;
-		}		
+		}
 
-		if($katthn_new !== $katthn_old) {
+		if ($katthn_new !== $katthn_old) {
 			$retval	= true;
 		}
-		
+
 		return $retval;
 	}
 
 	function testqrcode()
 	{
-        $nim='test_pertama_qrcode';
- 
-        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
- 
-        $config['cacheable']    = true; //boolean, the default is true
-        $config['cachedir']     = './publicfolder/qrcode/'; //string, the default is application/cache/
-        $config['errorlog']     = './publicfolder/qrcode/'; //string, the default is application/logs/
-        $config['imagedir']     = './publicfolder/qrcode/images/'; //direktori penyimpanan qr code
-        $config['quality']      = true; //boolean, the default is true
-        $config['size']         = '1024'; //interger, the default is 1024
-        $config['black']        = array(224,255,255); // array, default is array(255,255,255)
-        $config['white']        = array(70,130,180); // array, default is array(0,0,0)
-        $this->ciqrcode->initialize($config);
- 
-        $image_name='test_pertama_qrcode.png';
-        $params['data'] = $nim; //data yang akan di jadikan QR CODE
-        $params['level'] = 'H'; //H=High
-        $params['size'] = 4;
-        $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder publicfolder/qrcode/images/
-        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
-		echo'ok';
-    }
+		$nim = 'test_pertama_qrcode';
+
+		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+		$config['cacheable']    = true; //boolean, the default is true
+		$config['cachedir']     = './publicfolder/qrcode/'; //string, the default is application/cache/
+		$config['errorlog']     = './publicfolder/qrcode/'; //string, the default is application/logs/
+		$config['imagedir']     = './publicfolder/qrcode/images/'; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+		$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+
+		$image_name = 'test_pertama_qrcode.png';
+		$params['data'] = $nim; //data yang akan di jadikan QR CODE
+		$params['level'] = 'H'; //H=High
+		$params['size'] = 4;
+		$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder publicfolder/qrcode/images/
+		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+		echo 'ok';
+	}
 
 	function barcode()
 	{
 		$this->load->library('zend');
 		$this->zend->load('Zend/Barcode');
 
-		$id='ahmadmirza210173';
+		$id = 'ahmadmirza210173';
 
 		$barcodeOptions = array('text' => $id);
 		$rendererOptions = array(
-								'imageType'          => 'png', 
-								'horizontalPosition' => 'center', 
-								'verticalPosition'   => 'middle'
-							);
-			
+			'imageType'          => 'png',
+			'horizontalPosition' => 'center',
+			'verticalPosition'   => 'middle'
+		);
+
 		// $imageResource=Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->render();
 		// return $imageResource;
 
 		// $imageResource = Zend_Barcode::factory('code128', 'image', $barcodeOptions, $rendererOptions)->draw();
 		// imagepng($imageResource, 'publicfolder/qrcode/images/barcode.png');
 	}
-	
-	function viewbarcode() 
+
+	function viewbarcode()
 	{
 		// echo "<img src='".site_url()."/sjaset/asetgelmes/barcode'  alt='not show' /></div>";
-		echo "<img src='".base_url()."/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
+		echo "<img src='" . base_url() . "/publicfolder/qrcode/images/barcode.png'  alt='not show' /></div>";
 	}
 
-	function pdf($id)
+	function _pdf($id)
 	{
 		$datas	= $this->_getBarQrCodeData($id);
-		$keterangan_arr	= explode("\n",$datas['KeteranganSi']);
-		$keterangan1	= isset($keterangan_arr[0])?$keterangan_arr[0]:'';
-		$keterangan2	= isset($keterangan_arr[1])?$keterangan_arr[1]:'';
+		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0]) ? $keterangan_arr[0] : '';
+		$keterangan2	= isset($keterangan_arr[1]) ? $keterangan_arr[1] : '';
 
 		$this->load->library('ciqrcode');
 
-        $config['cacheable']    = true;
-        $config['cachedir']     = './publicfolder/qrcode/';
-        $config['errorlog']     = './publicfolder/qrcode/';
-        $config['imagedir']     = './publicfolder/qrcode/images/';
-        $config['quality']      = true;
-        $config['size']         = '1024';
-        $config['black']        = array(224,255,255);
-        $config['white']        = array(70,130,180);
-        $this->ciqrcode->initialize($config);
+		$config['cacheable']    = true;
+		$config['cachedir']     = './publicfolder/qrcode/';
+		$config['errorlog']     = './publicfolder/qrcode/';
+		$config['imagedir']     = './publicfolder/qrcode/images/';
+		$config['quality']      = true;
+		$config['size']         = '1024';
+		$config['black']        = array(224, 255, 255);
+		$config['white']        = array(70, 130, 180);
+		$this->ciqrcode->initialize($config);
 
 		$userid = $this->session->userdata('UserID');
-		$image_name			= 'gdb'.$userid.'.png';
-        $params['data']		= $datas['AssetNo'];
-        $params['level']	= 'H';
-        $params['size']		= 4;
-        $params['savename']	= FCPATH.$config['imagedir'].$image_name;
-        $this->ciqrcode->generate($params);
-		
-		$imageurl = base_url()."publicfolder/qrcode/images/".$image_name;
+		$image_name			= 'gdb' . $userid . '.png';
+		$params['data']		= $datas['AssetNo'];
+		$params['level']	= 'H';
+		$params['size']		= 4;
+		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
+		$this->ciqrcode->generate($params);
+
+		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcode');
 		$pdf->AddPage();
@@ -605,13 +604,55 @@ class AsetGdBang extends Authcontroller
 		$pdf->Text(21, 17, $datas['JenisGdgBangunanName']);
 		$pdf->Text(21, 21, $keterangan1);
 		// $pdf->Text(21, 25, $keterangan2);
-		$logo = base_url()."publicfolder/image/sjlogo_bw2.png";
+		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 49, 6, 26, 12);
 		$pdf->Output('test.pdf', 'I');
-
 	}
 
-	function _getBarQrCodeData($id) 
+	function pdf($id)
+	{
+		$datas	= $this->_getBarQrCodeData($id);
+		$keterangan_arr	= explode("\n", $datas['KeteranganSi']);
+		$keterangan1	= isset($keterangan_arr[0]) ? $keterangan_arr[0] : '';
+		$keterangan2	= isset($keterangan_arr[1]) ? $keterangan_arr[1] : '';
+
+		$this->load->library('ciqrcode');
+
+		$config['cacheable']    = true;
+		$config['cachedir']     = './publicfolder/qrcode/';
+		$config['errorlog']     = './publicfolder/qrcode/';
+		$config['imagedir']     = './publicfolder/qrcode/images/';
+		$config['quality']      = true;
+		$config['size']         = '1024';
+		$config['black']        = array(224, 255, 255);
+		$config['white']        = array(70, 130, 180);
+		$this->ciqrcode->initialize($config);
+
+		$userid = $this->session->userdata('UserID');
+		$image_name			= 'gdb' . $userid . '.png';
+		$params['data']		= $datas['AssetNo'];
+		$params['level']	= 'H';
+		$params['size']		= 4;
+		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
+		$this->ciqrcode->generate($params);
+
+		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
+		$this->load->library('fpdf');
+		$pdf = new FPDF('P', 'mm', 'printerbarcodegede');
+		$pdf->AddPage();
+		$pdf->Image($imageurl, 1, 18, 22, 22); //gambar barcode
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->Text(24, 22,  $datas['AssetNo']);
+		$pdf->Text(24, 26,  $datas['NoDokumenSi']);
+		$pdf->Text(24, 30, $datas['JenisGdgBangunanName']);
+		$pdf->Text(24, 34, $keterangan1);
+		$pdf->Text(24, 38, $keterangan2);
+		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
+		$pdf->Image($logo, 24, 4, 26, 12); //gambar sarana jaya
+		$pdf->Output('test.pdf', 'I');
+	}
+
+	function _getBarQrCodeData($id)
 	{
 		$sql = "SELECT 
 				m.AssetNo, v.JenisGdgBangunanName, d.NoDokumenSi, d.TglDokumenSi, d.KeteranganSi
@@ -619,7 +660,7 @@ class AsetGdBang extends Authcontroller
 				itemmaster m, itemgdgbangdetail d, itemjenisbangunanmaster v
 			WHERE 
 				m.ItemID=d.ItemID AND d.JenisGdgBangunanIDSi=v.JenisGdgBangunanID AND m.ItemID='$id' AND m.GolID='02'";
-		
+
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= $result[0];
@@ -631,17 +672,16 @@ class AsetGdBang extends Authcontroller
 		print_array('asdf');
 	}
 
-	function getfolder() 
-    {
-        $str = FCPATH;
-        $base_arr   = explode('/', $str, -2);
-        $folderimg  = '';
-        for($i=0;$i<count($base_arr);$i++){            
-            $folderimg  .= $base_arr[$i];
-            $folderimg  .= '/';
-        }
-        $folderimg  .= 'sensusapi/';
-        return $folderimg;
-    }
-
+	function getfolder()
+	{
+		$str = FCPATH;
+		$base_arr   = explode('/', $str, -2);
+		$folderimg  = '';
+		for ($i = 0; $i < count($base_arr); $i++) {
+			$folderimg  .= $base_arr[$i];
+			$folderimg  .= '/';
+		}
+		$folderimg  .= 'sensusapi/';
+		return $folderimg;
+	}
 }
