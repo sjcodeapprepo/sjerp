@@ -127,7 +127,7 @@ class FPDF
 		// Page sizes 2 0.8
 		$this->StdPageSizes = array(
 			'a3' => array(841.89, 1190.55), 'a4' => array(595.28, 841.89), 'a5' => array(420.94, 595.28),
-			'letter' => array(612, 792), 'legal' => array(612, 1008), 'printerbarcodegede' => array(504, 360), 'printerbarcode' => array(220, 90), 'printerbarcodekecil' => array(144, 57.6)
+			'letter' => array(612, 792), 'legal' => array(612, 1008), 'printerbarcodegede' => array(198, 141), 'printerbarcode' => array(220, 90), 'printerbarcodekecil' => array(144, 57.6)
 		);
 		$size = $this->_getpagesize($size);
 		$this->DefPageSize = $size;
