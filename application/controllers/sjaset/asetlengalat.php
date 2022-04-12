@@ -589,7 +589,7 @@ class Asetlengalat extends Authcontroller
 
 		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
 		$this->load->library('fpdf');
-		$pdf = new FPDF('P', 'mm', 'printerbarcode');
+		$pdf = new FPDF('P', 'mm', 'printerbarcodegede');
 		$pdf->AddPage();
 		$pdf->Image($imageurl, 1, 22, 22, 22); //gambar barcode
 		$pdf->SetFont('Arial', '', 8);
