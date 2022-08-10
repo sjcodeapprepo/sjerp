@@ -897,7 +897,7 @@ class ListAset extends Authcontroller {
 	    // $laporan->getActiveSheet()->getStyle('C8:'.$stcollt.$lastrow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$laporan->getActiveSheet()->getStyle('A7:'.$stcollt.$lastrow)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-		$laporan->getActiveSheet()->setAutoFilter('J7:J'.$lastrow);
+		$laporan->getActiveSheet()->setAutoFilter('J6:J'.$lastrow);
 	}
 	
 
