@@ -213,8 +213,22 @@
                             <td align="right">
                                 Divisi&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td>
 								<?=form_dropdownDB_init('divisionidps', $itemdivisionmaster, 'DivisionID', 'DivisionAbbr', $data['DivisionIDPs'], '', '-Pilih Divisi-', "id='divisionidps'");?>
+                            </td>
+                            <td align="right">
+                                Lantai&nbsp;
+                            </td>
+                            <td>
+                                <input type='text' name='lantaips' size='5' id='lantaips' value="<?=$data['LantaiPs']?>" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="3">
+                                Ruangan&nbsp;
+                            </td>
+                            <td>
+                            <input type='text' name='ruanganps' size='20' id='ruanganps' value="<?=$data['RuanganPs']?>" />
                             </td>
                         </tr>
 						<tr>

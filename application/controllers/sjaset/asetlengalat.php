@@ -128,6 +128,8 @@ class Asetlengalat extends Authcontroller
 			'PenyusutanPs'			=> '0',
 			'LokasiIDPs'			=> '',
 			'DivisionIDPs'			=> '',
+			'LantaiPs'				=> '',
+			'RuanganPs'				=> '',
 			'PenanggungJawabSi'		=> '',
 			'KondisiKodeSi'			=> '',
 			'HargaSi'				=> '0',
@@ -138,8 +140,8 @@ class Asetlengalat extends Authcontroller
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.JenisPerlengPeralatKatID, d.JenisID,
 					CONCAT(d.JenisID,'|',d.JenisPerlengPeralatKatID) AS jenisidj, 
-					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPs, d.DivisionIDPs, d.PenanggungJawabSi, 
-					d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
+					d.NoDokumenPr, d.NilaiPr, d.PenyusutanPs, d.LokasiIDPs, d.DivisionIDPs, d.LantaiPs, d.RuanganPs, 
+					d.PenanggungJawabSi, d.KondisiKodeSi, d.HargaSi, d.KeteranganSi, d.PicLocationSi
 				FROM 
 					itemmaster m, itemperlengperalatdetail d
 				WHERE 
@@ -268,6 +270,8 @@ class Asetlengalat extends Authcontroller
 		$nilaipr			= ($this->input->post('nilaipr') == '') ? '0' : $this->input->post('nilaipr');
 		$penyusutanps		= $this->input->post('penyusutanps');
 		$lokasiidps			= $this->input->post('lokasiidps');
+		$lantaips			= $this->input->post('lantaips');
+		$ruanganps			= $this->input->post('ruanganps');
 		$divisionidps		= $this->input->post('divisionidps');
 		$penanggungjawabps	= $this->input->post('penanggungjawabsi');
 		$kondisikodesi		= $this->input->post('kondisikodesi');
@@ -308,6 +312,8 @@ class Asetlengalat extends Authcontroller
 				'PenyusutanPs'			=> $penyusutanps,
 				'LokasiIDPs'			=> $lokasiidps,
 				'DivisionIDPs'			=> $divisionidps,
+				'LantaiPs'				=> $lantaips,
+				'RuanganPs'				=> $ruanganps,
 				'PenanggungJawabSi'		=> $penanggungjawabps,
 				'KondisiKodeSi'			=> $kondisikodesi,
 				'HargaSi'				=> $hargasi,
