@@ -898,7 +898,11 @@ class ListAset extends Authcontroller {
 		$stcol	= 1;
 		for ($i = 0; $i < 17; $i++) {			
 			$stcollt	= $letterarr[$stcol];
-			$laporan->getActiveSheet()->getColumnDimension($stcollt)->setWidth(12);
+			$lebarkol	= 12;
+			if($i==9 OR $i==13) {
+				$lebarkol	= 17;
+			}
+			$laporan->getActiveSheet()->getColumnDimension($stcollt)->setWidth($lebarkol);
 			$stcol++;
 		}
 		$laporan->getActiveSheet()->getStyle('A1:'.$stcollt.'6')->getFont()->setBold(true);
