@@ -811,8 +811,8 @@ class ListAset extends Authcontroller {
 		$laporan->getActiveSheet()->setCellValue('K5','Lantai');
 		$laporan->getActiveSheet()->mergeCells('L5:L6');
 		$laporan->getActiveSheet()->setCellValue('L5','Ruangan');
-		$laporan->getActiveSheet()->mergeCells('K5:K6');
-		$laporan->getActiveSheet()->setCellValue('K5','Divisi');
+		$laporan->getActiveSheet()->mergeCells('M5:M6');
+		$laporan->getActiveSheet()->setCellValue('M5','Divisi');
 		$laporan->getActiveSheet()->mergeCells('N4:Q4');
 		$laporan->getActiveSheet()->setCellValue('N4','Kondisi Saat Ini');
 		$laporan->getActiveSheet()->mergeCells('N5:N6');
