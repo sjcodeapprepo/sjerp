@@ -128,7 +128,7 @@
 *Catatan :
 Progress target tercapai dihitung berdasarkan asumsi total data sebanyak 4720. 
 Dengan komposisi data Tanah (109), Gedung dan Bangunan (9), Kendaraan (10), 
-Elektronika dan Mesin (2676) dan Perlengkapan dan Peralatan (1918).
+Elektronika dan Mesin (2674) dan Perlengkapan dan Peralatan (1918).
 Jumlah Data Asumsi Gedung Bangunan, Perlengkapan dan Peralatan, dan Elektronika dan Mesin 
 berdasarkan BAST Laporan hasil sensus aset tahun 2019. Untuk Golongan Tanah, jumlah asumsi data 
 berdasarkan soft copy inventarisasi aset tanah yg dibuat tahun 2021. 
