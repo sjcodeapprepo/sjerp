@@ -900,7 +900,7 @@ class ListAset extends Authcontroller {
 			$stcollt	= $letterarr[$stcol];
 			$lebarkol	= 12;
 			if($i==9 OR $i==13) {
-				$lebarkol	= 17;
+				$lebarkol	= 22;
 			}
 			$laporan->getActiveSheet()->getColumnDimension($stcollt)->setWidth($lebarkol);
 			$stcol++;
