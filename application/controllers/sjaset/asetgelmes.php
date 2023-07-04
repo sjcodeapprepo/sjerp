@@ -595,7 +595,9 @@ class AsetGElMes extends Authcontroller
 		$params['savename']	= FCPATH . $config['imagedir'] . $image_name;
 		$this->ciqrcode->generate($params);
 
-		$imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
+		// $imageurl = base_url() . "publicfolder/qrcode/images/" . $image_name;
+		$projpath = substr(BASEPATH,0,-7);
+		$imageurl = $projpath . "/publicfolder/qrcode/images/" . $image_name;
 		$this->load->library('fpdf');
 		$pdf = new FPDF('P', 'mm', 'printerbarcodegede');
 		$pdf->AddPage();
@@ -606,7 +608,8 @@ class AsetGElMes extends Authcontroller
 		$pdf->Text(24, 30, $datas['JenisElkmesinKatName']);
 		$pdf->Text(24, 34, $keterangan1);
 		$pdf->Text(24, 38, $keterangan2);
-		$logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
+		// $logo = base_url() . "publicfolder/image/sjlogo_bw2.png";
+		$logo = $projpath . "/publicfolder/image/sjlogo_bw2.png";
 		$pdf->Image($logo, 24, 4, 26, 12); //gambar sarana jaya
 		$pdf->Output('elms.pdf', 'I');
 	}
