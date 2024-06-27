@@ -48,10 +48,9 @@
       <tr>
         <td noWrap align=center>
 		<select name="option">
-			<option value='l.LokasiName'>Lokasi</option>
-			<option value='mk.KatName'>Kategori</option>
-			<option value='mj.JenisPerlengPeralatKatName'>Jenis</option>
-			<option value='d.PenanggungJawabSi'>Penanggung Jawab</option>
+			<option value='LokasiName'>Lokasi</option>
+			<option value='KatName'>Kategori</option>
+			<option value='JenisPerlengPeralatKatName'>Jenis</option>
 		</select>
 		&nbsp;&nbsp;<input type=text size='50' name='optionValue' />&nbsp;&nbsp;<input type=submit value='Cari' name='submit' />
 		</td>

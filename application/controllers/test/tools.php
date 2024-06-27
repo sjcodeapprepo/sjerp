@@ -1,6 +1,6 @@
 <?php
 include(APPPATH.'/controllers/auth/authcontroller'.EXT);
-class GenAsetNo extends Authcontroller { //testpurpose
+class Tools extends Authcontroller { //testpurpose
 
 	function __construct() 
     {
@@ -8,8 +8,121 @@ class GenAsetNo extends Authcontroller { //testpurpose
     }
 
 	function index() 
+    {	
+        $juml_data          = 0;
+        $datasrc            = $this->_getDataSource();
+        $lastno_arr         = array();
+        for($a=0; $a<count($datasrc); $a++) {
+            $id             = $datasrc[$a]['id'];
+            $jenisbarang    = $datasrc[$a]['jenis_barang'];
+            $merk           = $datasrc[$a]['merk_model'];
+            $ukuran         = $datasrc[$a]['ukuran'];
+            $bahan          = $datasrc[$a]['bahan'];
+            $tahunpengadaan = $datasrc[$a]['tahunpengadaan'];
+            $nomorkode      = $datasrc[$a]['nomor_kode'];
+            $jumlah         = $datasrc[$a]['jumlah'];
+            $keadaanbarang  = $datasrc[$a]['keadaan_barang'];
+            $keterangan     = $datasrc[$a]['keterangan'];
+            $lokasi         = $datasrc[$a]['lokasi'];
+            $nama           = $datasrc[$a]['nama'];
+            $prekode        = $datasrc[$a]['prekode'];
+            //nama, jenis_barang, merk_model, keterangan 
+            $keteranganSi   = $nama."\n".$jenisbarang."\n".$merk."\n".$keterangan;
+
+            $prekode_arr        = explode('.',$prekode);
+            $tahunpengadaan_arr = explode('-',$tahunpengadaan);            
+            
+            $katid          = $prekode_arr[1];
+            $tglpr          = $tahunpengadaan;
+            $golid          = $prekode_arr[0];
+            $arrindex       = $golid.$katid.$tahunpengadaan_arr['0'];
+
+            for($b=0; $b<$jumlah; $b++) {
+                $last_urutan    = isset($lastno_arr[$arrindex])?$lastno_arr[$arrindex]:0;
+                $nourut_str     = '00000'.($last_urutan+1);
+                $nourut_str     = substr($nourut_str,-5,5);
+                $assetno        = $golid.'.'.$katid.'.'.$tahunpengadaan_arr['0'].'-'.$nourut_str;                
+
+                $datamaster	= array(
+                    'GolID'			=> $golid,
+                    'KatID'			=> $katid,
+                    'AssetNo'		=> $assetno,
+                    'UserID'		=> '1',
+                    'TglPr'			=> $tglpr,
+                    'Lokasi'        => $lokasi,
+                    'Nama'          => $nama,
+                    'NoKode'        => $nomorkode
+                );
+                $this->db->insert('itemmaster', $datamaster);
+                $itemid		= $this->_getLastInsertID();
+                $juml_data++;
+                
+                if($golid=='03') {
+                    $datadetail	= array(
+                        'ItemID'				=> $itemid,
+                        'AssetOrder'			=> $nourut_str,
+                        'JenisPerlengPeralatKatID'	=> null,//to be edit
+                        'JenisID'				=> null,//to be edit
+                        'NoDokumenPr'			=> '',
+                        'NilaiPr'				=> 0,
+                        'PenyusutanPs'			=> 0,
+                        'LokasiIDPs'			=> 1,
+                        'DivisionIDPs'			=> null,//to be edit
+                        'LantaiPs'				=> '',//to be edit
+                        'RuanganPs'				=> '',
+                        'PenanggungJawabSi'		=> 'Divisi Umum dan SDM',
+                        'KondisiKodeSi'			=> $keadaanbarang,
+                        'HargaSi'				=> 0,
+                        'KeteranganSi'			=> $keteranganSi
+                    );
+                    $this->db->insert('itemperlengperalatdetail', $datadetail);
+                } else {
+                    $datadetail	= array(
+                        'ItemID'				=> $itemid,
+                        'AssetOrder'			=> $nourut_str,
+                        'JenisElkmesinKatID'	=> null,//to be edit
+                        'JenisID'				=> null,//to be edit
+                        'NoDokumenPr'			=> '',
+                        'NilaiPr'				=> 0,
+                        'PenyusutanPr'			=> 0,
+                        'LokasiIDPr'			=> null,
+                        'DivisionIDPs'			=> null,//to be edit
+                        'PenanggungJawabPs'		=> 'Divisi Umum dan SDM',
+                        'KondisiKodeSi'			=> $keadaanbarang,
+                        'HargaSi'				=> 0,
+                        'KeteranganSi'			=> $keteranganSi,
+                        'PicLocationSi'			=> ''
+                    );
+                    $this->db->insert('itemelkmesindetail', $datadetail);
+                }
+                $lastno_arr[$arrindex]  = $last_urutan+1;                
+            }
+        
+        }
+        echo 'Edit ==>'.$juml_data;	
+        // $data['datasrc']    = $datasrc;
+        // $this->load->view('_test/index_tools',$data);
+	}
+
+    function _getDataSource()
     {
-		$this->load->view('_test/testone');		
+        $sql = "SELECT 
+                    id, jenis_barang, merk_model, ukuran, 
+                    bahan, tahunpengadaan, nomor_kode, jumlah, 
+                    keadaan_barang, keterangan, lokasi, nama, prekode
+                FROM asetdivisi_detail WHERE prekode !=''";
+		
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+    }
+
+    function _getLastInsertID()
+	{
+		$sql	= "SELECT LAST_INSERT_ID() AS lii";
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result[0]['lii'];
 	}
 		
 	function goex() 

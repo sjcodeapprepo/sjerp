@@ -61,16 +61,18 @@ class Asetlengalat extends Authcontroller
 			$offset = $offset . ',';
 
 		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerlengPeralatKatName, md.DivisionAbbr, 
-					d.PenanggungJawabSi, l.LokasiName 
+					m.ItemID, m.AssetNo, 
+					(SELECT mk.KatName FROM itemkatmaster mk WHERE m.KatID=mk.KatID AND m.GolID=mk.GolID) AS KatName,
+					(SELECT mj.JenisPerlengPeralatKatName FROM itemjenisperlengperalatkatmaster mj WHERE d.JenisID=mj.ID) AS JenisPerlengPeralatKatName, 
+					(SELECT md.DivisionAbbr FROM itemdivisionmaster md WHERE d.DivisionIDPs=md.DivisionID) AS DivisionAbbr, 
+					d.PenanggungJawabSi,
+					(SELECT l.LokasiName FROM itemlokasimaster l WHERE l.LokasiID=d.LokasiIDPs) AS LokasiName
 				FROM 
-					itemmaster m, itemperlengperalatdetail d, itemkatmaster mk, itemdivisionmaster md, 
-					itemjenisperlengperalatkatmaster mj, itemlokasimaster l 
+					itemmaster m, itemperlengperalatdetail d
 				WHERE 
-					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID AND l.LokasiID=d.LokasiIDPs
-					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='03'";
+					m.ItemID=d.ItemID AND m.GolID='03'";
 		if ($key !== '')
-			$sql .= " AND $category LIKE '%$key%'";
+			$sql .= " HAVING $category LIKE '%$key%'";
 		if ($isviewdata) {
 			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
 		}
@@ -516,11 +518,14 @@ class Asetlengalat extends Authcontroller
 	function _getBarQrCodeData($id)
 	{
 		$sql = "SELECT 
-					m.AssetNo, k.KatName, d.KeteranganSi ,j.JenisPerlengPeralatKatName  
-				FROM 					itemmaster m, itemperlengperalatdetail d, itemkatmaster k, itemjenisperlengperalatkatmaster j
+					m.AssetNo, 
+					(SELECT k.KatName FROM itemkatmaster k WHERE m.KatID=k.KatID AND m.GolID=k.GolID ) AS KatName, 
+					d.KeteranganSi ,
+					(SELECT j.JenisPerlengPeralatKatName FROM itemjenisperlengperalatkatmaster j WHERE d.JenisID=j.ID ) AS JenisPerlengPeralatKatName  
+				FROM 
+					itemmaster m, itemperlengperalatdetail d
 				WHERE 
-					m.ItemID=d.ItemID AND m.KatID=k.KatID AND m.GolID=k.GolID 
-					AND d.JenisID=j.ID AND m.ItemID='$id' AND m.GolID='03'";
+					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='03'";
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
 		$retval	= $result[0];

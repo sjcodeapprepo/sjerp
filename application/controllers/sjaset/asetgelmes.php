@@ -60,20 +60,22 @@ class AsetGElMes extends Authcontroller
 		if ($offset != '')
 			$offset = $offset . ',';
 
-		$sql = "SELECT 
-					m.ItemID, m.AssetNo, mk.KatName, mj.JenisElkmesinKatName, md.DivisionAbbr, 
-					d.PenanggungJawabPs, l.LokasiName 
-				FROM 
-					itemmaster m, itemelkmesindetail d, itemkatmaster mk, itemdivisionmaster md, 
-					itemjeniselkmesinmaster mj, itemlokasimaster l 
-				WHERE 
-					m.ItemID=d.ItemID AND d.JenisID=mj.ID AND d.DivisionIDPs=md.DivisionID AND l.LokasiID=d.LokasiIDPr
-					AND m.GolID=mk.GolID AND m.KatID=mk.KatID AND m.GolID='04'";
-		if ($key !== '')
-			$sql .= " AND $category LIKE '%$key%'";
-		if ($isviewdata) {
-			$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
-		}
+			$sql = "SELECT 
+						m.ItemID, m.AssetNo, 
+						(SELECT mk.KatName FROM itemkatmaster mk WHERE m.KatID=mk.KatID AND m.GolID=mk.GolID) AS KatName,
+						(SELECT mj.JenisElkmesinKatName FROM itemjeniselkmesinmaster mj WHERE d.JenisID=mj.ID) AS JenisElkmesinKatName, 
+						(SELECT md.DivisionAbbr FROM itemdivisionmaster md WHERE d.DivisionIDPs=md.DivisionID) AS DivisionAbbr, 
+						d.PenanggungJawabPs, 
+						(SELECT l.LokasiName FROM itemlokasimaster l WHERE l.LokasiID=d.LokasiIDPr) AS LokasiName
+					FROM 
+						itemmaster m, itemelkmesindetail d
+					WHERE 
+						m.ItemID=d.ItemID AND m.GolID='04'";
+			if ($key !== '')
+				$sql .= " HAVING $category LIKE '%$key%'";
+			if ($isviewdata) {
+				$sql .= " ORDER BY m.ItemID DESC, m.AssetNo DESC LIMIT $offset $num";
+			}
 		//---------------------------------------------------
 		$query = $this->db->query($sql);
 
@@ -513,11 +515,14 @@ class AsetGElMes extends Authcontroller
 	function _getBarQrCodeData($id)
 	{
 		$sql = "SELECT 
-					m.AssetNo, k.KatName, d.KeteranganSi ,j.JenisElkmesinKatName  
-				FROM 					itemmaster m, itemelkmesindetail d, itemkatmaster k, itemjeniselkmesinmaster j
+					m.AssetNo, 
+					(SELECT k.KatName FROM itemkatmaster k WHERE m.KatID=k.KatID AND m.GolID=k.GolID ) AS KatName,
+					d.KeteranganSi ,
+					(SELECT j.JenisElkmesinKatName   FROM itemjeniselkmesinmaster j WHERE d.JenisID=j.ID ) AS JenisElkmesinKatName  
+				FROM 
+					itemmaster m, itemelkmesindetail d
 				WHERE 
-					m.ItemID=d.ItemID AND m.KatID=k.KatID AND m.GolID=k.GolID 
-					AND d.JenisID=j.ID AND m.ItemID='$id' AND m.GolID='04'";
+					m.ItemID=d.ItemID AND m.ItemID='$id' AND m.GolID='04'";
 
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
