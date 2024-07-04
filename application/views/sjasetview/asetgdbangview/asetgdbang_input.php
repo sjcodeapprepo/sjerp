@@ -61,12 +61,12 @@
         $("#tgldokumenpr").datepicker({              
             changeMonth: true,
             changeYear: true,
-            yearRange: "1960:2022"
+            yearRange: "1960:2024"
         });
         $("#tgldokumensi").datepicker({              
             changeMonth: true,
             changeYear: true,
-            yearRange: "1960:2022"
+            yearRange: "1960:2024"
         });
 
         $( "#penyusutanps" ).focusin(function() {

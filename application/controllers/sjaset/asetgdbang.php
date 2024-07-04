@@ -252,12 +252,12 @@ class AsetGdBang extends Authcontroller
 		$thnpr					= substr($tglpr, 0, 4);
 
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
-		$nilaiperolehanpr		= $this->input->post('nilaiperolehanpr');
-		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr');
+		$nilaiperolehanpr		= ($this->input->post('nilaiperolehanpr') == '') ? 0 : $this->input->post('nilaiperolehanpr');
+		$jenisperolehanidpr		= ($this->input->post('jenisperolehanidpr') == '') ? 0 : $this->input->post('jenisperolehanidpr');
 		$mitrakerjasamapr		= $this->input->post('mitrakerjasamapr');
 		$nodokumenpr			= $this->input->post('nodokumenpr');
 		$tgldokumenpr			= ($this->input->post('tgldokumenpr') == '') ? '0000-00-00' : $this->input->post('tgldokumenpr');
-		$penyusutanps			= $this->input->post('penyusutanps');
+		$penyusutanps			= ($this->input->post('penyusutanps') == '') ? 0 : $this->input->post('penyusutanps');
 		$lokasips				= $this->input->post('lokasips');
 		$berdiriatastanahps		= $this->input->post('berdiriatastanahps');
 		$latps					= $this->input->post('latps');
@@ -270,7 +270,7 @@ class AsetGdBang extends Authcontroller
 
 		$jenisid				= $this->input->post('jenisid');
 
-		$nilaisi				= $this->input->post('nilaisi');
+		$nilaisi				= ($this->input->post('nilaisi') == '') ? 0 : $this->input->post('nilaisi');
 		$keterangansi			= $this->input->post('keterangansi');
 		$piclocationsi			= $this->input->post('piclocationsi');
 		$userid					= $this->session->userdata('UserID');
