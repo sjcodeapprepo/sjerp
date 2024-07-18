@@ -185,7 +185,7 @@
                                 Jenis&nbsp;
                             </td>
                             <td>
-                                <?=form_dropdownDB_init('jenisperolehanidpr', $itemjenisperolehanmaster, 'JenisPerolehanID', 'JenisPerolehanName', $data['JenisPerolehanIDPr'], '', '-Pilih Jenis Perolehan-', "id='jenisperolehanidpr'");?>
+                                <?=form_dropdownDB_init('jenisperolehanidpr', $itemjenisperolehanmaster, 'JenisPerolehanID', 'JenisPerolehanName', $data['JenisPerolehanIDPr'], '00', '-Pilih Jenis Perolehan-', "id='jenisperolehanidpr'");?>
                             </td>
                         </tr>
 						<tr>
