@@ -393,7 +393,7 @@ class Asetlengalat extends Authcontroller
 		$lokasiidps			= $this->input->post('lokasiidps');
 		$nilaipr			= $this->input->post('nilaipr');
 		$penyusutanps		= $this->input->post('penyusutanps');
-		$divisionidps		= $this->input->post('divisionidps');
+		$divisionidps		= $this->input->post('divisionidps')==''?0:$this->input->post('divisionidps');
 		$lantaips			= $this->input->post('lantaips');
 		$ruanganps			= $this->input->post('ruanganps');
 		$penanggungjawabps	= $this->input->post('penanggungjawabsi');
