@@ -422,7 +422,8 @@ class AsetGdBang extends Authcontroller
 				'TglPr'			=> $tglpr
 			);
 
-			(is_null($jenisperolehanidpr))?0:$jenisperolehanidpr;
+			($jenisperolehanidpr=='')?0:$jenisperolehanidpr;
+			($jenisperolehanidsi=='')?0:$jenisperolehanidsi;
 
 			$datadetail	= array(
 				'Nama'					=> $nama,
