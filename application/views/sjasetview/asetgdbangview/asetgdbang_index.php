@@ -78,7 +78,7 @@
 						<a href="<?=site_url()?>/sjaset/asetgdbang/input">
 							<div class='ui-state-default ui-corner-all lebariconkecil' title='TAMBAH DATA ASET GEDUNG BANGUNAN'>
 								<span class='ui-icon ui-icon-plusthick' />
-							</div
+							</div>
 						</a>
 					</td>
 				</tr>
