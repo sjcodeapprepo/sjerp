@@ -133,6 +133,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td align="right">
+                                Nama Gedung / Bangunan&nbsp;
+                            </td>
+                            <td colspan='3'>
+                                <input type='text' name='nama' size='50' id='nama' value="<?= $data['Nama'] ?>" />
+                            </td>
+						</tr>
+                        <tr>
                             <td colspan='4' class='subdata'>
                                 Perolehan&nbsp;
                             </td>

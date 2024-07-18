@@ -103,6 +103,7 @@ class AsetGdBang extends Authcontroller
 	{
 		$datakosong	= array(
 			'ItemID'				=> null,
+			'Nama'					=> '',
 			'KatID'					=> '',
 			'TglPr'					=> '',
 			'AssetOrder'			=> '',
@@ -131,6 +132,7 @@ class AsetGdBang extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.KatID, m.AssetNo, m.TglPr, d.AssetOrder, d.LuasBangunanPr, d.NilaiPerolehanPr,
+					d.Nama,
 					d.JenisPerolehanIDPr, d.MitraKerjasamaPr, d.NoDokumenPr, d.TglDokumenPr, d.PenyusutanPs,
 					d.LokasiPs, d.LatPs, d.LongPs, d.BerdiriAtasTanahPs, d.PenanggungJawabSi, d.JenisPerolehanIDSi,
 					d.JenisPerolehanIDSi, d.MitraKerjasamaSi, d.NoDokumenSi, d.TglDokumenSi,d.JenisID,
@@ -251,6 +253,7 @@ class AsetGdBang extends Authcontroller
 		$tglpr					= ($this->input->post('tglpr') == '') ? '0000-00-00' : $this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
 
+		$nama					= $this->input->post('nama');
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
 		$nilaiperolehanpr		= ($this->input->post('nilaiperolehanpr') == '') ? 0 : $this->input->post('nilaiperolehanpr');
 		$jenisperolehanidpr		= ($this->input->post('jenisperolehanidpr') == '') ? 0 : $this->input->post('jenisperolehanidpr');
@@ -296,6 +299,7 @@ class AsetGdBang extends Authcontroller
 
 			$datadetail	= array(
 				'ItemID'				=> $itemid,
+				'Nama'					=> $nama,
 				'AssetOrder'			=> $assetorder,
 				'LuasBangunanPr'		=> $luasbangunanpr,
 				'NilaiPerolehanPr'		=> $nilaiperolehanpr,
@@ -372,6 +376,7 @@ class AsetGdBang extends Authcontroller
 		$katid					= $this->input->post('katid');
 		$tglpr					= $this->input->post('tglpr');
 		$thnpr					= substr($tglpr, 0, 4);
+		$nama					= $this->input->post('nama');
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
 		$nilaiperolehanpr		= $this->input->post('nilaiperolehanpr');
 		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr');
@@ -417,6 +422,7 @@ class AsetGdBang extends Authcontroller
 			);
 
 			$datadetail	= array(
+				'Nama'					=> $nama,
 				'LuasBangunanPr'		=> $luasbangunanpr,
 				'NilaiPerolehanPr'		=> $nilaiperolehanpr,
 				'JenisPerolehanIDPr'	=> $jenisperolehanidpr,

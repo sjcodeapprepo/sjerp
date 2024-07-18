@@ -65,6 +65,7 @@
 	<thead>
 	  <tr>
 		<th>NO ASET</th>
+		<th>NAMA GEDUNG/BANGUNAN</th>
 	  	<th>KATEGORI</th>
 		<th>JENIS BANGUNAN</th>
         <th>NO DOKUMEN</th>
@@ -90,6 +91,7 @@
 for($a=0; $a<count($view_data); $a++) {
 	
 	$id			= $view_data[$a]['ItemID'];
+	$nama		= $view_data[$a]['Nama'];
 	$asno		= $view_data[$a]['AssetNo'];
     $katname	= $view_data[$a]['KatName'];
     $jgdb		= $view_data[$a]['JenisGdgBangunanName'];
@@ -99,6 +101,7 @@ for($a=0; $a<count($view_data); $a++) {
 ?>
 	  <tr>
 	  	<td align='center' noWrap><?=$asno?></td>
+		  <td align='center'><?=$nama?></td>
 		<td align='center'><?=$katname?></td>
 	  	<td align='center'><?=$jgdb?></td>
 		<td align='center'><?=$nodok?></td>
