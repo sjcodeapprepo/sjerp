@@ -429,7 +429,7 @@ class AsetGdBang extends Authcontroller
 				'Nama'					=> $nama,
 				'LuasBangunanPr'		=> $luasbangunanpr,
 				'NilaiPerolehanPr'		=> $nilaiperolehanpr,
-				'JenisPerolehanIDPr'	=> '01';//$jenisperolehanidpr,
+				'JenisPerolehanIDPr'	=> '00',//$jenisperolehanidpr,
 				'MitraKerjasamaPr'		=> $mitrakerjasamapr,
 				'NoDokumenPr'			=> $nodokumenpr,
 				'TglDokumenPr'			=> $tgldokumenpr,
