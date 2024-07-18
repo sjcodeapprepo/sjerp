@@ -379,7 +379,7 @@ class AsetGdBang extends Authcontroller
 		$nama					= $this->input->post('nama');
 		$luasbangunanpr			= $this->input->post('luasbangunanpr');
 		$nilaiperolehanpr		= $this->input->post('nilaiperolehanpr');
-		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr');
+		$jenisperolehanidpr		= $this->input->post('jenisperolehanidpr')==''?0:$this->input->post('jenisperolehanidpr');
 		$mitrakerjasamapr		= $this->input->post('mitrakerjasamapr');
 		$nodokumenpr			= $this->input->post('nodokumenpr');
 		$tgldokumenpr			= $this->input->post('tgldokumenpr');
