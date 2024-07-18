@@ -62,6 +62,7 @@ class AsetGdBang extends Authcontroller
 
 		$sql = "SELECT 
 					m.ItemID, m.AssetNo, mk.KatName, mj.JenisPerolehanName, mb.JenisGdgBangunanName, 
+					d.Nama,
                     d.NoDokumenSi, d.LokasiPs, d.PenanggungJawabSi, d.MitraKerjasamaSi
 				FROM 
 					itemmaster m, itemgdgbangdetail d, itemkatmaster mk, itemjenisperolehanmaster mj, itemjenisbangunanmaster mb
