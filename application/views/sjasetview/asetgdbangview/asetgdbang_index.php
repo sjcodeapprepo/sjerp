@@ -61,7 +61,7 @@
 
 <br><br>
 
-<table align=center border="0" cellpadding="0" cellspacing="3" width="800" class='gridua'>
+<table align=center border="0" cellpadding="0" cellspacing="3" width="900" class='gridua'>
 	<thead>
 	  <tr>
 		<th>NO ASET</th>
